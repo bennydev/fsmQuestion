@@ -19,8 +19,10 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
+    "src",
+    "spec",
+    "bower.json",
+    "gruntfile.js",
+    "package.json",
+    "README.md" ]
 }

@@ -11,4 +11,9 @@ module.exports = function (grunt){
 
     // Load in our build configuration file.
     var userConfig = require('./build.config.js');
+
+//    First version, the simple approach
+//    TODO: 1. Copy files from src to dist folder.
+//    TODO: 2. Bump up version property in bower.json.
+//    TODO: 3. Publish to git repo
 };
