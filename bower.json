@@ -1,0 +1,26 @@
+{
+  "name": "fsmQuestion",
+  "version": "0.0.1",
+  "description": "Generic Question library",
+  "main": "fsmQuestion.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "Folksam",
+    "Questions",
+    "angularjs"
+  ],
+  "authors": [
+    "A-Team"
+  ],
+  "license": "Folksam",
+  "homepage": "http://www.folksam.se",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

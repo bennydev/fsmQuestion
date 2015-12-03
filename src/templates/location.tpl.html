@@ -1,0 +1,5 @@
+<div>{{question.textRoot+'.QUESTION' | fsmTranslate}}</div>
+<input ng-model="question.model[question.id]"
+       ng-change="question.removeErrors();question.saveAnswer();"
+       ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}">
+[KARTA]

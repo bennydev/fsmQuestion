@@ -1,0 +1,9 @@
+{
+  "directory": "vendor",
+  "json": "bower.json",
+  "registry": {
+    "register": "CHANGE_TO_URL",
+    "publish": "CHANGE_TO_URL"
+  }
+}
+

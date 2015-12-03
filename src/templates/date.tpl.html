@@ -1,0 +1,34 @@
+<div class="form-label">
+    <label for="{{question.id}}">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show="question.isRequired()"
+                                                                                       class="required"></span></label>
+</div>
+
+<div class="grid">
+    <div class="grid__item sm--six-twelfths">
+        <div class="form-row form-row--gap">
+
+            <input type="text"
+                   id="{{question.id}}"
+                   name="{{question.id}}"
+                   class="input-text"
+                   placeholder="ÅÅÅÅ-MM-DD"
+                   input-touched
+                   ng-model="question.model[question.id].dateString"
+                   ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                   ng-change="question.removeErrors();question.model[question.id].updateDate();question.saveAnswer();"
+                    />
+            <i aria-hidden="true" class="icon icon-date" ng-click="question.isOpen =! question.isOpen"></i>
+            <div datepicker-popup="yyyy-MM-dd"
+                 min-date="question.minDate"
+                 max-date="question.maxDate"
+                 ng-model="question.model[question.id].date"
+                 ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                 ng-change="question.removeErrors();question.model[question.id].updateDateString();question.saveAnswer();"
+                 is-open="question.isOpen"
+                    style="margin-top:1px;">
+                 </div>
+        </div>
+        <div ng-include="'fsmQuestion/templates/tooltip.tpl.html'"></div>
+    </div>
+    <div class="grid__item sm--six-twelfths" ng-include="'fsmQuestion/templates/formerror.tpl.html'"></div>
+</div>
