@@ -16,6 +16,8 @@
 *.gz
 *.iso
 *.jar
+*.war
+*.ear
 *.rar
 *.tar
 *.zip
@@ -35,4 +37,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+# IDE project files #
+#####################
 .iml
+.project
+.classpath
+.metadata
+.idea
