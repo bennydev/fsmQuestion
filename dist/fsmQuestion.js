@@ -1,7 +1,7 @@
-angular.module('fsm-templates', ['buttongroup.tpl.html', 'buttongroupbig.tpl.html', 'checkbox.tpl.html', 'date.tpl.html', 'datetime.tpl.html', 'formerror.tpl.html', 'input.tpl.html', 'inputcurrency.tpl.html', 'location.tpl.html', 'phone.tpl.html', 'question.tpl.html', 'select.tpl.html', 'text.tpl.html', 'tooltip.tpl.html', 'upload.tpl.html']);
+angular.module('fsm-templates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/formerror.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/question.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
-angular.module("buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("buttongroup.tpl.html",
+angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/buttongroup.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"><span translate translate-default=\"''\" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
@@ -31,8 +31,8 @@ angular.module("buttongroup.tpl.html", []).run(["$templateCache", function($temp
     "</div>");
 }]);
 
-angular.module("buttongroupbig.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("buttongroupbig.tpl.html",
+angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/buttongroupbig.tpl.html",
     "<div class=\"u-spacing-above u-spacing-under u-inline-block\">\n" +
     "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\"''\" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span>\n" +
     "\n" +
@@ -53,8 +53,8 @@ angular.module("buttongroupbig.tpl.html", []).run(["$templateCache", function($t
     "</div>");
 }]);
 
-angular.module("checkbox.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("checkbox.tpl.html",
+angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/checkbox.tpl.html",
     "<div class=\"form-row form-row--gap\">\n" +
     "  <div ng-repeat=\"option in question.options track by $index\">\n" +
     "    <label class=\"custom-checkbox\">\n" +
@@ -75,8 +75,8 @@ angular.module("checkbox.tpl.html", []).run(["$templateCache", function($templat
     "");
 }]);
 
-angular.module("date.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("date.tpl.html",
+angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/date.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\"\n" +
     "                                                                                       class=\"required\"></span></label>\n" +
@@ -113,8 +113,8 @@ angular.module("date.tpl.html", []).run(["$templateCache", function($templateCac
     "</div>");
 }]);
 
-angular.module("datetime.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("datetime.tpl.html",
+angular.module("templates/datetime.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/datetime.tpl.html",
     "<div class=\"col-sm-6\">\n" +
     "    <span>\n" +
     "        <label for=\"{{question.id}}Date\"\n" +
@@ -150,15 +150,15 @@ angular.module("datetime.tpl.html", []).run(["$templateCache", function($templat
     "</div>");
 }]);
 
-angular.module("formerror.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("formerror.tpl.html",
+angular.module("templates/formerror.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/formerror.tpl.html",
     "<div class=\"form-error\" role=\"alert\" ng-cloak ng-show=\"question.hasErrors()\">\n" +
     "    <div>{{question.getErrors().message | fsmTranslate}}</div>\n" +
     "</div>");
 }]);
 
-angular.module("input.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("input.tpl.html",
+angular.module("templates/input.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/input.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
@@ -187,8 +187,8 @@ angular.module("input.tpl.html", []).run(["$templateCache", function($templateCa
     "</div>");
 }]);
 
-angular.module("inputcurrency.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("inputcurrency.tpl.html",
+angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/inputcurrency.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
@@ -220,8 +220,8 @@ angular.module("inputcurrency.tpl.html", []).run(["$templateCache", function($te
     "</div>");
 }]);
 
-angular.module("location.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("location.tpl.html",
+angular.module("templates/location.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/location.tpl.html",
     "<div>{{question.textRoot+'.QUESTION' | fsmTranslate}}</div>\n" +
     "<input ng-model=\"question.model[question.id]\"\n" +
     "       ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
@@ -229,8 +229,8 @@ angular.module("location.tpl.html", []).run(["$templateCache", function($templat
     "[KARTA]");
 }]);
 
-angular.module("phone.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("phone.tpl.html",
+angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/phone.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
@@ -271,16 +271,16 @@ angular.module("phone.tpl.html", []).run(["$templateCache", function($templateCa
     "</div>");
 }]);
 
-angular.module("question.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("question.tpl.html",
+angular.module("templates/question.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/question.tpl.html",
     "<div ng-show=\"question.isVisible()\"\n" +
     "     class=\"row input-block animate-show\">\n" +
     "    <div class=\"input-block__block\" ng-include=\"'fsmQuestion/templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
-angular.module("select.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("select.tpl.html",
+angular.module("templates/select.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/select.tpl.html",
     "<div class=\"form-label\" ng-if=\"question.textRoot+'.QUESTION' | fsmTranslate\">\n" +
     "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
@@ -308,8 +308,8 @@ angular.module("select.tpl.html", []).run(["$templateCache", function($templateC
     "</div>");
 }]);
 
-angular.module("text.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("text.tpl.html",
+angular.module("templates/text.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/text.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label>{{question.textRoot+'.QUESTION' | fsmTranslate}}</label>\n" +
     "</div>\n" +
@@ -338,13 +338,13 @@ angular.module("text.tpl.html", []).run(["$templateCache", function($templateCac
     "</div>");
 }]);
 
-angular.module("tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("tooltip.tpl.html",
+angular.module("templates/tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/tooltip.tpl.html",
     "<p ng-if=\"question.textRoot+'.INFO' | fsmTranslate\" class=\"form-note\" translate>{{question.textRoot+'.INFO'}}</p>");
 }]);
 
-angular.module("upload.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("upload.tpl.html",
+angular.module("templates/upload.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/upload.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"\n" +
     "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}\n" +
