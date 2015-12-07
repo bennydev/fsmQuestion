@@ -31,7 +31,7 @@ angular.module('fsmQuestion')
                 translateValues: '='
 
             },
-            templateUrl: 'fsmQuestion/templates/question.tpl.html',
+            templateUrl: 'templates/question.tpl.html',
             link: function(scope, element, attributes){
                 init(scope);
                 //UPLOAD
