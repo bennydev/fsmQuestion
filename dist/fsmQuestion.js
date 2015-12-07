@@ -1,5 +1,5 @@
 'use strict';
-angular.module('services').factory('ErrorAdapter', ['ErrorReporter', function (ErrorReporter) {
+angular.module('fsmQuestion').factory('ErrorAdapter', ['ErrorReporter', function (ErrorReporter) {
     var errorAdapter = {
         removeErrorsForQuestion: removeErrorsForQuestion,
         hasErrorForQuestion: hasErrorForQuestion,
@@ -24,7 +24,7 @@ angular.module('services').factory('ErrorAdapter', ['ErrorReporter', function (E
 ]);
 
 'use strict';
-angular.module('services').factory('ErrorReporter', ['$log', function($log){
+angular.module('fsmQuestion').factory('ErrorReporter', ['$log', function($log){
     var errors = {messages: []};
 
     function addError(error){
@@ -89,7 +89,7 @@ angular.module('services').factory('ErrorReporter', ['$log', function($log){
 }]);
 
 'use strict';
-angular.module('services').factory('QuestionService', ['ValidationService', 'localStorageService', 'ErrorAdapter', '$filter', 'ClaimService',
+angular.module('fsmQuestion').factory('QuestionService', ['ValidationService', 'localStorageService', 'ErrorAdapter', '$filter', 'ClaimService',
     function (ValidationService, localStorageService, ErrorAdapter, $filter, ClaimService) {
     var createdQuestions = [];
     function Question(id, type, textRoot, model, options, required, requiredFn, requiredValidator, minLength, maxLength, minDate, maxDate, placeholder, validator, showFn, relatedQuestionIds, onChange, defaultAnswer) {
@@ -617,7 +617,7 @@ angular.module('services').factory('QuestionService', ['ValidationService', 'loc
 }]);
 
 'use strict';
-angular.module('services').factory('ValidationService', ['ErrorReporter', function(ErrorReporter){
+angular.module('fsmQuestion').factory('ValidationService', ['ErrorReporter', function(ErrorReporter){
 
     var validators = {};
     validators.getRequiredValidator = function() {
@@ -691,9 +691,12 @@ angular.module('services').factory('ValidationService', ['ErrorReporter', functi
     };
 }]);
 
+"use strict";
+angular.module('fsmQuestion', []);
+
 'use strict';
 
-angular.module('directives')
+angular.module('fsmQuestion')
     .directive('fsmQuestion',['QuestionService', 'ErrorReporter', 'FileUploaderService', function(QuestionService, ErrorReporter, FileUploaderService){
         function init(scope){
             initScopeVariables(scope);
@@ -761,7 +764,7 @@ angular.module('directives')
     }]);
 
 'use strict';
-angular.module('filters').filter('fsmTranslate', ['$translate', function($translate){
+angular.module('fsmQuestion').filter('fsmTranslate', ['$translate', function($translate){
     function fsmTranslate(key){
         var translation = $translate.instant(key);
         if(translation === key){
