@@ -7,7 +7,7 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
@@ -27,7 +27,7 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
     "        </div>\n" +
     "        <input type=\"hidden\" ng-required=\"true\" name=\"newPhone\" ng-model=\"step1.newPhone\">\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -71,7 +71,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "    </label>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "<div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "");
 }]);
 
@@ -107,9 +107,9 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                    style=\"margin-top:1px;\">\n" +
     "                 </div>\n" +
     "        </div>\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -164,7 +164,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
@@ -183,7 +183,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "                  />\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -194,7 +194,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
@@ -216,7 +216,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -267,7 +267,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -275,7 +275,7 @@ angular.module("templates/question.tpl.html", []).run(["$templateCache", functio
   $templateCache.put("templates/question.tpl.html",
     "<div ng-show=\"question.isVisible()\"\n" +
     "     class=\"row input-block animate-show\">\n" +
-    "    <div class=\"input-block__block\" ng-include=\"'fsmQuestion/templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
+    "    <div class=\"input-block__block\" ng-include=\"'templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -286,7 +286,7 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
@@ -304,7 +304,7 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -315,7 +315,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
-    "  <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "  <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
@@ -334,7 +334,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "        <div class=\"form-charcount\" ng-cloak>{{question.model[question.id].length}} {{'VIEW.EXTRAS.OF' | fsmTranslate}} {{question.maxLength}}</div>\n" +
     "\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -355,7 +355,7 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.options[0].value\" button-text=\"{{question.options[0].label | fsmTranslate}}\"></fsm-file-uploader>\n" +
     "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
