@@ -46,10 +46,17 @@ module.exports = function (grunt) {
          * `build_dir`, and then to copy the assets to `compile_dir`.
          */
         copy: {
+            build: {
+                //cwd: 'src',
+                src: ['src/**/**'],
+                dest: 'dist',
+                expand: true
+            }
 
         }
     };
-//    TODO: 1. Copy files from src to dist folder.
+
+    grunt.initConfig(taskConfig);
 
     /**
      * The default task is to copy files to the dist folder.

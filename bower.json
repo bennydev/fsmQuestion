@@ -1,8 +1,8 @@
 {
   "name": "fsmQuestion",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "Generic Question library",
-  "main": "fsmQuestion.js",
+  "directory": "dist",
   "moduleType": [
     "globals"
   ],
