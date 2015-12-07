@@ -1,0 +1,17 @@
+<div class="form-row form-row--gap">
+  <div ng-repeat="option in question.options track by $index">
+    <label class="custom-checkbox">
+      <input id="{{question.id}}{{$index}}"
+               name="{{question.id}}{{$index}}"
+               type="checkbox"
+               class="custom-checkbox__input"
+               ng-model="question.model[question.id]"
+               ng-change="question.removeErrors();question.saveAnswer();"
+               ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+               ng-true-value="'{{option.value}}'"
+               ng-false-value="undefined">
+        <span class="custom-checkbox__icon">Jag vet inte exakt datum</span>
+    </label>
+  </div>
+</div>
+<div ng-include="'fsmQuestion/templates/tooltip.tpl.html'"></div>
