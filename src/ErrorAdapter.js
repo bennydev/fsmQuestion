@@ -1,5 +1,5 @@
 'use strict';
-angular.module('services').factory('ErrorAdapter', ['ErrorReporter', function (ErrorReporter) {
+angular.module('fsmQuestion').factory('ErrorAdapter', ['ErrorReporter', function (ErrorReporter) {
     var errorAdapter = {
         removeErrorsForQuestion: removeErrorsForQuestion,
         hasErrorForQuestion: hasErrorForQuestion,

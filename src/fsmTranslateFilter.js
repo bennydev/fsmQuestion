@@ -1,5 +1,5 @@
 'use strict';
-angular.module('filters').filter('fsmTranslate', ['$translate', function($translate){
+angular.module('fsmQuestion').filter('fsmTranslate', ['$translate', function($translate){
     function fsmTranslate(key){
         var translation = $translate.instant(key);
         if(translation === key){

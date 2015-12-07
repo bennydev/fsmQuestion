@@ -1,5 +1,5 @@
 'use strict';
-angular.module('services').factory('ValidationService', ['ErrorReporter', function(ErrorReporter){
+angular.module('fsmQuestion').factory('ValidationService', ['ErrorReporter', function(ErrorReporter){
 
     var validators = {};
     validators.getRequiredValidator = function() {

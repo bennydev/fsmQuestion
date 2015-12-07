@@ -1,5 +1,5 @@
 'use strict';
-angular.module('services').factory('ErrorReporter', ['$log', function($log){
+angular.module('fsmQuestion').factory('ErrorReporter', ['$log', function($log){
     var errors = {messages: []};
 
     function addError(error){

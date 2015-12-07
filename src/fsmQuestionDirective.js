@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('directives')
+angular.module('fsmQuestion')
     .directive('fsmQuestion',['QuestionService', 'ErrorReporter', 'FileUploaderService', function(QuestionService, ErrorReporter, FileUploaderService){
         function init(scope){
             initScopeVariables(scope);

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('services').factory('QuestionService', ['ValidationService', 'localStorageService', 'ErrorAdapter', '$filter', 'ClaimService',
+angular.module('fsmQuestion').factory('QuestionService', ['ValidationService', 'localStorageService', 'ErrorAdapter', '$filter', 'ClaimService',
     function (ValidationService, localStorageService, ErrorAdapter, $filter, ClaimService) {
     var createdQuestions = [];
     function Question(id, type, textRoot, model, options, required, requiredFn, requiredValidator, minLength, maxLength, minDate, maxDate, placeholder, validator, showFn, relatedQuestionIds, onChange, defaultAnswer) {
