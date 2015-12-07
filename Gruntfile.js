@@ -71,10 +71,11 @@ module.exports = function (grunt) {
              */
             app: {
                 options: {
-                    base: 'build/src/templates'
+                    base: 'build/src/templates',
+                    module: 'fsm-templates'
                 },
                 src: ['build/**/*.html'],
-                dest: 'build/templates-app.js'
+                dest: 'build/fsm-templates-app.js'
             }
         }
 

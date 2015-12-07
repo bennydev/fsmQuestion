@@ -1,3 +1,364 @@
+angular.module('fsm-templates', ['buttongroup.tpl.html', 'buttongroupbig.tpl.html', 'checkbox.tpl.html', 'date.tpl.html', 'datetime.tpl.html', 'formerror.tpl.html', 'input.tpl.html', 'inputcurrency.tpl.html', 'location.tpl.html', 'phone.tpl.html', 'question.tpl.html', 'select.tpl.html', 'text.tpl.html', 'tooltip.tpl.html', 'upload.tpl.html']);
+
+angular.module("buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("buttongroup.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.id}}\"><span translate translate-default=\"''\" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "            <div class=\"toggle-list\">\n" +
+    "                <button class=\"toggle-list__item\"\n" +
+    "                    id=\"{{question.id + $index}}\"\n" +
+    "                    name=\"{{question.id}}\"\n" +
+    "                    ng-repeat=\"option in question.options track by $index\"\n" +
+    "                    ng-model=\"question.model[question.id]\"\n" +
+    "                    btn-radio=\"'{{option.value}}'\"\n" +
+    "                    ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                    ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | fsmTranslate}}</button>\n" +
+    "                </button>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <input type=\"hidden\" ng-required=\"true\" name=\"newPhone\" ng-model=\"step1.newPhone\">\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("buttongroupbig.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("buttongroupbig.tpl.html",
+    "<div class=\"u-spacing-above u-spacing-under u-inline-block\">\n" +
+    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\"''\" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span>\n" +
+    "\n" +
+    "    <div class=\"toggle-list toggle-list--large\">\n" +
+    "        <button type=\"button\" class=\"toggle-list__item\" id=\"{{question.id + $index}}\"\n" +
+    "            name=\"{{question.id}}\"\n" +
+    "            ng-repeat=\"option in question.options track by $index\"\n" +
+    "            ng-model=\"question.model[question.id]\"\n" +
+    "            btn-radio=\"'{{option.value}}'\"\n" +
+    "            ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "            ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | fsmTranslate}}</button>\n" +
+    "    </div>\n" +
+    "    <input type=\"hidden\" ng-required=\"true\" name=\"agree\" ng-model=\"agree\">\n" +
+    "\n" +
+    "    <div class=\"form-error u-spacing-above-narrow\" role=\"alert\" ng-show=\"question.hasErrors()\" ng-cloak>\n" +
+    "        <div>{{question.getErrors().message | fsmTranslate}}</div>\n" +
+    "    </div>\n" +
+    "</div>");
+}]);
+
+angular.module("checkbox.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("checkbox.tpl.html",
+    "<div class=\"form-row form-row--gap\">\n" +
+    "  <div ng-repeat=\"option in question.options track by $index\">\n" +
+    "    <label class=\"custom-checkbox\">\n" +
+    "      <input id=\"{{question.id}}{{$index}}\"\n" +
+    "               name=\"{{question.id}}{{$index}}\"\n" +
+    "               type=\"checkbox\"\n" +
+    "               class=\"custom-checkbox__input\"\n" +
+    "               ng-model=\"question.model[question.id]\"\n" +
+    "               ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
+    "               ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "               ng-true-value=\"'{{option.value}}'\"\n" +
+    "               ng-false-value=\"undefined\">\n" +
+    "        <span class=\"custom-checkbox__icon\">Jag vet inte exakt datum</span>\n" +
+    "    </label>\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "<div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "");
+}]);
+
+angular.module("date.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("date.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\"\n" +
+    "                                                                                       class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "\n" +
+    "            <input type=\"text\"\n" +
+    "                   id=\"{{question.id}}\"\n" +
+    "                   name=\"{{question.id}}\"\n" +
+    "                   class=\"input-text\"\n" +
+    "                   placeholder=\"ÅÅÅÅ-MM-DD\"\n" +
+    "                   input-touched\n" +
+    "                   ng-model=\"question.model[question.id].dateString\"\n" +
+    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                   ng-change=\"question.removeErrors();question.model[question.id].updateDate();question.saveAnswer();\"\n" +
+    "                    />\n" +
+    "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +
+    "            <div datepicker-popup=\"yyyy-MM-dd\"\n" +
+    "                 min-date=\"question.minDate\"\n" +
+    "                 max-date=\"question.maxDate\"\n" +
+    "                 ng-model=\"question.model[question.id].date\"\n" +
+    "                 ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                 ng-change=\"question.removeErrors();question.model[question.id].updateDateString();question.saveAnswer();\"\n" +
+    "                 is-open=\"question.isOpen\"\n" +
+    "                    style=\"margin-top:1px;\">\n" +
+    "                 </div>\n" +
+    "        </div>\n" +
+    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("datetime.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("datetime.tpl.html",
+    "<div class=\"col-sm-6\">\n" +
+    "    <span>\n" +
+    "        <label for=\"{{question.id}}Date\"\n" +
+    "               ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}\n" +
+    "        </label>\n" +
+    "    </span>\n" +
+    "</div>\n" +
+    "<div class=\"col-sm-6\" ng-init=\"question.model[question.id] = {};\">\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-sm-8\">\n" +
+    "            <input type=\"text\"\n" +
+    "                   id=\"{{question.id}}Date\"\n" +
+    "                   name=\"{{question.id}}Date\"\n" +
+    "                   class=\"form-control\"\n" +
+    "                   ng-model=\"question.model[question.id].date\"\n" +
+    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                   ng-change=\"question.removeErrors();\"\n" +
+    "                    />\n" +
+    "        </div>\n" +
+    "        <div class=\"clearfix visible-xs\" style=\"padding-bottom: 15px;\"></div>\n" +
+    "        <div class=\"col-sm-4\">\n" +
+    "            <input type=\"text\"\n" +
+    "                   id=\"{{question.id}}Time\"\n" +
+    "                   name=\"{{question.id}}Time\"\n" +
+    "                   class=\"form-control\"\n" +
+    "                   ng-model=\"question.model[question.id].time\"\n" +
+    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                   ng-change=\"question.removeErrors();\"\n" +
+    "                    />\n" +
+    "        </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "</div>");
+}]);
+
+angular.module("formerror.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("formerror.tpl.html",
+    "<div class=\"form-error\" role=\"alert\" ng-cloak ng-show=\"question.hasErrors()\">\n" +
+    "    <div>{{question.getErrors().message | fsmTranslate}}</div>\n" +
+    "</div>");
+}]);
+
+angular.module("input.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("input.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "          <input type=\"text\"\n" +
+    "             id=\"{{question.id}}\"\n" +
+    "             name=\"{{question.id}}\"\n" +
+    "             placeholder=\"{{question.placeholder}}\"\n" +
+    "             input-touched\n" +
+    "             class=\"input-text\"\n" +
+    "             ng-model=\"question.model[question.id]\"\n" +
+    "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\"\n" +
+    "             ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "             maxlength=\"{{question.maxLength}}\"\n" +
+    "                  />\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("inputcurrency.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("inputcurrency.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "            <div class=\"input-group\">\n" +
+    "                <input type=\"text\"\n" +
+    "                   id=\"{{question.id}}\"\n" +
+    "                   name=\"{{question.id}}\"\n" +
+    "                   placeholder=\"{{question.placeholder}}\"\n" +
+    "                   input-touched\n" +
+    "                   class=\"input-text input-group__input\"\n" +
+    "                   ng-model=\"question.model[question.id]\"\n" +
+    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                   ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
+    "                   maxlength=\"{{question.maxLength}}\"\n" +
+    "                    />\n" +
+    "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | fsmTranslate}}</div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("location.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("location.tpl.html",
+    "<div>{{question.textRoot+'.QUESTION' | fsmTranslate}}</div>\n" +
+    "<input ng-model=\"question.model[question.id]\"\n" +
+    "       ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
+    "       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\">\n" +
+    "[KARTA]");
+}]);
+
+angular.module("phone.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("phone.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "       <div class=\"form-row form-row--gap\">\n" +
+    "          <div class=\"input-group\">\n" +
+    "              <div class=\"input-group__addon\">\n" +
+    "\n" +
+    "                  <div class=\"addon-select\">\n" +
+    "                    {{ question.model[question.id].countryCode.phoneCode }} <i class=\"icon icon-arrow-down\" aria-hidden=\"true\"></i>\n" +
+    "                      <select ng-model=\"question.model[question.id].countryCode\"\n" +
+    "                              id=\"{{question.id}}CountryCode\"\n" +
+    "                              name=\"{{question.id}}CountryCode\"\n" +
+    "                              ng-change=\"question.removeErrors(); addZeroToPhonenumber(); question.saveAnswer();\"\n" +
+    "                              ng-init=\"question.model[question.id].countryCode = question.options[209]; question.model[question.id].phoneNumber = '0';\"\n" +
+    "                              ng-options=\"option.name for option in question.options track by option.id\"\n" +
+    "\n" +
+    "                              >\n" +
+    "                      </select>\n" +
+    "                  </div>\n" +
+    "              </div>\n" +
+    "              <input\n" +
+    "                      type=\"tel\"\n" +
+    "                      class=\"input-text input-group__input\"\n" +
+    "                 id=\"{{question.id}}PhoneNumber\"\n" +
+    "                 name=\"{{question.id}}PhoneNumber\"\n" +
+    "                 input-touched\n" +
+    "                 ng-model=\"question.model[question.id].phoneNumber\"\n" +
+    "                 ng-change=\"question.removeErrors(); question.onChange(question); question.saveAnswer();\"\n" +
+    "                  />\n" +
+    "          </div>\n" +
+    "\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("question.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("question.tpl.html",
+    "<div ng-show=\"question.isVisible()\"\n" +
+    "     class=\"row input-block animate-show\">\n" +
+    "    <div class=\"input-block__block\" ng-include=\"'fsmQuestion/templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("select.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("select.tpl.html",
+    "<div class=\"form-label\" ng-if=\"question.textRoot+'.QUESTION' | fsmTranslate\">\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "            <div class=\"custom-select custom-select--full-width\">\n" +
+    "                 <select id=\"{{question.id}}\"\n" +
+    "                        name=\"{{question.id}}\"\n" +
+    "                        class=\"form-control\"\n" +
+    "                        ng-model=\"question.model[question.id]\"\n" +
+    "                        ng-change=\"question.removeErrors();question.onChange(question); question.saveAnswer();\"\n" +
+    "                        ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"\n" +
+    "                        ng-options=\"option.value as option.label | translate for option in question.options\">\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("text.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("text.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label>{{question.textRoot+'.QUESTION' | fsmTranslate}}</label>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"grid\">\n" +
+    "  <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "            <textarea class=\"input-textarea\"\n" +
+    "              ng-trim=\"false\"\n" +
+    "              maxlength=\"{{question.maxLength}}\"\n" +
+    "              id=\"{{question.id}}\"\n" +
+    "              name=\"{{question.id}}\"\n" +
+    "              ng-model=\"question.model[question.id]\"\n" +
+    "              ng-change=\"question.removeErrors(); question.saveAnswer();\"\n" +
+    "              ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-charcount\" ng-cloak>{{question.model[question.id].length}} {{'VIEW.EXTRAS.OF' | fsmTranslate}} {{question.maxLength}}</div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("tooltip.tpl.html",
+    "<p ng-if=\"question.textRoot+'.INFO' | fsmTranslate\" class=\"form-note\" translate>{{question.textRoot+'.INFO'}}</p>");
+}]);
+
+angular.module("upload.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("upload.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.id}}\"\n" +
+    "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}\n" +
+    "    </label>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.options[0].value\" button-text=\"{{question.options[0].label | fsmTranslate}}\"></fsm-file-uploader>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
 "use strict";
 angular.module('fsmQuestion', []);
 
@@ -773,365 +1134,4 @@ angular.module('fsmQuestion').factory('ValidationService', ['ErrorReporter', fun
     return {
         validate: validate
     };
-}]);
-
-angular.module('templates-app', ['buttongroup.tpl.html', 'buttongroupbig.tpl.html', 'checkbox.tpl.html', 'date.tpl.html', 'datetime.tpl.html', 'formerror.tpl.html', 'input.tpl.html', 'inputcurrency.tpl.html', 'location.tpl.html', 'phone.tpl.html', 'question.tpl.html', 'select.tpl.html', 'text.tpl.html', 'tooltip.tpl.html', 'upload.tpl.html']);
-
-angular.module("buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("buttongroup.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\"><span translate translate-default=\"''\" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
-    "            <div class=\"toggle-list\">\n" +
-    "                <button class=\"toggle-list__item\"\n" +
-    "                    id=\"{{question.id + $index}}\"\n" +
-    "                    name=\"{{question.id}}\"\n" +
-    "                    ng-repeat=\"option in question.options track by $index\"\n" +
-    "                    ng-model=\"question.model[question.id]\"\n" +
-    "                    btn-radio=\"'{{option.value}}'\"\n" +
-    "                    ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                    ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | fsmTranslate}}</button>\n" +
-    "                </button>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <input type=\"hidden\" ng-required=\"true\" name=\"newPhone\" ng-model=\"step1.newPhone\">\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("buttongroupbig.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("buttongroupbig.tpl.html",
-    "<div class=\"u-spacing-above u-spacing-under u-inline-block\">\n" +
-    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\"''\" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span>\n" +
-    "\n" +
-    "    <div class=\"toggle-list toggle-list--large\">\n" +
-    "        <button type=\"button\" class=\"toggle-list__item\" id=\"{{question.id + $index}}\"\n" +
-    "            name=\"{{question.id}}\"\n" +
-    "            ng-repeat=\"option in question.options track by $index\"\n" +
-    "            ng-model=\"question.model[question.id]\"\n" +
-    "            btn-radio=\"'{{option.value}}'\"\n" +
-    "            ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "            ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | fsmTranslate}}</button>\n" +
-    "    </div>\n" +
-    "    <input type=\"hidden\" ng-required=\"true\" name=\"agree\" ng-model=\"agree\">\n" +
-    "\n" +
-    "    <div class=\"form-error u-spacing-above-narrow\" role=\"alert\" ng-show=\"question.hasErrors()\" ng-cloak>\n" +
-    "        <div>{{question.getErrors().message | fsmTranslate}}</div>\n" +
-    "    </div>\n" +
-    "</div>");
-}]);
-
-angular.module("checkbox.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("checkbox.tpl.html",
-    "<div class=\"form-row form-row--gap\">\n" +
-    "  <div ng-repeat=\"option in question.options track by $index\">\n" +
-    "    <label class=\"custom-checkbox\">\n" +
-    "      <input id=\"{{question.id}}{{$index}}\"\n" +
-    "               name=\"{{question.id}}{{$index}}\"\n" +
-    "               type=\"checkbox\"\n" +
-    "               class=\"custom-checkbox__input\"\n" +
-    "               ng-model=\"question.model[question.id]\"\n" +
-    "               ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
-    "               ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "               ng-true-value=\"'{{option.value}}'\"\n" +
-    "               ng-false-value=\"undefined\">\n" +
-    "        <span class=\"custom-checkbox__icon\">Jag vet inte exakt datum</span>\n" +
-    "    </label>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "<div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
-    "");
-}]);
-
-angular.module("date.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("date.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\"\n" +
-    "                                                                                       class=\"required\"></span></label>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
-    "\n" +
-    "            <input type=\"text\"\n" +
-    "                   id=\"{{question.id}}\"\n" +
-    "                   name=\"{{question.id}}\"\n" +
-    "                   class=\"input-text\"\n" +
-    "                   placeholder=\"ÅÅÅÅ-MM-DD\"\n" +
-    "                   input-touched\n" +
-    "                   ng-model=\"question.model[question.id].dateString\"\n" +
-    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();question.model[question.id].updateDate();question.saveAnswer();\"\n" +
-    "                    />\n" +
-    "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +
-    "            <div datepicker-popup=\"yyyy-MM-dd\"\n" +
-    "                 min-date=\"question.minDate\"\n" +
-    "                 max-date=\"question.maxDate\"\n" +
-    "                 ng-model=\"question.model[question.id].date\"\n" +
-    "                 ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                 ng-change=\"question.removeErrors();question.model[question.id].updateDateString();question.saveAnswer();\"\n" +
-    "                 is-open=\"question.isOpen\"\n" +
-    "                    style=\"margin-top:1px;\">\n" +
-    "                 </div>\n" +
-    "        </div>\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("datetime.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("datetime.tpl.html",
-    "<div class=\"col-sm-6\">\n" +
-    "    <span>\n" +
-    "        <label for=\"{{question.id}}Date\"\n" +
-    "               ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}\n" +
-    "        </label>\n" +
-    "    </span>\n" +
-    "</div>\n" +
-    "<div class=\"col-sm-6\" ng-init=\"question.model[question.id] = {};\">\n" +
-    "    <div class=\"row\">\n" +
-    "        <div class=\"col-sm-8\">\n" +
-    "            <input type=\"text\"\n" +
-    "                   id=\"{{question.id}}Date\"\n" +
-    "                   name=\"{{question.id}}Date\"\n" +
-    "                   class=\"form-control\"\n" +
-    "                   ng-model=\"question.model[question.id].date\"\n" +
-    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();\"\n" +
-    "                    />\n" +
-    "        </div>\n" +
-    "        <div class=\"clearfix visible-xs\" style=\"padding-bottom: 15px;\"></div>\n" +
-    "        <div class=\"col-sm-4\">\n" +
-    "            <input type=\"text\"\n" +
-    "                   id=\"{{question.id}}Time\"\n" +
-    "                   name=\"{{question.id}}Time\"\n" +
-    "                   class=\"form-control\"\n" +
-    "                   ng-model=\"question.model[question.id].time\"\n" +
-    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();\"\n" +
-    "                    />\n" +
-    "        </div>\n" +
-    "\n" +
-    "    </div>\n" +
-    "</div>");
-}]);
-
-angular.module("formerror.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("formerror.tpl.html",
-    "<div class=\"form-error\" role=\"alert\" ng-cloak ng-show=\"question.hasErrors()\">\n" +
-    "    <div>{{question.getErrors().message | fsmTranslate}}</div>\n" +
-    "</div>");
-}]);
-
-angular.module("input.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("input.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
-    "          <input type=\"text\"\n" +
-    "             id=\"{{question.id}}\"\n" +
-    "             name=\"{{question.id}}\"\n" +
-    "             placeholder=\"{{question.placeholder}}\"\n" +
-    "             input-touched\n" +
-    "             class=\"input-text\"\n" +
-    "             ng-model=\"question.model[question.id]\"\n" +
-    "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\"\n" +
-    "             ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "             maxlength=\"{{question.maxLength}}\"\n" +
-    "                  />\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("inputcurrency.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("inputcurrency.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
-    "            <div class=\"input-group\">\n" +
-    "                <input type=\"text\"\n" +
-    "                   id=\"{{question.id}}\"\n" +
-    "                   name=\"{{question.id}}\"\n" +
-    "                   placeholder=\"{{question.placeholder}}\"\n" +
-    "                   input-touched\n" +
-    "                   class=\"input-text input-group__input\"\n" +
-    "                   ng-model=\"question.model[question.id]\"\n" +
-    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
-    "                   maxlength=\"{{question.maxLength}}\"\n" +
-    "                    />\n" +
-    "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | fsmTranslate}}</div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("location.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("location.tpl.html",
-    "<div>{{question.textRoot+'.QUESTION' | fsmTranslate}}</div>\n" +
-    "<input ng-model=\"question.model[question.id]\"\n" +
-    "       ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
-    "       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\">\n" +
-    "[KARTA]");
-}]);
-
-angular.module("phone.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("phone.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "       <div class=\"form-row form-row--gap\">\n" +
-    "          <div class=\"input-group\">\n" +
-    "              <div class=\"input-group__addon\">\n" +
-    "\n" +
-    "                  <div class=\"addon-select\">\n" +
-    "                    {{ question.model[question.id].countryCode.phoneCode }} <i class=\"icon icon-arrow-down\" aria-hidden=\"true\"></i>\n" +
-    "                      <select ng-model=\"question.model[question.id].countryCode\"\n" +
-    "                              id=\"{{question.id}}CountryCode\"\n" +
-    "                              name=\"{{question.id}}CountryCode\"\n" +
-    "                              ng-change=\"question.removeErrors(); addZeroToPhonenumber(); question.saveAnswer();\"\n" +
-    "                              ng-init=\"question.model[question.id].countryCode = question.options[209]; question.model[question.id].phoneNumber = '0';\"\n" +
-    "                              ng-options=\"option.name for option in question.options track by option.id\"\n" +
-    "\n" +
-    "                              >\n" +
-    "                      </select>\n" +
-    "                  </div>\n" +
-    "              </div>\n" +
-    "              <input\n" +
-    "                      type=\"tel\"\n" +
-    "                      class=\"input-text input-group__input\"\n" +
-    "                 id=\"{{question.id}}PhoneNumber\"\n" +
-    "                 name=\"{{question.id}}PhoneNumber\"\n" +
-    "                 input-touched\n" +
-    "                 ng-model=\"question.model[question.id].phoneNumber\"\n" +
-    "                 ng-change=\"question.removeErrors(); question.onChange(question); question.saveAnswer();\"\n" +
-    "                  />\n" +
-    "          </div>\n" +
-    "\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("question.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("question.tpl.html",
-    "<div ng-show=\"question.isVisible()\"\n" +
-    "     class=\"row input-block animate-show\">\n" +
-    "    <div class=\"input-block__block\" ng-include=\"'fsmQuestion/templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("select.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("select.tpl.html",
-    "<div class=\"form-label\" ng-if=\"question.textRoot+'.QUESTION' | fsmTranslate\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
-    "            <div class=\"custom-select custom-select--full-width\">\n" +
-    "                 <select id=\"{{question.id}}\"\n" +
-    "                        name=\"{{question.id}}\"\n" +
-    "                        class=\"form-control\"\n" +
-    "                        ng-model=\"question.model[question.id]\"\n" +
-    "                        ng-change=\"question.removeErrors();question.onChange(question); question.saveAnswer();\"\n" +
-    "                        ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"\n" +
-    "                        ng-options=\"option.value as option.label | translate for option in question.options\">\n" +
-    "                </select>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("text.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("text.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label>{{question.textRoot+'.QUESTION' | fsmTranslate}}</label>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class=\"grid\">\n" +
-    "  <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/tooltip.tpl.html'\"></div>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
-    "            <textarea class=\"input-textarea\"\n" +
-    "              ng-trim=\"false\"\n" +
-    "              maxlength=\"{{question.maxLength}}\"\n" +
-    "              id=\"{{question.id}}\"\n" +
-    "              name=\"{{question.id}}\"\n" +
-    "              ng-model=\"question.model[question.id]\"\n" +
-    "              ng-change=\"question.removeErrors(); question.saveAnswer();\"\n" +
-    "              ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
-    "        </div>\n" +
-    "        <div class=\"form-charcount\" ng-cloak>{{question.model[question.id].length}} {{'VIEW.EXTRAS.OF' | fsmTranslate}} {{question.maxLength}}</div>\n" +
-    "\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("tooltip.tpl.html",
-    "<p ng-if=\"question.textRoot+'.INFO' | fsmTranslate\" class=\"form-note\" translate>{{question.textRoot+'.INFO'}}</p>");
-}]);
-
-angular.module("upload.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("upload.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\"\n" +
-    "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}\n" +
-    "    </label>\n" +
-    "</div>\n" +
-    "\n" +
-    "<div class=\"grid\">\n" +
-    "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.options[0].value\" button-text=\"{{question.options[0].label | fsmTranslate}}\"></fsm-file-uploader>\n" +
-    "    </div>\n" +
-    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'fsmQuestion/templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
 }]);
