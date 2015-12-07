@@ -35,7 +35,8 @@ module.exports = function (grunt) {
             },
             files: {
                 src: [
-                    '<%= dest_dir %>'
+                    'build',
+                    'dist'
                 ]
             }
         },
@@ -47,14 +48,37 @@ module.exports = function (grunt) {
          */
         copy: {
             build: {
-                //cwd: 'src',
-                src: ['src/**/**'],
-                dest: 'dist',
+                src: ['src/**/**', '!src/**/*.spec.js'],
+                dest: 'build',
                 expand: true
             }
 
+        },
+
+        concat: {
+            compile_js: {
+                options: {
+                },
+                src: [
+                    'build/**/*.js'
+                ],
+                dest: 'dist/fsmQuestion.js'
+            }
+        },
+        html2js: {
+            /**
+             * These are the templates from `src/app`.
+             */
+            app: {
+                options: {
+                    base: 'build/src/templates'
+                },
+                src: ['build/**/*.html'],
+                dest: 'build/templates-app.js'
+            }
         }
-    };
+
+        };
 
     grunt.initConfig(taskConfig);
 
@@ -65,7 +89,7 @@ module.exports = function (grunt) {
      * The default task is to build and compile. When build and compile is finished
      * the project opened in your browser served by the connect-server.
      */
-    grunt.registerTask( 'default', [ 'copy' ] );
+    grunt.registerTask( 'default', [ 'clean', 'copy', 'html2js', 'concat' ] );
 
     //grunt.registerTask( 'default', [ 'build', 'compile', 'configureProxies:server', 'connect:dist:keepalive' ] );
 
