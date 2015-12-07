@@ -1,0 +1,38 @@
+<div class="form-label">
+    <label for="{{question.id}}">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show="question.isRequired()" class="required"></span></label>
+</div>
+
+<div class="grid">
+    <div class="grid__item sm--six-twelfths">
+       <div class="form-row form-row--gap">
+          <div class="input-group">
+              <div class="input-group__addon">
+
+                  <div class="addon-select">
+                    {{ question.model[question.id].countryCode.phoneCode }} <i class="icon icon-arrow-down" aria-hidden="true"></i>
+                      <select ng-model="question.model[question.id].countryCode"
+                              id="{{question.id}}CountryCode"
+                              name="{{question.id}}CountryCode"
+                              ng-change="question.removeErrors(); addZeroToPhonenumber(); question.saveAnswer();"
+                              ng-init="question.model[question.id].countryCode = question.options[209]; question.model[question.id].phoneNumber = '0';"
+                              ng-options="option.name for option in question.options track by option.id"
+
+                              >
+                      </select>
+                  </div>
+              </div>
+              <input
+                      type="tel"
+                      class="input-text input-group__input"
+                 id="{{question.id}}PhoneNumber"
+                 name="{{question.id}}PhoneNumber"
+                 input-touched
+                 ng-model="question.model[question.id].phoneNumber"
+                 ng-change="question.removeErrors(); question.onChange(question); question.saveAnswer();"
+                  />
+          </div>
+
+        </div>
+    </div>
+    <div class="grid__item sm--six-twelfths" ng-include="'fsmQuestion/templates/formerror.tpl.html'"></div>
+</div>
