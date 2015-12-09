@@ -1,12 +1,16 @@
 {
   "name": "fsmQuestion",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Generic Question library",
   "directory": "dist",
-  "main": ["fsmQuestion.js"],
+  "main": "fsmQuestion.js",
   "moduleType": [
     "globals"
   ],
+  "dependencies": {
+    "angular-translate": "~2.7.0",
+    "angular-translate-loader-static-files": "~2.7.0"
+  },
   "keywords": [
     "Folksam",
     "Questions",
