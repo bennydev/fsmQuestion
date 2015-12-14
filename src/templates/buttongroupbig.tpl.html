@@ -8,11 +8,11 @@
             ng-model="question.model[question.id]"
             btn-radio="'{{option.value}}'"
             ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
-            ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();">{{option.label | fsmTranslate}}</button>
+            ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();">{{option.label | translate}}</button>
     </div>
     <input type="hidden" ng-required="true" name="agree" ng-model="agree">
 
     <div class="form-error u-spacing-above-narrow" role="alert" ng-show="question.hasErrors()" ng-cloak>
-        <div>{{question.getErrors().message | fsmTranslate}}</div>
+        <div>{{question.getErrors().message | translate}}</div>
     </div>
 </div>

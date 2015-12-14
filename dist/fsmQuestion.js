@@ -21,7 +21,7 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
     "                    ng-model=\"question.model[question.id]\"\n" +
     "                    btn-radio=\"'{{option.value}}'\"\n" +
     "                    ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                    ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | fsmTranslate}}</button>\n" +
+    "                    ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | translate}}</button>\n" +
     "                </button>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -43,12 +43,12 @@ angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", f
     "            ng-model=\"question.model[question.id]\"\n" +
     "            btn-radio=\"'{{option.value}}'\"\n" +
     "            ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "            ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | fsmTranslate}}</button>\n" +
+    "            ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | translate}}</button>\n" +
     "    </div>\n" +
     "    <input type=\"hidden\" ng-required=\"true\" name=\"agree\" ng-model=\"agree\">\n" +
     "\n" +
     "    <div class=\"form-error u-spacing-above-narrow\" role=\"alert\" ng-show=\"question.hasErrors()\" ng-cloak>\n" +
-    "        <div>{{question.getErrors().message | fsmTranslate}}</div>\n" +
+    "        <div>{{question.getErrors().message | translate}}</div>\n" +
     "    </div>\n" +
     "</div>");
 }]);
