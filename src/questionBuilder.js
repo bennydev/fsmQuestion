@@ -16,6 +16,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
         builder.validator = set('validator', builder);
         builder.min = set('min', builder);
         builder.max = set('max', builder);
+        builder.numeric = set('numeric', builder);
         builder.createQuestion = function(){
             if(!questionStorage.contains(builder.id)){
                 var question = new Question(
@@ -23,7 +24,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                     value(builder.type),
                     value(builder.text),
                     new Options(value(builder.defaultAnswer)||'', value(builder.visible)||true, value(builder.values)||[], value(builder.placeholder)||'', value(builder.onChange)),
-                    new Restrictions(value(builder.required)||false, value(builder.validator), value(builder.min), value(builder.max)),
+                    new Restrictions(value(builder.required)||false, value(builder.validator), value(builder.min), value(builder.max), value(builder.numeric)||false),
                     ValidationService,
                     ErrorReporter
                 );

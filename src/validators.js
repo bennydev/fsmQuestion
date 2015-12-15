@@ -43,7 +43,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var numericAnswer = getNumericAnswer(answer);
 
-                if(numericAnswer){
+                if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer >= min;
                     result.message = question.textRoot + '.ERRORS.TOO_LOW';
                 } else {
@@ -63,7 +63,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var numericAnswer = getNumericAnswer(answer);
 
-                if(numericAnswer){
+                if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer <= max;
                     result.message = question.textRoot + '.ERRORS.TOO_HIGH';
                 } else {

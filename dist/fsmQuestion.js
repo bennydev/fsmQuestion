@@ -520,6 +520,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
         builder.validator = set('validator', builder);
         builder.min = set('min', builder);
         builder.max = set('max', builder);
+        builder.numeric = set('numeric', builder);
         builder.createQuestion = function(){
             if(!questionStorage.contains(builder.id)){
                 var question = new Question(
@@ -527,7 +528,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                     value(builder.type),
                     value(builder.text),
                     new Options(value(builder.defaultAnswer)||'', value(builder.visible)||true, value(builder.values)||[], value(builder.placeholder)||'', value(builder.onChange)),
-                    new Restrictions(value(builder.required)||false, value(builder.validator), value(builder.min), value(builder.max)),
+                    new Restrictions(value(builder.required)||false, value(builder.validator), value(builder.min), value(builder.max), value(builder.numeric)||false),
                     ValidationService,
                     ErrorReporter
                 );
@@ -635,12 +636,13 @@ function QuestionTypes(){
 "use strict";
 angular.module('fsmQuestion')
 .value('Restrictions', Restrictions);
-function Restrictions(required, validator, min, max){
+function Restrictions(required, validator, min, max, numeric){
     var restrictions = this;
     restrictions.isRequired = setRestriction(required);
     restrictions.getValidator = setRestriction(validator);
     restrictions.getMin = setRestriction(min);
     restrictions.getMax = setRestriction(max);
+    restrictions.isNumeric = setRestriction(numeric);
 
     function setRestriction(value){
         if(value instanceof Function){
@@ -730,7 +732,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var numericAnswer = getNumericAnswer(answer);
 
-                if(numericAnswer){
+                if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer >= min;
                     result.message = question.textRoot + '.ERRORS.TOO_LOW';
                 } else {
@@ -750,7 +752,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var numericAnswer = getNumericAnswer(answer);
 
-                if(numericAnswer){
+                if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer <= max;
                     result.message = question.textRoot + '.ERRORS.TOO_HIGH';
                 } else {
