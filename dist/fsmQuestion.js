@@ -167,14 +167,14 @@ angular.module("templates/fsmQuestion.tpl.html", []).run(["$templateCache", func
 angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/fsmQuestionGroup.tpl.html",
     "<fieldset ng-show=\"isVisible()\">\n" +
-    "    <fsm-question question=\"question\" ng-repeat=\"question in group.questions\"></fsm-question>\n" +
+    "    <fsm-question question=\"question\" ng-repeat=\"question in questions\"></fsm-question>\n" +
     "</fieldset>");
 }]);
 
 angular.module("templates/input.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/input.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -190,8 +190,8 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "             placeholder=\"{{question.placeholder}}\"\n" +
     "             input-touched\n" +
     "             class=\"input-text\"\n" +
-    "             ng-model=\"question.model[question.id]\"\n" +
-    "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\"\n" +
+    "             ng-model=\"model\"\n" +
+    "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(model);\"\n" +
     "             ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "             maxlength=\"{{question.maxLength}}\"\n" +
     "                  />\n" +
@@ -444,12 +444,6 @@ angular.module('fsmQuestion')
                 };
             }
         };
-    }])
-    .factory('QuestionGroupService', [function(){
-        var service = {
-
-        };
-        return service;
     }]);
 'use strict';
 angular.module('fsmQuestion')

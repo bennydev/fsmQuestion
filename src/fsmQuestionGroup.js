@@ -18,10 +18,4 @@ angular.module('fsmQuestion')
                 };
             }
         };
-    }])
-    .factory('QuestionGroupService', [function(){
-        var service = {
-
-        };
-        return service;
     }]);
