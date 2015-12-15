@@ -1,5 +1,5 @@
 <div class="form-label">
-    <label for="{{question.id}}">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show="question.isRequired()" class="required"></span></label>
+    <label for="{{question.id}}">{{question.textRoot+'.QUESTION' | translate}}<span ng-show="question.isRequired()" class="required"></span></label>
 </div>
 <div class="grid">
     <div class="grid__item sm--six-twelfths">
@@ -21,7 +21,7 @@
                    ng-change="question.removeErrors();question.saveAnswer();"
                    maxlength="{{question.maxLength}}"
                     />
-                <div class="input-group__addon">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | fsmTranslate}}</div>
+                <div class="input-group__addon">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>
             </div>
         </div>
     </div>

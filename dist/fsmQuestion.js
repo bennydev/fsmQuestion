@@ -78,7 +78,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
 angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/date.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\"\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\"\n" +
     "                                                                                       class=\"required\"></span></label>\n" +
     "</div>\n" +
     "\n" +
@@ -118,7 +118,7 @@ angular.module("templates/datetime.tpl.html", []).run(["$templateCache", functio
     "<div class=\"col-sm-6\">\n" +
     "    <span>\n" +
     "        <label for=\"{{question.id}}Date\"\n" +
-    "               ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}\n" +
+    "               ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | translate}}\n" +
     "        </label>\n" +
     "    </span>\n" +
     "</div>\n" +
@@ -160,7 +160,7 @@ angular.module("templates/formerror.tpl.html", []).run(["$templateCache", functi
 angular.module("templates/input.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/input.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -190,7 +190,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
 angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/inputcurrency.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -212,7 +212,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                   ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
     "                   maxlength=\"{{question.maxLength}}\"\n" +
     "                    />\n" +
-    "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | fsmTranslate}}</div>\n" +
+    "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -222,7 +222,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
 
 angular.module("templates/location.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/location.tpl.html",
-    "<div>{{question.textRoot+'.QUESTION' | fsmTranslate}}</div>\n" +
+    "<div>{{question.textRoot+'.QUESTION' | translate}}</div>\n" +
     "<input ng-model=\"question.model[question.id]\"\n" +
     "       ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
     "       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\">\n" +
@@ -232,7 +232,7 @@ angular.module("templates/location.tpl.html", []).run(["$templateCache", functio
 angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/phone.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
@@ -281,8 +281,8 @@ angular.module("templates/question.tpl.html", []).run(["$templateCache", functio
 
 angular.module("templates/select.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/select.tpl.html",
-    "<div class=\"form-label\" ng-if=\"question.textRoot+'.QUESTION' | fsmTranslate\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "<div class=\"form-label\" ng-if=\"question.textRoot+'.QUESTION' | translate\">\n" +
+    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -311,7 +311,7 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
 angular.module("templates/text.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/text.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label>{{question.textRoot+'.QUESTION' | fsmTranslate}}</label>\n" +
+    "    <label>{{question.textRoot+'.QUESTION' | translate}}</label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
@@ -331,7 +331,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "              ng-change=\"question.removeErrors(); question.saveAnswer();\"\n" +
     "              ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
     "        </div>\n" +
-    "        <div class=\"form-charcount\" ng-cloak>{{question.model[question.id].length}} {{'VIEW.EXTRAS.OF' | fsmTranslate}} {{question.maxLength}}</div>\n" +
+    "        <div class=\"form-charcount\" ng-cloak>{{question.model[question.id].length}} {{'VIEW.EXTRAS.OF' | translate}} {{question.maxLength}}</div>\n" +
     "\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
@@ -340,20 +340,20 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
 
 angular.module("templates/tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/tooltip.tpl.html",
-    "<p ng-if=\"question.textRoot+'.INFO' | fsmTranslate\" class=\"form-note\" translate>{{question.textRoot+'.INFO'}}</p>");
+    "<p ng-if=\"question.textRoot+'.INFO' | translate\" class=\"form-note\" translate>{{question.textRoot+'.INFO'}}</p>");
 }]);
 
 angular.module("templates/upload.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/upload.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"\n" +
-    "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | fsmTranslate}}\n" +
+    "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | translate}}\n" +
     "    </label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.options[0].value\" button-text=\"{{question.options[0].label | fsmTranslate}}\"></fsm-file-uploader>\n" +
+    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.options[0].value\" button-text=\"{{question.options[0].label | translate}}\"></fsm-file-uploader>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");

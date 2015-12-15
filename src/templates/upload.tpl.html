@@ -1,12 +1,12 @@
 <div class="form-label">
     <label for="{{question.id}}"
-        ng-class="{'mandatory' : question.isRequired()}">{{question.textRoot+'.QUESTION' | fsmTranslate}}
+        ng-class="{'mandatory' : question.isRequired()}">{{question.textRoot+'.QUESTION' | translate}}
     </label>
 </div>
 
 <div class="grid">
     <div class="grid__item sm--six-twelfths">
-        <fsm-file-uploader id="{{question.id}}" group="question.options[0].value" button-text="{{question.options[0].label | fsmTranslate}}"></fsm-file-uploader>
+        <fsm-file-uploader id="{{question.id}}" group="question.options[0].value" button-text="{{question.options[0].label | translate}}"></fsm-file-uploader>
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
 </div>
