@@ -34,7 +34,7 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
 angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroupbig.tpl.html",
     "<div class=\"u-spacing-above u-spacing-under u-inline-block\">\n" +
-    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\" \" translate-values=\"translateValues\">{{question.text.root+'.QUESTION'}}</span>\n" +
+    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\" \" translate-values=\"question.text.translateValues\">{{question.text.root+'.QUESTION'}}</span>\n" +
     "\n" +
     "    <div class=\"toggle-list toggle-list--large\">\n" +
     "        <button type=\"button\" class=\"toggle-list__item\" id=\"{{question.id + $index}}\"\n" +
