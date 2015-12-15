@@ -6,7 +6,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
     function init(){
         builder.id = set('id', builder);
         builder.type = set('type', builder);
-        builder.textRoot = set('textRoot', builder);
+        builder.text = set('text', builder);
         builder.defaultAnswer = set('defaultAnswer', builder);
         builder.values = set('values', builder);
         builder.placeholder = set('placeholder', builder);
@@ -21,7 +21,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                 var question = new Question(
                     value(builder.id),
                     value(builder.type),
-                    value(builder.textRoot),
+                    value(builder.text),
                     new Options(value(builder.defaultAnswer)||'', value(builder.visible)||true, value(builder.values)||[], value(builder.placeholder)||'', value(builder.onChange)),
                     new Restrictions(value(builder.required)||false, value(builder.validator), value(builder.min), value(builder.max)),
                     ValidationService,

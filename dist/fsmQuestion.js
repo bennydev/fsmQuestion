@@ -3,7 +3,7 @@ angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templ
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.translateValues\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -441,11 +441,11 @@ function Options(defaultAnswer, visible, values, placeholder, onChange){
 "use strict";
 angular.module('fsmQuestion')
     .value('Question', Question);
-function Question(id, type, textRoot, options, restrictions, ValidationService, ErrorReporter){
+function Question(id, type, text, options, restrictions, ValidationService, ErrorReporter){
     var question = this;
     question.id = id;
     question.type = type;
-    question.textRoot = textRoot;
+    question.textRoot = text;
     question.options = options;
     question.restrictions = restrictions;
     question.isVisible = options.isVisible;
@@ -475,7 +475,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
     function init(){
         builder.id = set('id', builder);
         builder.type = set('type', builder);
-        builder.textRoot = set('textRoot', builder);
+        builder.text = set('text', builder);
         builder.defaultAnswer = set('defaultAnswer', builder);
         builder.values = set('values', builder);
         builder.placeholder = set('placeholder', builder);
@@ -490,7 +490,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                 var question = new Question(
                     value(builder.id),
                     value(builder.type),
-                    value(builder.textRoot),
+                    value(builder.text),
                     new Options(value(builder.defaultAnswer)||'', value(builder.visible)||true, value(builder.values)||[], value(builder.placeholder)||'', value(builder.onChange)),
                     new Restrictions(value(builder.required)||false, value(builder.validator), value(builder.min), value(builder.max)),
                     ValidationService,

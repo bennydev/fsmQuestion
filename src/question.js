@@ -1,11 +1,11 @@
 "use strict";
 angular.module('fsmQuestion')
     .value('Question', Question);
-function Question(id, type, textRoot, options, restrictions, ValidationService, ErrorReporter){
+function Question(id, type, text, options, restrictions, ValidationService, ErrorReporter){
     var question = this;
     question.id = id;
     question.type = type;
-    question.textRoot = textRoot;
+    question.textRoot = text;
     question.options = options;
     question.restrictions = restrictions;
     question.isVisible = options.isVisible;
