@@ -666,10 +666,10 @@ function ValidationService(Validators, ErrorReporter){
             if(question.isRequired()){
                 validateWithValidator(Validators.getRequiredValidator(), question);
             }
-            if(question.restrictions.min() && !ErrorReporter.hasErrorFor(question.id)){
+            if(question.restrictions.getMin() && !ErrorReporter.hasErrorFor(question.id)){
                 validateWithValidator(Validators.getMinValidator(question), question);
             }
-            if(question.restrictions.max() && !ErrorReporter.hasErrorFor(question.id)){
+            if(question.restrictions.getMax() && !ErrorReporter.hasErrorFor(question.id)){
                 validateWithValidator(Validators.getMaxValidator(question), question);
             }
             if(question.restrictions.getValidator() && !ErrorReporter.hasErrorFor(question.id)){
