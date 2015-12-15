@@ -1,4 +1,4 @@
-angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/formerror.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/question.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
+angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
@@ -157,6 +157,20 @@ angular.module("templates/formerror.tpl.html", []).run(["$templateCache", functi
     "</div>");
 }]);
 
+angular.module("templates/fsmQuestion.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/fsmQuestion.tpl.html",
+    "<div ng-show=\"question.isVisible()\" class=\"row input-block animate-show\">\n" +
+    "    <div class=\"input-block__block\" ng-include=\"'templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/fsmQuestionGroup.tpl.html",
+    "<fieldset ng-show=\"isVisible()\">\n" +
+    "    <fsm-question question=\"question\" ng-repeat=\"question in group.questions\"></fsm-question>\n" +
+    "</fieldset>");
+}]);
+
 angular.module("templates/input.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/input.tpl.html",
     "<div class=\"form-label\">\n" +
@@ -268,14 +282,6 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
-    "</div>");
-}]);
-
-angular.module("templates/question.tpl.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("templates/question.tpl.html",
-    "<div ng-show=\"question.isVisible()\"\n" +
-    "     class=\"row input-block animate-show\">\n" +
-    "    <div class=\"input-block__block\" ng-include=\"'templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
@@ -404,7 +410,7 @@ angular.module('fsmQuestion')
             question: '=',
             translateValues: '='
         },
-        templateUrl: 'templates/question.tpl.html',
+        templateUrl: 'templates/fsmQuestion.tpl.html',
         link: function(scope){
             init(scope);
         }
@@ -418,6 +424,33 @@ angular.module('fsmQuestion')
         scope.types = QuestionTypes;
     }
 }]);
+"use strict";
+angular.module('fsmQuestion')
+    .directive('fsmQuestionGroup', [function(){
+        return {
+            restrict: 'E',
+            scope: {
+                questions: '='
+            },
+            replace: true,
+            templateUrl: 'templates/fsmQuestionGroup.tpl.html',
+            link: function(scope){
+                scope.isVisible = function(){
+                  var show = false;
+                    scope.questions.forEach(function(question){
+                        show = question.isVisible() ? true : show;
+                    });
+                    return show;
+                };
+            }
+        };
+    }])
+    .factory('QuestionGroupService', [function(){
+        var service = {
+
+        };
+        return service;
+    }]);
 'use strict';
 angular.module('fsmQuestion')
 .value('Options', Options);
@@ -657,7 +690,8 @@ function Validators(QuestionTypes){
     var service = {
         getRequiredValidator: getRequiredValidator,
         getMinValidator: getMinValidator,
-        getMaxValidator: getMaxValidator
+        getMaxValidator: getMaxValidator,
+        getIdentificationValidator: getIdentificationValidator
     };
 
     return service;
@@ -774,5 +808,104 @@ function Validators(QuestionTypes){
         var month = parseInt(isoDateString.substr(5,2)) -1;
         var day = parseInt(isoDateString.substr(8,2));
         return new Date(Date.UTC(year, month, day));
+    }
+
+    function getIdentificationValidator(){
+        return {
+            validate: function(question){
+                var answer = question.answer;
+                if(isPersonId(answer)){
+                    return {
+                        valid: validatePersonId(answer),
+                        message: question.text.root + '.ERRORS.PERSON_ID_INVALID'
+                    };
+                } else if(startsWithNumberOfChars(answer, 2)){
+                    return {
+                        valid: validateCustomerNumber(answer),
+                        message: question.text.root + '.ERRORS.CUSTOMER_NUMBER_INVALID'
+                    };
+                } else {
+                    return {valid: false, message: question.text.root + '.ERRORS.FORMAT'};
+                }
+            }
+        };
+    }
+
+    function isPersonId(value){
+        value = removeValidPersonIdSeparators(value);
+        return isNumeric(value) && (value.length === 10 || value.length === 12);
+    }
+
+    function validatePersonId(value){
+        value = removeValidPersonIdSeparators(value);
+        value = value.length === 12 ? value.substr(2) : value;
+        return isValidDate(value) && hasValidChecksum(value);
+    }
+
+    function isValidDate(value){
+        var year = '19'+value.substr(0,2);
+        var month = value.substr(2,2) -1;
+        var day = value.substr(4,2);
+        return new Date(Date.UTC(year, month, day)).toISOString().removeChars(['-']).indexOf(value.substr(0,6)) === 2;
+    }
+
+    function hasValidChecksum(value){
+        value = value.toString();
+        var actual = value.charAt(value.length -1);
+        var checksum = calculateChecksum(value);
+        var expected = checksum === 0 ? 0 : 10 - checksum.toString().split('')[checksum.toString().length -1];
+        return parseInt(actual) === parseInt(expected);
+    }
+
+    function calculateChecksum(value){
+        var multiplier = 2;
+        var chars = value.toString().split('');
+        chars.splice(chars.length -1);
+        return chars.map(function(value){
+            var x = multiplier;
+            multiplier = multiplier === 2 ? 1 : 2;
+            return value * x;
+        }).join('').split('').reduce(function(prev, curr){
+            return parseInt(prev) + parseInt(curr);
+        }).toString().split('').reduce(function(prev, curr){return parseInt(curr);});
+    }
+
+    function removeValidPersonIdSeparators(value){
+        return value.toString().replace(new RegExp('\\+', 'gi'), '').replace(new RegExp('-', 'gi'), '');
+    }
+
+    function validateCustomerNumber(value){
+        value = removeValidPersonIdSeparators(value);
+        return startsWithNumberOfChars(value, 3) && value.substr(3).isNumeric() && value.length === 9;
+    }
+
+    function isNumeric(value, allowExponent){
+        value = value.toString();
+        if(allowExponent){
+            return !isNaN(value) && isFinite(value);
+        } else {
+            var amountLeadingZeroes = amountLeadingChar(value, '0');
+            var parsed = parseFloat(value).toString();
+            return value.length === parsed.length + amountLeadingZeroes && !isNaN(parsed) && isFinite(parsed);
+        }
+    }
+
+    function amountLeadingChar(string, find){
+        var amount = 0;
+        var found = true;
+        string.split('').forEach(function(char){
+            if(found){
+                found = find === char;
+                if(found){
+                    amount++;
+                }
+            }
+        });
+        return amount;
+    }
+
+    function startsWithNumberOfChars(value, length){
+        value = value.toString();
+        return !! value.substr(0, length).match(new RegExp('[a-zA-ZåäöÅÄÖ]','gi'));
     }
 }

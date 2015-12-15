@@ -7,7 +7,7 @@ angular.module('fsmQuestion')
             question: '=',
             translateValues: '='
         },
-        templateUrl: 'templates/question.tpl.html',
+        templateUrl: 'templates/fsmQuestion.tpl.html',
         link: function(scope){
             init(scope);
         }
