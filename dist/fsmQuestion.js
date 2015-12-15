@@ -639,8 +639,8 @@ function Restrictions(required, validator, min, max){
     var restrictions = this;
     restrictions.isRequired = setRestriction(required);
     restrictions.getValidator = setRestriction(validator);
-    restrictions.min = setRestriction(min);
-    restrictions.max = setRestriction(max);
+    restrictions.getMin = setRestriction(min);
+    restrictions.getMax = setRestriction(max);
 
     function setRestriction(value){
         if(value instanceof Function){

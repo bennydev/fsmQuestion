@@ -1,6 +1,6 @@
 {
   "name": "fsmQuestion",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Generic Question library",
   "directory": "dist",
   "main": "fsmQuestion.js",
