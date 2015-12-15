@@ -376,6 +376,7 @@ function ErrorReporter(){
     var service = {
         addError: addError,
         getErrors: getErrors,
+        hasErrors: hasErrors,
         hasErrorFor: hasErrorFor,
         clearErrors: clearErrors
     };
@@ -388,6 +389,10 @@ function ErrorReporter(){
 
     function getErrors(){
         return errors;
+    }
+
+    function hasErrors(){
+        return messages.length !== 0;
     }
 
     function hasErrorFor(id){
