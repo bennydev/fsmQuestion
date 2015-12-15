@@ -850,7 +850,7 @@ function Validators(QuestionTypes){
         var year = '19'+value.substr(0,2);
         var month = value.substr(2,2) -1;
         var day = value.substr(4,2);
-        return new Date(Date.UTC(year, month, day)).toISOString().removeChars(['-']).indexOf(value.substr(0,6)) === 2;
+        return new Date(Date.UTC(year, month, day)).toISOString().replace(new RegExp('-', 'gi'), '').indexOf(value.substr(0,6)) === 2;
     }
 
     function hasValidChecksum(value){
