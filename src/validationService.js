@@ -13,13 +13,13 @@ function ValidationService(Validators, ErrorReporter){
             if(question.isRequired()){
                 validateWithValidator(Validators.getRequiredValidator(), question);
             }
-            if(question.restrictions.min() && !ErrorReporter.hasErrorsFor(question.id)){
-                validateWithValidator(Validators.getMinValidator(question), question); //minLength (string), minValue (number), minDate (date)
+            if(question.restrictions.min() && !ErrorReporter.hasErrorFor(question.id)){
+                validateWithValidator(Validators.getMinValidator(question), question);
             }
-            if(question.restrictions.max() && !ErrorReporter.hasErrorsFor(question.id)){
-                validateWithValidator(Validators.getMaxValidator(question), question); //maxLength (string), maxValue (number), maxDate (date)
+            if(question.restrictions.max() && !ErrorReporter.hasErrorFor(question.id)){
+                validateWithValidator(Validators.getMaxValidator(question), question);
             }
-            if(question.restrictions.getValidator() && !ErrorReporter.hasErrorsFor(question.id)){
+            if(question.restrictions.getValidator() && !ErrorReporter.hasErrorFor(question.id)){
                 validateWithValidator(question.restrictions.getValidator(), question);
             }
         }
