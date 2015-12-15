@@ -1,6 +1,6 @@
 "use strict";
 angular.module('fsmQuestion')
-.directive('fsmQuestion', ['QuestionTypes', function(QuestionTypes){
+.directive('fsmQuestion', ['QuestionTypes', '$translate', function(QuestionTypes, $translate){
     return {
         restrict: 'E',
         scope: {
@@ -10,6 +10,9 @@ angular.module('fsmQuestion')
         templateUrl: 'templates/fsmQuestion.tpl.html',
         link: function(scope){
             init(scope);
+            scope.hasText = function(key){
+                return $translate.instant(key) !== key;
+            };
         }
     };
 

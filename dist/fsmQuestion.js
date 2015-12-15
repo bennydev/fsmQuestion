@@ -346,7 +346,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
 
 angular.module("templates/tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/tooltip.tpl.html",
-    "<p ng-if=\"{{(question.text.root+'.INFO' | translate) !== question.text.root+'.INFO'}}\" class=\"form-note\" translate translate-values=\"question.text.translateValues\">{{question.text.root+'.INFO'}}</p>");
+    "<p ng-if=\"hasText(question.text.root+'.INFO')\" class=\"form-note\" translate translate-values=\"question.text.translateValues\">{{question.text.root+'.INFO'}}</p>");
 }]);
 
 angular.module("templates/upload.tpl.html", []).run(["$templateCache", function($templateCache) {
@@ -403,7 +403,7 @@ function ErrorReporter(){
 
 "use strict";
 angular.module('fsmQuestion')
-.directive('fsmQuestion', ['QuestionTypes', function(QuestionTypes){
+.directive('fsmQuestion', ['QuestionTypes', '$translate', function(QuestionTypes, $translate){
     return {
         restrict: 'E',
         scope: {
@@ -413,6 +413,9 @@ angular.module('fsmQuestion')
         templateUrl: 'templates/fsmQuestion.tpl.html',
         link: function(scope){
             init(scope);
+            scope.hasText = function(key){
+                return $translate.instant(key) !== key;
+            };
         }
     };
 
