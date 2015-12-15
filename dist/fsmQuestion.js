@@ -340,7 +340,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
 
 angular.module("templates/tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/tooltip.tpl.html",
-    "<p ng-if=\"question.textRoot+'.INFO' | translate\" class=\"form-note\" translate>{{question.textRoot+'.INFO'}}</p>");
+    "<p ng-if=\"question.text.root+'.INFO' | translate\" class=\"form-note\" translate translate-values=\"question.text.translateValues\">{{question.text.root+'.INFO'}}</p>");
 }]);
 
 angular.module("templates/upload.tpl.html", []).run(["$templateCache", function($templateCache) {
@@ -445,7 +445,7 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
     var question = this;
     question.id = id;
     question.type = type;
-    question.textRoot = text;
+    question.text = text;
     question.options = options;
     question.restrictions = restrictions;
     question.isVisible = options.isVisible;

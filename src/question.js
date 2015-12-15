@@ -5,7 +5,7 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
     var question = this;
     question.id = id;
     question.type = type;
-    question.textRoot = text;
+    question.text = text;
     question.options = options;
     question.restrictions = restrictions;
     question.isVisible = options.isVisible;
