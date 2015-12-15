@@ -1,1 +1,1 @@
-<p ng-if="question.text.root+'.INFO' | translate" class="form-note" translate translate-values="question.text.translateValues">{{question.text.root+'.INFO'}}</p>
+<p ng-if="{{(question.text.root+'.INFO' | translate) !== question.text.root+'.INFO'}}" class="form-note" translate translate-values="question.text.translateValues">{{question.text.root+'.INFO'}}</p>

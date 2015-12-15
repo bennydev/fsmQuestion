@@ -34,21 +34,21 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
 angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroupbig.tpl.html",
     "<div class=\"u-spacing-above u-spacing-under u-inline-block\">\n" +
-    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\"''\" translate-values=\"translateValues\">{{question.textRoot+'.QUESTION'}}</span>\n" +
+    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\" \" translate-values=\"translateValues\">{{question.text.root+'.QUESTION'}}</span>\n" +
     "\n" +
     "    <div class=\"toggle-list toggle-list--large\">\n" +
     "        <button type=\"button\" class=\"toggle-list__item\" id=\"{{question.id + $index}}\"\n" +
     "            name=\"{{question.id}}\"\n" +
-    "            ng-repeat=\"option in question.options track by $index\"\n" +
+    "            ng-repeat=\"option in question.options.getValues() track by $index\"\n" +
     "            ng-model=\"question.model[question.id]\"\n" +
     "            btn-radio=\"'{{option.value}}'\"\n" +
-    "            ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "            ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "            ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | translate}}</button>\n" +
     "    </div>\n" +
     "    <input type=\"hidden\" ng-required=\"true\" name=\"agree\" ng-model=\"agree\">\n" +
     "\n" +
-    "    <div class=\"form-error u-spacing-above-narrow\" role=\"alert\" ng-show=\"question.hasErrors()\" ng-cloak>\n" +
-    "        <div>{{question.getErrors().message | translate}}</div>\n" +
+    "    <div class=\"form-error u-spacing-above-narrow\" role=\"alert\" ng-show=\"question.hasError()\" ng-cloak>\n" +
+    "        <div>{{question.getError() | translate}}</div>\n" +
     "    </div>\n" +
     "</div>");
 }]);
@@ -340,7 +340,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
 
 angular.module("templates/tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/tooltip.tpl.html",
-    "<p ng-if=\"question.text.root+'.INFO' | translate\" class=\"form-note\" translate translate-values=\"question.text.translateValues\">{{question.text.root+'.INFO'}}</p>");
+    "<p ng-if=\"{{(question.text.root+'.INFO' | translate) !== question.text.root+'.INFO'}}\" class=\"form-note\" translate translate-values=\"question.text.translateValues\">{{question.text.root+'.INFO'}}</p>");
 }]);
 
 angular.module("templates/upload.tpl.html", []).run(["$templateCache", function($templateCache) {
