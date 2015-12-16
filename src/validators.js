@@ -6,7 +6,11 @@ function Validators(QuestionTypes){
         getRequiredValidator: getRequiredValidator,
         getMinValidator: getMinValidator,
         getMaxValidator: getMaxValidator,
-        getIdentificationValidator: getIdentificationValidator
+        getIdentificationValidator: getIdentificationValidator,
+        utils: {
+            isPersonId: isPersonId,
+            removeValidPersonIdSeparators: removeValidPersonIdSeparators
+        }
     };
 
     return service;
