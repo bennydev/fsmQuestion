@@ -191,7 +191,7 @@ function Validators(QuestionTypes){
 
     function validateCustomerNumber(value){
         value = removeValidPersonIdSeparators(value);
-        return startsWithNumberOfChars(value, 3) && value.substr(3).isNumeric() && value.length === 9;
+        return startsWithNumberOfChars(value, 3) && isNumeric(value.substr(3)) && value.length === 9;
     }
 
     function isNumeric(value, allowExponent){
