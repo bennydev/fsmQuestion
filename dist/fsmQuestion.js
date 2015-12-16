@@ -78,7 +78,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
 angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/date.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\"\n" +
+    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\"\n" +
     "                                                                                       class=\"required\"></span></label>\n" +
     "</div>\n" +
     "\n" +
@@ -118,7 +118,7 @@ angular.module("templates/datetime.tpl.html", []).run(["$templateCache", functio
     "<div class=\"col-sm-6\">\n" +
     "    <span>\n" +
     "        <label for=\"{{question.id}}Date\"\n" +
-    "               ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | translate}}\n" +
+    "               ng-class=\"{'mandatory' : question.isRequired()}\">{{question.text.root+'.QUESTION' | translate}}\n" +
     "        </label>\n" +
     "    </span>\n" +
     "</div>\n" +
@@ -204,7 +204,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
 angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/inputcurrency.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -236,7 +236,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
 
 angular.module("templates/location.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/location.tpl.html",
-    "<div>{{question.textRoot+'.QUESTION' | translate}}</div>\n" +
+    "<div>{{question.text.root+'.QUESTION' | translate}}</div>\n" +
     "<input ng-model=\"question.model[question.id]\"\n" +
     "       ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
     "       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\">\n" +
@@ -246,7 +246,7 @@ angular.module("templates/location.tpl.html", []).run(["$templateCache", functio
 angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/phone.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
@@ -287,8 +287,8 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
 
 angular.module("templates/select.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/select.tpl.html",
-    "<div class=\"form-label\" ng-if=\"question.textRoot+'.QUESTION' | translate\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.textRoot+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "<div class=\"form-label\" ng-if=\"question.text.root+'.QUESTION' | translate\">\n" +
+    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -317,7 +317,7 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
 angular.module("templates/text.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/text.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label>{{question.textRoot+'.QUESTION' | translate}}</label>\n" +
+    "    <label>{{question.text.root+'.QUESTION' | translate}}</label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
@@ -353,7 +353,7 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
   $templateCache.put("templates/upload.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"\n" +
-    "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.textRoot+'.QUESTION' | translate}}\n" +
+    "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.text.root+'.QUESTION' | translate}}\n" +
     "    </label>\n" +
     "</div>\n" +
     "\n" +
@@ -706,7 +706,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var result = {};
                 result.valid = dateInMillis(answer) >= question.restrictions.getMin().getTime();
-                result.message = question.textRoot + '.ERRORS.TOO_EARLY';
+                result.message = question.text.root + '.ERRORS.TOO_EARLY';
                 return result;
             }
         };
@@ -718,7 +718,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var result = {};
                 result.valid = dateInMillis(answer) <= question.restrictions.getMax().getTime();
-                result.message = question.textRoot + '.ERRORS.TOO_LATE';
+                result.message = question.text.root + '.ERRORS.TOO_LATE';
                 return result;
             }
         };
@@ -734,10 +734,10 @@ function Validators(QuestionTypes){
 
                 if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer >= min;
-                    result.message = question.textRoot + '.ERRORS.TOO_LOW';
+                    result.message = question.text.root + '.ERRORS.TOO_LOW';
                 } else {
                     result.valid = answer.toString().length >= min;
-                    result.message = question.textRoot + '.ERRORS.TOO_SHORT';
+                    result.message = question.text.root + '.ERRORS.TOO_SHORT';
                 }
                 return result;
             }
@@ -754,10 +754,10 @@ function Validators(QuestionTypes){
 
                 if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer <= max;
-                    result.message = question.textRoot + '.ERRORS.TOO_HIGH';
+                    result.message = question.text.root + '.ERRORS.TOO_HIGH';
                 } else {
                     result.valid = answer.toString().length <= max;
-                    result.message = question.textRoot + '.ERRORS.TOO_LONG';
+                    result.message = question.text.root + '.ERRORS.TOO_LONG';
                 }
                 return result;
             }
@@ -770,7 +770,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var result = {};
                 result.valid = answer != undefined && answer !== '' && answer !== null && answer !== 'SELECT';
-                result.message = question.textRoot + '.ERRORS.REQUIRED';
+                result.message = question.text.root + '.ERRORS.REQUIRED';
                 return result;
             }
         };

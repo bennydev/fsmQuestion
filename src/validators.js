@@ -17,7 +17,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var result = {};
                 result.valid = dateInMillis(answer) >= question.restrictions.getMin().getTime();
-                result.message = question.textRoot + '.ERRORS.TOO_EARLY';
+                result.message = question.text.root + '.ERRORS.TOO_EARLY';
                 return result;
             }
         };
@@ -29,7 +29,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var result = {};
                 result.valid = dateInMillis(answer) <= question.restrictions.getMax().getTime();
-                result.message = question.textRoot + '.ERRORS.TOO_LATE';
+                result.message = question.text.root + '.ERRORS.TOO_LATE';
                 return result;
             }
         };
@@ -45,10 +45,10 @@ function Validators(QuestionTypes){
 
                 if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer >= min;
-                    result.message = question.textRoot + '.ERRORS.TOO_LOW';
+                    result.message = question.text.root + '.ERRORS.TOO_LOW';
                 } else {
                     result.valid = answer.toString().length >= min;
-                    result.message = question.textRoot + '.ERRORS.TOO_SHORT';
+                    result.message = question.text.root + '.ERRORS.TOO_SHORT';
                 }
                 return result;
             }
@@ -65,10 +65,10 @@ function Validators(QuestionTypes){
 
                 if(numericAnswer && question.restrictions.isNumeric()){
                     result.valid = numericAnswer <= max;
-                    result.message = question.textRoot + '.ERRORS.TOO_HIGH';
+                    result.message = question.text.root + '.ERRORS.TOO_HIGH';
                 } else {
                     result.valid = answer.toString().length <= max;
-                    result.message = question.textRoot + '.ERRORS.TOO_LONG';
+                    result.message = question.text.root + '.ERRORS.TOO_LONG';
                 }
                 return result;
             }
@@ -81,7 +81,7 @@ function Validators(QuestionTypes){
                 var answer = question.answer;
                 var result = {};
                 result.valid = answer != undefined && answer !== '' && answer !== null && answer !== 'SELECT';
-                result.message = question.textRoot + '.ERRORS.REQUIRED';
+                result.message = question.text.root + '.ERRORS.REQUIRED';
                 return result;
             }
         };

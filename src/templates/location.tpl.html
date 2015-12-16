@@ -1,4 +1,4 @@
-<div>{{question.textRoot+'.QUESTION' | translate}}</div>
+<div>{{question.text.root+'.QUESTION' | translate}}</div>
 <input ng-model="question.model[question.id]"
        ng-change="question.removeErrors();question.saveAnswer();"
        ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}">
