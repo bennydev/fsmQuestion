@@ -187,7 +187,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "          <input type=\"text\"\n" +
     "             id=\"{{question.id}}\"\n" +
     "             name=\"{{question.id}}\"\n" +
-    "             placeholder=\"{{question.placeholder}}\"\n" +
+    "             placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "             input-touched\n" +
     "             class=\"input-text\"\n" +
     "             ng-model=\"model\"\n" +
@@ -823,7 +823,7 @@ function Validators(QuestionTypes){
                         valid: validatePersonId(answer),
                         message: question.text.root + '.ERRORS.PERSON_ID_INVALID'
                     };
-                } else if(startsWithNumberOfChars(answer, 2)){
+                } else if(startsWithNumberOfChars(answer, 1)){
                     return {
                         valid: validateCustomerNumber(answer),
                         message: question.text.root + '.ERRORS.CUSTOMER_NUMBER_INVALID'

@@ -134,7 +134,7 @@ function Validators(QuestionTypes){
                         valid: validatePersonId(answer),
                         message: question.text.root + '.ERRORS.PERSON_ID_INVALID'
                     };
-                } else if(startsWithNumberOfChars(answer, 2)){
+                } else if(startsWithNumberOfChars(answer, 1)){
                     return {
                         valid: validateCustomerNumber(answer),
                         message: question.text.root + '.ERRORS.CUSTOMER_NUMBER_INVALID'
