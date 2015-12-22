@@ -153,7 +153,7 @@ angular.module("templates/datetime.tpl.html", []).run(["$templateCache", functio
 angular.module("templates/formerror.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/formerror.tpl.html",
     "<div class=\"form-error\" role=\"alert\" ng-cloak ng-show=\"question.hasError()\">\n" +
-    "    <div>{{question.getError() | translate}}</div>\n" +
+    "    <div id=\"{{question.id +'Error'}}\">{{question.getError() | translate}}</div>\n" +
     "</div>");
 }]);
 
