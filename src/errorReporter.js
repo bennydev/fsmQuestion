@@ -9,13 +9,20 @@ function ErrorReporter(){
         getErrors: getErrors,
         hasErrors: hasErrors,
         hasErrorFor: hasErrorFor,
-        clearErrors: clearErrors
+        clearErrors: clearErrors,
+        removeErrorFor: removeErrorFor
     };
     return service;
 
     function addError(id, message){
         errors[id] = message;
         messages.push(message)
+    }
+
+    function removeErrorFor(id){
+        var message = errors[id];
+        messages.splice(messages.indexOf(message), 1);
+        delete errors[id];
     }
 
     function getErrors(){

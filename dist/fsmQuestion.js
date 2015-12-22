@@ -21,7 +21,7 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
     "                    ng-model=\"question.answer\"\n" +
     "                    btn-radio=\"'{{option.value}}'\"\n" +
     "                    ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
-    "                    ng-change=\"question.removeErrors();question.onChange(question);question.setAnswer(question.answer)\">{{option.label | translate}}</button>\n" +
+    "                    ng-change=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer)\">{{option.label | translate}}</button>\n" +
     "                </button>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -190,8 +190,8 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "             placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "             input-touched\n" +
     "             class=\"input-text\"\n" +
-    "             ng-model=\"model\"\n" +
-    "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(model);\"\n" +
+    "             ng-model=\"question.answer\"\n" +
+    "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "             ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "             maxlength=\"{{question.maxLength}}\"\n" +
     "                  />\n" +
@@ -378,13 +378,20 @@ function ErrorReporter(){
         getErrors: getErrors,
         hasErrors: hasErrors,
         hasErrorFor: hasErrorFor,
-        clearErrors: clearErrors
+        clearErrors: clearErrors,
+        removeErrorFor: removeErrorFor
     };
     return service;
 
     function addError(id, message){
         errors[id] = message;
         messages.push(message)
+    }
+
+    function removeErrorFor(id){
+        var message = errors[id];
+        messages.splice(messages.indexOf(message), 1);
+        delete errors[id];
     }
 
     function getErrors(){
@@ -498,6 +505,9 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
     };
     question.getError = function(){
       return ErrorReporter.getErrors()[question.id];
+    };
+    question.removeError = function(){
+      ErrorReporter.removeErrorFor(question.id);
     };
     question.answer = question.options.getDefaultAnswer();
 }

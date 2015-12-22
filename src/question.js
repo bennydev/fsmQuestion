@@ -24,5 +24,8 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
     question.getError = function(){
       return ErrorReporter.getErrors()[question.id];
     };
+    question.removeError = function(){
+      ErrorReporter.removeErrorFor(question.id);
+    };
     question.answer = question.options.getDefaultAnswer();
 }
