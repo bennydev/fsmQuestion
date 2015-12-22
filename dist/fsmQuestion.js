@@ -3,7 +3,7 @@ angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templ
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.translateValues\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -34,7 +34,7 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
 angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroupbig.tpl.html",
     "<div class=\"u-spacing-above u-spacing-under u-inline-block\">\n" +
-    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\" \" translate-values=\"question.text.translateValues\">{{question.text.root+'.QUESTION'}}</span>\n" +
+    "    <span class=\"form-section__accept u-typography-3\" translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span>\n" +
     "\n" +
     "    <div class=\"toggle-list toggle-list--large\">\n" +
     "        <button type=\"button\" class=\"toggle-list__item\" id=\"{{question.id + $index}}\"\n" +
@@ -353,7 +353,7 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
   $templateCache.put("templates/upload.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"\n" +
-    "        ng-class=\"{'mandatory' : question.isRequired()}\">{{question.text.root+'.QUESTION' | translate}}\n" +
+    "        ng-class=\"{'mandatory' : question.isRequired()}\" translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}\n" +
     "    </label>\n" +
     "</div>\n" +
     "\n" +
@@ -642,6 +642,7 @@ function QuestionTypes(){
     types.input = 'INPUT';
     types.buttongroup = 'BUTTONGROUP';
     types.buttongroupBig = 'BUTTONGROUPBIG';
+    types.upload = 'UPLOAD';
 }
 
 "use strict";

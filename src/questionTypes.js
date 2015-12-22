@@ -6,4 +6,5 @@ function QuestionTypes(){
     types.input = 'INPUT';
     types.buttongroup = 'BUTTONGROUP';
     types.buttongroupBig = 'BUTTONGROUPBIG';
+    types.upload = 'UPLOAD';
 }
