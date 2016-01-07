@@ -1,4 +1,4 @@
-angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
+angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
@@ -148,6 +148,22 @@ angular.module("templates/datetime.tpl.html", []).run(["$templateCache", functio
     "\n" +
     "    </div>\n" +
     "</div>");
+}]);
+
+angular.module("templates/fileuploader.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/fileuploader.tpl.html",
+    "<div class=\"form-row form-row--gap\">\n" +
+    "    <button id=\"selectFileBtn\" type=\"button\" class=\"button button--small\"><i class=\"icon icon-doc\"></i> {{buttonText}}</button>\n" +
+    "    <input id=\"{{id}}\" type=\"file\" ng-model=\"file\" style=\"visibility: hidden; position: absolute;\"/>\n" +
+    "</div>\n" +
+    "\n" +
+    "<!-- This is how it looks after you've added an attachment -->\n" +
+    "<div class=\"form-row form-row--gap\" ng-if=\"files.length > 0\">\n" +
+    "    <div ng-repeat=\"selectedFile in files track by $index\">\n" +
+    "        <em>{{selectedFile.name}}</em> &nbsp; <span class=\"u-nowrap\"><a href=\"javascript:;\" class=\"u-font-semibold\" ng-click=\"removeFile($index);\"><i class=\"icon icon-close\" aria-hidden=\"true\"></i> {{'VIEW.EXTRAS.DELETE' | fsmTranslate}}</a></span>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("templates/formerror.tpl.html", []).run(["$templateCache", function($templateCache) {
@@ -365,6 +381,8 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
     "</div>");
 }]);
 
+'use strict';
+angular.module('services')
 "use strict";
 angular.module('fsmQuestion', [])
     .constant('buttonConfig', {activeClass: 'is-active'});
@@ -413,6 +431,114 @@ function ErrorReporter(){
     }
 }
 
+
+'use strict';
+angular.module('fsmFileUploader', [])
+    .directive('fsmFileUploader', ['FileUploaderService', function(FileUploaderService){
+    return {
+        restrict: 'E',
+        scope: {
+            group: '&',
+            buttonText: '@'
+        },
+        templateUrl: 'templates/fileuploader.tpl.html',
+        link: function(scope, element, attrs){
+            scope.id = 'fileUpload-'+scope.group();
+            scope.group = scope.group();
+            scope.files = FileUploaderService.createGroup(scope.group).files;
+            scope.removeFile = function(index){
+              FileUploaderService.removeFileInGroup(scope.group, index);
+            };
+
+            var btn = element.find('#selectFileBtn');
+            var input;
+
+            btn.bind('click', function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                bindInput();
+                input.click();
+            });
+
+            function bindInput(){
+                if(!input){
+                    input = element.find('#'+scope.id);
+                    input.bind('change', function(){
+                        var file = input.files[0];
+                        file.path = input.value;
+                        if(!file.name) {
+                            file.name = input.value.substr(input.value.lastIndexOf('/'));
+                        }
+                        input.value = '';
+                        FileUploaderService.addFileToGroup(file, scope.group);
+                        scope.$apply();
+                    });
+                    input = input[0];
+                }
+            }
+
+        }
+    };
+}])
+    .factory('FileUploaderService', ['$http', '$window', '$q', function($http, $window, $q){
+        var groups = {};
+        var config = {headers: {'Content-Type': undefined, transformRequest: angular.identity}};
+
+        function addFileToGroup(file, groupName){
+            var group = groups[groupName];
+            group.files.push(file);
+        }
+
+        function uploadFiles(url, reject){
+            var promises = [];
+            return $q(function(resolve){
+                [].valuesToArray(groups).forEach(function(group){
+                    group.files.forEach(function(file){
+                        var formData = new $window.FormData();
+                        formData.append('file', file, file.name);
+                        var promise = $http.post(url, formData, config).then(function(response){
+                            group.docIds.push(response.data.receiptid);
+                        }, function(errorResponse){
+                            return reject(errorResponse);
+                        });
+                        promises.push(promise);
+                    });
+                });
+                return $q.all(promises).then(function(){return resolve(groups);});
+            });
+        }
+
+        function getFileNames(groupName){
+            var fileNames = [];
+            groups[groupName].files.forEach(function(file){
+                fileNames.push(file.name);
+            });
+            return fileNames;
+        }
+
+        function removeFileInGroup(groupName, index){
+            groups[groupName].files.splice(index, 1);
+        }
+
+        function createGroup(groupName){
+            var group = groups[groupName] ? groups[groupName] : {name: groupName, files: [], docIds: []};
+            groups[groupName] = group;
+            return group;
+        }
+
+        function fileUploadSupported(){
+            return !!$window.FileReader && !!$window.File && !!$window.FileList && !!$window.Blob;
+        }
+
+        return {
+            getFileNames: getFileNames,
+            addFileToGroup: addFileToGroup,
+            uploadFiles: uploadFiles,
+            removeFileInGroup: removeFileInGroup,
+            createGroup: createGroup,
+            fileUploadSupported: fileUploadSupported
+        };
+    }]);
 
 "use strict";
 angular.module('fsmQuestion')

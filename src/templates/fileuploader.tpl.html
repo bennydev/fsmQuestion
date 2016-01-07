@@ -1,0 +1,11 @@
+<div class="form-row form-row--gap">
+    <button id="selectFileBtn" type="button" class="button button--small"><i class="icon icon-doc"></i> {{buttonText}}</button>
+    <input id="{{id}}" type="file" ng-model="file" style="visibility: hidden; position: absolute;"/>
+</div>
+
+<!-- This is how it looks after you've added an attachment -->
+<div class="form-row form-row--gap" ng-if="files.length > 0">
+    <div ng-repeat="selectedFile in files track by $index">
+        <em>{{selectedFile.name}}</em> &nbsp; <span class="u-nowrap"><a href="javascript:;" class="u-font-semibold" ng-click="removeFile($index);"><i class="icon icon-close" aria-hidden="true"></i> {{'VIEW.EXTRAS.DELETE' | fsmTranslate}}</a></span>
+    </div>
+</div>
