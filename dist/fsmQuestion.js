@@ -381,8 +381,6 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
     "</div>");
 }]);
 
-'use strict';
-angular.module('services')
 "use strict";
 angular.module('fsmQuestion', [])
     .constant('buttonConfig', {activeClass: 'is-active'});
