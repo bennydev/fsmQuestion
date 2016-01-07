@@ -710,7 +710,8 @@ function Validators(QuestionTypes){
         getIdentificationValidator: getIdentificationValidator,
         utils: {
             isPersonId: isPersonId,
-            removeValidPersonIdSeparators: removeValidPersonIdSeparators
+            removeValidPersonIdSeparators: removeValidPersonIdSeparators,
+            addCenturyToPersonId: addCenturyToPersonId
         }
     };
 
@@ -892,6 +893,20 @@ function Validators(QuestionTypes){
 
     function removeValidPersonIdSeparators(value){
         return value.toString().replace(new RegExp('\\+', 'gi'), '').replace(new RegExp('-', 'gi'), '');
+    }
+
+    function addCenturyToPersonId(personId) {
+        personId = personId.toString();
+        if (Validators.utils.removeValidPersonIdSeparators(personId).length === 10) {
+            var currentYear = new Date().getUTCFullYear();
+            var currentCentury = currentYear.toString().substr(0, 2);
+            if (personId.indexOf('+') === 6) {
+                personId = currentCentury - 1 + personId;
+            } else {
+                personId = currentYear - parseInt(currentCentury - 1 + personId.substr(0, 2)) >= 100 ? currentCentury + personId : currentCentury - 1 + personId;
+            }
+        }
+        return personId;
     }
 
     function validateCustomerNumber(value){
