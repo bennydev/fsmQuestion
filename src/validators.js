@@ -196,7 +196,7 @@ function Validators(QuestionTypes){
 
     function addCenturyToPersonId(personId) {
         personId = personId.toString();
-        if (Validators.utils.removeValidPersonIdSeparators(personId).length === 10) {
+        if (removeValidPersonIdSeparators(personId).length === 10) {
             var currentYear = new Date().getUTCFullYear();
             var currentCentury = currentYear.toString().substr(0, 2);
             if (personId.indexOf('+') === 6) {
