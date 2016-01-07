@@ -353,13 +353,13 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
   $templateCache.put("templates/upload.tpl.html",
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"\n" +
-    "        ng-class=\"{'mandatory' : question.isRequired()}\" translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}\n" +
+    "        ng-class=\"{'mandatory' : question.isRequired()}\" translate translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}\n" +
     "    </label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.options[0].value\" button-text=\"{{question.options[0].label | translate}}\"></fsm-file-uploader>\n" +
+    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.options.getValues()[0].value\" button-text=\"{{question.options.getValues()[0].label | translate}}\"></fsm-file-uploader>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
