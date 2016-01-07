@@ -193,7 +193,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "             ng-model=\"question.answer\"\n" +
     "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "             ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "             maxlength=\"{{question.maxLength}}\"\n" +
+    "             maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                  />\n" +
     "        </div>\n" +
     "    </div>\n" +
