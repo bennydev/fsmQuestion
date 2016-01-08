@@ -502,7 +502,8 @@ angular.module('fsmFileUploader', [])
         function uploadFiles(url, reject){
             var promises = [];
             return $q(function(resolve){
-                Object.keys(groups).forEach(function(group){
+                Object.keys(groups).forEach(function(groupname){
+                    var group = groups[groupname];
                     group.files.forEach(function(file){
                         var formData = new $window.FormData();
                         formData.append('file', file, file.name);
