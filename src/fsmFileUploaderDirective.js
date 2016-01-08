@@ -72,7 +72,7 @@ angular.module('fsmFileUploader', [])
                         var formData = new $window.FormData();
                         formData.append('file', file, file.name);
                         var promise = $http.post(url, formData, config).then(function(response){
-                            group.docIds.push(response.data.receiptid);
+                            group.docIds.push(response.data.receiptId);
                         }, function(errorResponse){
                             return reject(errorResponse);
                         });
