@@ -10,7 +10,7 @@
 </div>
 <div class="grid">
     <div class="grid__item sm--six-twelfths">
-        <fsm-file-uploader id="{{question.id}}" group="question.id" max="{{question.restrictions.getMax()}}" button-text="{{question.options.getValues()[0].label | translate}}"></fsm-file-uploader>
+        <fsm-file-uploader id="{{question.id}}" group="question.id" max="question.restrictions.getMax()" button-text="{{question.options.getValues()[0].label | translate}}"></fsm-file-uploader>
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
 </div>

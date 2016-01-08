@@ -379,7 +379,7 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.id\" max=\"{{question.restrictions.getMax()}}\" button-text=\"{{question.options.getValues()[0].label | translate}}\"></fsm-file-uploader>\n" +
+    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.id\" max=\"question.restrictions.getMax()\" button-text=\"{{question.options.getValues()[0].label | translate}}\"></fsm-file-uploader>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
