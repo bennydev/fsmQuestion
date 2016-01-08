@@ -46,7 +46,7 @@ angular.module('fsmFileUploader', [])
 
             function addFile(file, group){
                 if(scope.max == 1){
-                    FileUploaderService.removeFile(0);
+                    scope.removeFile(0);
                 }
                 FileUploaderService.addFileToGroup(file, group);
             }

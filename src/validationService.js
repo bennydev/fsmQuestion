@@ -1,7 +1,7 @@
 "use strict";
 angular.module('fsmQuestion')
-.factory('ValidationService', ['Validators', 'ErrorReporter', ValidationService]);
-function ValidationService(Validators, ErrorReporter){
+.factory('ValidationService', ['Validators', 'QuestionTypes', 'ErrorReporter', ValidationService]);
+function ValidationService(Validators, QuestionTypes, ErrorReporter){
     var service = {
         validate: validate
     };
@@ -13,10 +13,10 @@ function ValidationService(Validators, ErrorReporter){
             if(question.isRequired()){
                 validateWithValidator(Validators.getRequiredValidator(), question);
             }
-            if(question.restrictions.getMin() && !ErrorReporter.hasErrorFor(question.id)){
+            if(question.type === QuestionTypes.input && question.restrictions.getMin() && !ErrorReporter.hasErrorFor(question.id)){
                 validateWithValidator(Validators.getMinValidator(question), question);
             }
-            if(question.restrictions.getMax() && !ErrorReporter.hasErrorFor(question.id)){
+            if(question.type === QuestionTypes.input && question.restrictions.getMax() && !ErrorReporter.hasErrorFor(question.id)){
                 validateWithValidator(Validators.getMaxValidator(question), question);
             }
             if(question.restrictions.getValidator() && !ErrorReporter.hasErrorFor(question.id)){
