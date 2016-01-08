@@ -372,10 +372,14 @@ angular.module("templates/upload.tpl.html", []).run(["$templateCache", function(
     "        ng-class=\"{'mandatory' : question.isRequired()}\" translate translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}\n" +
     "    </label>\n" +
     "</div>\n" +
-    "\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.id\" button-text=\"{{question.options.getValues()[0].label | translate}}\"></fsm-file-uploader>\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <fsm-file-uploader id=\"{{question.id}}\" group=\"question.id\" max=\"{{question.restrictions.getMax()}}\" button-text=\"{{question.options.getValues()[0].label | translate}}\"></fsm-file-uploader>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
@@ -437,7 +441,8 @@ angular.module('fsmFileUploader', [])
         restrict: 'E',
         scope: {
             group: '&',
-            buttonText: '@'
+            buttonText: '@',
+            max: '='
         },
         templateUrl: 'templates/fileuploader.tpl.html',
         link: function(scope, element, attrs){
@@ -468,11 +473,18 @@ angular.module('fsmFileUploader', [])
                             file.name = input.value.substr(input.value.lastIndexOf('/'));
                         }
                         input.value = '';
-                        FileUploaderService.addFileToGroup(file, scope.group);
+                        addFile(file, scope.group);
                         scope.$apply();
                     });
                     input = input[0];
                 }
+            }
+
+            function addFile(file, group){
+                if(scope.max == 1){
+                    FileUploaderService.removeFile(0);
+                }
+                FileUploaderService.addFileToGroup(file, group);
             }
 
         }
@@ -490,7 +502,7 @@ angular.module('fsmFileUploader', [])
         function uploadFiles(url, reject){
             var promises = [];
             return $q(function(resolve){
-                [].valuesToArray(groups).forEach(function(group){
+                Object.keys(groups).forEach(function(group){
                     group.files.forEach(function(file){
                         var formData = new $window.FormData();
                         formData.append('file', file, file.name);

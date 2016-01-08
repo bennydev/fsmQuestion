@@ -3,10 +3,14 @@
         ng-class="{'mandatory' : question.isRequired()}" translate translate-values="question.text.getTranslateValues()">{{question.text.root+'.QUESTION'}}
     </label>
 </div>
-
 <div class="grid">
     <div class="grid__item sm--six-twelfths">
-        <fsm-file-uploader id="{{question.id}}" group="question.id" button-text="{{question.options.getValues()[0].label | translate}}"></fsm-file-uploader>
+        <div ng-include="'templates/tooltip.tpl.html'"></div>
+    </div>
+</div>
+<div class="grid">
+    <div class="grid__item sm--six-twelfths">
+        <fsm-file-uploader id="{{question.id}}" group="question.id" max="{{question.restrictions.getMax()}}" button-text="{{question.options.getValues()[0].label | translate}}"></fsm-file-uploader>
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
 </div>
