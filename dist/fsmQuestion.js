@@ -160,7 +160,7 @@ angular.module("templates/fileuploader.tpl.html", []).run(["$templateCache", fun
     "<!-- This is how it looks after you've added an attachment -->\n" +
     "<div class=\"form-row form-row--gap\" ng-if=\"files.length > 0\">\n" +
     "    <div ng-repeat=\"selectedFile in files track by $index\">\n" +
-    "        <em>{{selectedFile.name}}</em> &nbsp; <span class=\"u-nowrap\"><a href=\"javascript:;\" class=\"u-font-semibold\" ng-click=\"removeFile($index);\"><i class=\"icon icon-close\" aria-hidden=\"true\"></i> {{'VIEW.EXTRAS.DELETE' | translate}}</a></span>\n" +
+    "        <em>{{selectedFile.name}}</em> &nbsp; <span class=\"u-nowrap\"><a href=\"javascript:;\" class=\"u-font-semibold\" ng-click=\"removeFile($index);\"><i class=\"icon icon-close\" aria-hidden=\"true\"></i> {{'GENERAL.EXTRAS.DELETE' | translate}}</a></span>\n" +
     "    </div>\n" +
     "</div>\n" +
     "");
