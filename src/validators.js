@@ -6,6 +6,7 @@ function Validators(QuestionTypes){
         getRequiredValidator: getRequiredValidator,
         getMinValidator: getMinValidator,
         getMaxValidator: getMaxValidator,
+        getNumericValidator: getNumericValidator,
         getIdentificationValidator: getIdentificationValidator,
         utils: {
             isPersonId: isPersonId,
@@ -111,6 +112,18 @@ function Validators(QuestionTypes){
         }
         return maxValidator;
     }
+
+    function getNumericValidator() {
+        return {
+            validate: function(question) {
+                var answer = question.answer;
+                var result = {};
+                result.valid = getNumericAnswer(answer) !== undefined;
+                result.message = question.text.root + '.ERRORS.INVALID';
+            }
+        }
+    }
+
 
     function getNumericAnswer(answer){
         var numericAnswer = parseFloat(answer);
