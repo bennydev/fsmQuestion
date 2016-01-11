@@ -62,12 +62,12 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "               name=\"{{question.id}}{{$index}}\"\n" +
     "               type=\"checkbox\"\n" +
     "               class=\"custom-checkbox__input\"\n" +
-    "               ng-model=\"question.model[question.id]\"\n" +
-    "               ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
-    "               ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "               ng-true-value=\"'{{option.value}}'\"\n" +
+    "               ng-model=\"question.answer\"\n" +
+    "               ng-change=\"question.removeError();question.saveAnswer();\"\n" +
+    "               ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
+    "               ng-true-value=\"'{{question.options.getValues()[0].value}}'\"\n" +
     "               ng-false-value=\"undefined\">\n" +
-    "        <span class=\"custom-checkbox__icon\">Jag vet inte exakt datum</span>\n" +
+    "        <span class=\"custom-checkbox__icon\" translate>{{question.options.getValues()[0].label}}</span>\n" +
     "    </label>\n" +
     "  </div>\n" +
     "</div>\n" +
@@ -782,6 +782,7 @@ function QuestionTypes(){
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
     types.date = 'DATE';
+    types.checkbox = 'CHECKBOX';
 }
 
 "use strict";
