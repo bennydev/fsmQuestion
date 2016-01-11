@@ -19,7 +19,7 @@
               ng-change="question.removeErrors(); question.saveAnswer();"
               ng-class="{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}"></textarea>
         </div>
-        <div class="form-charcount" ng-cloak>{{question.model[question.id].length}} {{'GENERAL.EXTRAS.OF' | translate}} {{question.getMax()}}</div>
+        <div class="form-charcount" ng-cloak>{{question.model[question.id].length}} {{'GENERAL.EXTRAS.OF' | translate}} {{question.restrictions.getMax()}}</div>
 
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
