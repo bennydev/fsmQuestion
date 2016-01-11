@@ -786,6 +786,7 @@ function QuestionTypes(){
     types.date = 'DATE';
     types.checkbox = 'CHECKBOX';
     types.select = 'SELECT';
+    types.text = 'TEXT';
 }
 
 "use strict";
