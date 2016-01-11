@@ -56,18 +56,18 @@ angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", f
 angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/checkbox.tpl.html",
     "<div class=\"form-row form-row--gap\">\n" +
-    "  <div ng-repeat=\"option in question.options track by $index\">\n" +
+    "  <div ng-repeat=\"option in question.options.getValues() track by $index\">\n" +
     "    <label class=\"custom-checkbox\">\n" +
     "      <input id=\"{{question.id}}{{$index}}\"\n" +
     "               name=\"{{question.id}}{{$index}}\"\n" +
     "               type=\"checkbox\"\n" +
     "               class=\"custom-checkbox__input\"\n" +
-    "               ng-model=\"question.model[question.id]\"\n" +
-    "               ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
-    "               ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "               ng-true-value=\"'{{option.value}}'\"\n" +
+    "               ng-model=\"question.answer\"\n" +
+    "               ng-change=\"question.removeError();question.saveAnswer();\"\n" +
+    "               ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
+    "               ng-true-value=\"'{{question.options.getValues()[0].value}}'\"\n" +
     "               ng-false-value=\"undefined\">\n" +
-    "        <span class=\"custom-checkbox__icon\">Jag vet inte exakt datum</span>\n" +
+    "        <span class=\"custom-checkbox__icon\" translate>{{question.options.getValues()[0].label}}</span>\n" +
     "    </label>\n" +
     "  </div>\n" +
     "</div>\n" +
@@ -318,10 +318,10 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "                 <select id=\"{{question.id}}\"\n" +
     "                        name=\"{{question.id}}\"\n" +
     "                        class=\"form-control\"\n" +
-    "                        ng-model=\"question.model[question.id]\"\n" +
-    "                        ng-change=\"question.removeErrors();question.onChange(question); question.saveAnswer();\"\n" +
-    "                        ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"\n" +
-    "                        ng-options=\"option.value as option.label | translate for option in question.options\">\n" +
+    "                        ng-model=\"question.answer\"\n" +
+    "                        ng-change=\"question.removeError();question.onChange(question); question.saveAnswer();\"\n" +
+    "                         ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
+    "                        ng-options=\"option.value as option.label | translate for option in question.options.getValues()\">\n" +
     "                </select>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -708,8 +708,10 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
 
     function loadAnswer(question){
         var answer = questionStorage.loadAnswer(question.id);
-        question.setAnswer(answer);
-        question.options.onChange();
+        if(answer) {
+            question.setAnswer(answer);
+            question.options.onChange(question);
+        }
     }
 
     init();
@@ -782,6 +784,8 @@ function QuestionTypes(){
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
     types.date = 'DATE';
+    types.checkbox = 'CHECKBOX';
+    types.select = 'SELECT';
 }
 
 "use strict";

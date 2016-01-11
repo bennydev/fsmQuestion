@@ -8,5 +8,7 @@ function QuestionTypes(){
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
     types.date = 'DATE';
+    types.checkbox = 'CHECKBOX';
+    types.select = 'SELECT';
     types.text = 'TEXT';
 }
