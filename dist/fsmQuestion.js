@@ -78,8 +78,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
 angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/date.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\"\n" +
-    "                                                                                       class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
@@ -90,19 +89,20 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                   id=\"{{question.id}}\"\n" +
     "                   name=\"{{question.id}}\"\n" +
     "                   class=\"input-text\"\n" +
-    "                   placeholder=\"ÅÅÅÅ-MM-DD\"\n" +
+    "                   placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "                   input-touched\n" +
-    "                   ng-model=\"question.model[question.id].dateString\"\n" +
+    "                   ng-model=\"model\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();question.model[question.id].updateDate();question.saveAnswer();\"\n" +
+    "                   ng-change=\"question.removeErrors();question.setAnswer(model);\"\n" +
+    "                   maxlength=\"{{question.restrictions.getMax().length}}\"\n" +
     "                    />\n" +
     "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +
     "            <div datepicker-popup=\"yyyy-MM-dd\"\n" +
-    "                 min-date=\"question.minDate\"\n" +
-    "                 max-date=\"question.maxDate\"\n" +
-    "                 ng-model=\"question.model[question.id].date\"\n" +
+    "                 min-date=\"question.restrictions.getMin().date\"\n" +
+    "                 max-date=\"question.restrictions.getMax().date\"\n" +
+    "                 ng-model=\"calendarModel\"\n" +
     "                 ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                 ng-change=\"question.removeErrors();question.model[question.id].updateDateString();question.saveAnswer();\"\n" +
+    "                 ng-change=\"question.removeErrors();question.setAnswer(calendarModel);\"\n" +
     "                 is-open=\"question.isOpen\"\n" +
     "                    style=\"margin-top:1px;\">\n" +
     "                 </div>\n" +
@@ -780,6 +780,7 @@ function QuestionTypes(){
     types.buttongroup = 'BUTTONGROUP';
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
+    types.date = 'DATE';
 }
 
 "use strict";
