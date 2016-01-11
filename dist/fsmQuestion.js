@@ -56,7 +56,7 @@ angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", f
 angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/checkbox.tpl.html",
     "<div class=\"form-row form-row--gap\">\n" +
-    "  <div ng-repeat=\"option in question.options track by $index\">\n" +
+    "  <div ng-repeat=\"option in question.options.getValues() track by $index\">\n" +
     "    <label class=\"custom-checkbox\">\n" +
     "      <input id=\"{{question.id}}{{$index}}\"\n" +
     "               name=\"{{question.id}}{{$index}}\"\n" +

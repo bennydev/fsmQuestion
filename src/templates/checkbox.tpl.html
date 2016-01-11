@@ -1,5 +1,5 @@
 <div class="form-row form-row--gap">
-  <div ng-repeat="option in question.options track by $index">
+  <div ng-repeat="option in question.options.getValues() track by $index">
     <label class="custom-checkbox">
       <input id="{{question.id}}{{$index}}"
                name="{{question.id}}{{$index}}"
