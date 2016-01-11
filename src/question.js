@@ -13,6 +13,7 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
     question.validate = function(){ValidationService.validate(question)};
     question.setAnswer = function(value){
         if(value instanceof Date){
+            value.setUTCHours(value.getUTCHours() + Math.abs(value.getTimezoneOffset()) / 60);
             question.answer = value.toISOString().substr(0,10);
         } else {
             question.answer = value;
