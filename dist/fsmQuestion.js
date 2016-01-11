@@ -318,10 +318,10 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "                 <select id=\"{{question.id}}\"\n" +
     "                        name=\"{{question.id}}\"\n" +
     "                        class=\"form-control\"\n" +
-    "                        ng-model=\"question.model[question.id]\"\n" +
-    "                        ng-change=\"question.removeErrors();question.onChange(question); question.saveAnswer();\"\n" +
-    "                        ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"\n" +
-    "                        ng-options=\"option.value as option.label | translate for option in question.options\">\n" +
+    "                        ng-model=\"question.answer\"\n" +
+    "                        ng-change=\"question.removeError();question.onChange(question); question.saveAnswer();\"\n" +
+    "                         ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
+    "                        ng-options=\"option.value as option.label | translate for option in question.options.getValues()\">\n" +
     "                </select>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -783,6 +783,7 @@ function QuestionTypes(){
     types.upload = 'UPLOAD';
     types.date = 'DATE';
     types.checkbox = 'CHECKBOX';
+    types.select = 'SELECT';
 }
 
 "use strict";

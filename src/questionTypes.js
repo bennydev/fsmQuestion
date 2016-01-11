@@ -9,4 +9,5 @@ function QuestionTypes(){
     types.upload = 'UPLOAD';
     types.date = 'DATE';
     types.checkbox = 'CHECKBOX';
+    types.select = 'SELECT';
 }
