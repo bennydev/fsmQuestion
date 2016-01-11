@@ -8,4 +8,5 @@ function QuestionTypes(){
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
     types.date = 'DATE';
+    types.text = 'TEXT';
 }
