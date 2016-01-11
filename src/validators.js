@@ -120,6 +120,7 @@ function Validators(QuestionTypes){
                 var result = {};
                 result.valid = getNumericAnswer(answer) !== undefined;
                 result.message = question.text.root + '.ERRORS.INVALID';
+                return result;
             }
         }
     }
