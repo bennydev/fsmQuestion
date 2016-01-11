@@ -91,9 +91,9 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                   class=\"input-text\"\n" +
     "                   placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "                   input-touched\n" +
-    "                   ng-model=\"model\"\n" +
+    "                   ng-model=\"question.answer\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();question.setAnswer(model);\"\n" +
+    "                   ng-change=\"question.removeErrors();\"\n" +
     "                   maxlength=\"{{question.restrictions.getMax().length}}\"\n" +
     "                    />\n" +
     "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +

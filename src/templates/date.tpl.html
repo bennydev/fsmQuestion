@@ -12,9 +12,9 @@
                    class="input-text"
                    placeholder="{{question.options.getPlaceholder()}}"
                    input-touched
-                   ng-model="model"
+                   ng-model="question.answer"
                    ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
-                   ng-change="question.removeErrors();question.setAnswer(model);"
+                   ng-change="question.removeErrors();"
                    maxlength="{{question.restrictions.getMax().length}}"
                     />
             <i aria-hidden="true" class="icon icon-date" ng-click="question.isOpen =! question.isOpen"></i>
