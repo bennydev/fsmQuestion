@@ -708,8 +708,10 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
 
     function loadAnswer(question){
         var answer = questionStorage.loadAnswer(question.id);
-        question.setAnswer(answer);
-        question.options.onChange();
+        if(answer) {
+            question.setAnswer(answer);
+            question.options.onChange(question);
+        }
     }
 
     init();
