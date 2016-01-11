@@ -353,7 +353,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "              ng-change=\"question.removeErrors(); question.saveAnswer();\"\n" +
     "              ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
     "        </div>\n" +
-    "        <div class=\"form-charcount\" ng-cloak>{{question.model[question.id].length}} {{'VIEW.EXTRAS.OF' | translate}} {{question.maxLength}}</div>\n" +
+    "        <div class=\"form-charcount\" ng-cloak>{{question.model[question.id].length}} {{'GENERAL.EXTRAS.OF' | translate}} {{question.maxLength}}</div>\n" +
     "\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
