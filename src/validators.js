@@ -8,10 +8,14 @@ function Validators(QuestionTypes){
         getMaxValidator: getMaxValidator,
         getNumericValidator: getNumericValidator,
         getIdentificationValidator: getIdentificationValidator,
+        getPastDateValidator: getPastDateValidator,
         utils: {
             isPersonId: isPersonId,
             removeValidPersonIdSeparators: removeValidPersonIdSeparators,
-            addCenturyToPersonId: addCenturyToPersonId
+            addCenturyToPersonId: addCenturyToPersonId,
+            isValidDateFormat: isValidDateFormat,
+            isValidDate: isValidDate,
+            isPastDate: isPastDate
         }
     };
 
@@ -125,7 +129,6 @@ function Validators(QuestionTypes){
         }
     }
 
-
     function getNumericAnswer(answer){
         var numericAnswer = parseFloat(answer);
         numericAnswer = answer === numericAnswer.toString() ? numericAnswer : undefined;
@@ -165,6 +168,20 @@ function Validators(QuestionTypes){
         };
     }
 
+    function getPastDateValidator(){
+        return {validate: function(question){
+            var answer = question.answer;
+            var result = {};
+            result.valid = true;
+            result.valid = result.valid && isValidDateFormat(answer);
+            result.message = !result.valid ? question.text.root + '.ERRORS.FORMAT' : undefined;
+            result.valid = result.valid && isValidDate(answer);
+            result.message = !result.valid ? question.text.root + '.ERRORS.INVALID' : undefined;
+            result.valid = result.valid && isPastDate(answer);
+            result.message = !result.valid ? question.text.root + '.ERRORS.FUTURE' : undefined;
+        }};
+    }
+
     function isPersonId(value){
         value = removeValidPersonIdSeparators(value);
         return isNumeric(value) && (value.length === 10 || value.length === 12);
@@ -177,10 +194,24 @@ function Validators(QuestionTypes){
     }
 
     function isValidDate(value){
-        var year = '19'+value.substr(0,2);
-        var month = value.substr(2,2) -1;
-        var day = value.substr(4,2);
-        return new Date(Date.UTC(year, month, day)).toISOString().replace(new RegExp('-', 'gi'), '').indexOf(value.substr(0,6)) === 2;
+        if(value) {
+            value = value.toString().length === 12 ? value.toString() : '19' + value;
+            var datePartials = getDatePartials(value);
+            return new Date(Date.UTC(datePartials.year, datePartials.month -1, datePartials.day)).toISOString().replace(new RegExp('-', 'gi'), '').indexOf(value.substr(0, 6)) === 2;
+        }
+    }
+
+    function getDatePartials(value){
+        if(value) {
+            value = value.replace(new RegExp('[-.]', 'gi'), '');
+            if(value.toString().length === 12) {
+                return {
+                    year: value.substr(0, 4),
+                    month: value.substr(4, 2),
+                    day: value.substr(6, 2)
+                };
+            }
+        }
     }
 
     function hasValidChecksum(value){
@@ -205,7 +236,7 @@ function Validators(QuestionTypes){
     }
 
     function removeValidPersonIdSeparators(value){
-        return value.toString().replace(new RegExp('\\+', 'gi'), '').replace(new RegExp('-', 'gi'), '');
+        return value.toString().replace(new RegExp('[\\+-]', 'gi'), '');
     }
 
     function addCenturyToPersonId(personId) {
@@ -255,5 +286,19 @@ function Validators(QuestionTypes){
     function startsWithNumberOfChars(value, length){
         value = value.toString();
         return !! value.substr(0, length).match(new RegExp('[a-zA-ZåäöÅÄÖ]','gi'));
+    }
+
+    function isValidDateFormat(value){
+        value = value.toString().replace(new RegExp('[-.]', 'gi'), '');
+        return value && isNumeric(value) && value.length === 8;
+    }
+
+    function isPastDate(value){
+        if(value) {
+            var datePartials = getDatePartials(value);
+            var date = createDate(datePartials.year+'-'+datePartials.month+'-'+datePartials.day);
+            var now = new Date();
+            return date.getTime() < now.getTime();
+        }
     }
 }
