@@ -179,6 +179,7 @@ function Validators(QuestionTypes){
             result.message = !result.valid ? question.text.root + '.ERRORS.INVALID' : undefined;
             result.valid = result.valid && isPastDate(answer);
             result.message = !result.valid ? question.text.root + '.ERRORS.FUTURE' : undefined;
+            return result;
         }};
     }
 
