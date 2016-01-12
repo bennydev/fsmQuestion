@@ -70,7 +70,8 @@ module.exports = function (grunt) {
             compile_js: {
                 options: {},
                 src: [
-                    'build/**/*.js',
+                    'build/src/**/*.js',
+                    'build/fsm*.js',
                     '!build/src/**/*.spec.js'
                 ],
                 dest: 'dist/fsmQuestion.js'
