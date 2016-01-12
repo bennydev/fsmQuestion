@@ -632,11 +632,11 @@ function Validators(QuestionTypes){
             var result = {};
             result.valid = true;
             result.valid = result.valid && isValidDateFormat(answer);
-            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : undefined;
+            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
             result.valid = result.valid && isValidDate(answer);
-            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : undefined;
+            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
             result.valid = result.valid && isPastDate(answer);
-            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FUTURE' : undefined;
+            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FUTURE' : result.message;
             return result;
         }};
     }
@@ -1116,7 +1116,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "                      ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                      ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
     "        </div>\n" +
-    "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.length : 0}} {{'GENERAL.EXTRAS.OF' |\n" +
+    "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'GENERAL.EXTRAS.OF' |\n" +
     "            translate}} {{question.restrictions.getMax()}}\n" +
     "        </div>\n" +
     "\n" +
