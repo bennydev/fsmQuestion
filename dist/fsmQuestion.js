@@ -1085,7 +1085,7 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "                        ng-model=\"question.answer\"\n" +
     "                        ng-change=\"question.removeErrors();question.onChange(question); question.saveAnswer(); question.setAnswer(question.answer);\"\n" +
     "                        ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                        ng-options=\"option.value as option.label | translate for option in question.options\">\n" +
+    "                        ng-options=\"option.value as option.label | translate for option in question.options.getValues()\">\n" +
     "                </select>\n" +
     "            </div>\n" +
     "        </div>\n" +
