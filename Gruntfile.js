@@ -48,7 +48,18 @@ module.exports = function (grunt) {
          */
         copy: {
             build: {
-                src: ['src/**/**', '!src/**/*.spec.js'],
+                src: [
+                    'vendor/angular/angular.js',
+                    'vendor/angular-sanitize/angular-sanitize.js',
+                    'vendor/angular-translate/angular-translate.js',
+                    'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+                    'vendor/angular-ui-router/release/angular-ui-router.js',
+                    'vendor/fsmQuestion/dist/fsmQuestion.js',
+                    'vendor/angular-mocks/angular-mocks.js',
+                    'src/**/*',
+                    'karma/helpers/**/*.js',
+                    'karma/mocks/**/*.js'
+                ],
                 dest: 'build',
                 expand: true
             }
@@ -57,10 +68,11 @@ module.exports = function (grunt) {
 
         concat: {
             compile_js: {
-                options: {
-                },
+                options: {},
                 src: [
-                    'build/**/*.js'
+                    'build/src/**/*.js',
+                    'build/fsm*.js',
+                    '!build/src/**/*.spec.js'
                 ],
                 dest: 'dist/fsmQuestion.js'
             }
@@ -77,22 +89,86 @@ module.exports = function (grunt) {
                 src: ['build/**/*.html'],
                 dest: 'build/fsmQuestionTemplates.js'
             }
-        }
+        },
 
-        };
+        /**
+         * The Karma configurations.
+         */
+        karma: {
+            options: {
+                configFile: 'build/karma-unit.js'
+            },
+            unit: {
+                runnerPort: 9876,
+                background: true
+            },
+            continuous: {
+                singleRun: true
+            }
+        },
+        /**
+         * This task compiles the karma template so that changes to its file array
+         * don't have to be managed manually.
+         *
+         * NOTE: The ordering of the modules is important!
+         */
+        karmaconfig: {
+            unit: {
+                dir: 'build',
+                src: [
+                    'vendor/angular/angular.js',
+                    'vendor/angular-sanitize/angular-sanitize.js',
+                    'vendor/angular-translate/angular-translate.js',
+                    'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+                    'vendor/angular-ui-router/release/angular-ui-router.js',
+                    'vendor/angular-mocks/angular-mocks.js',
+                    'src/**/*.js',
+                    '!src/**/*.spec.js',
+                    'karma/helpers/**/*.js',
+                    'karma/mocks/**/*.js'
+                ]
+            }
+
+
+        }
+    };
 
     grunt.initConfig(taskConfig);
 
     /**
-     * The default task is to copy files to the dist folder.
-     */
-    /**
      * The default task is to build and compile. When build and compile is finished
      * the project opened in your browser served by the connect-server.
      */
-    grunt.registerTask( 'default', [ 'clean', 'copy', 'html2js', 'concat' ] );
+    grunt.registerTask( 'default', [ 'clean', 'copy', 'html2js', 'concat', 'karmaconfig',  'karma:continuous', 'karma:unit' ] );
 
-    //grunt.registerTask( 'default', [ 'build', 'compile', 'configureProxies:server', 'connect:dist:keepalive' ] );
+    /**
+     * In order to avoid having to specify manually the files needed for karma to
+     * run, we use grunt to manage the list for us. The `karma/*` files are
+     * compiled as grunt templates for use by Karma. Yay!
+     */
+    grunt.registerMultiTask('karmaconfig', 'Process karma config templates', function () {
+        var jsFiles = filterForJS(this.filesSrc);
+
+        grunt.file.copy('karma/karma-unit.tpl.js', 'build/karma-unit.js', {
+            process: function (contents, path) {
+                return grunt.template.process(contents, {
+                    data: {
+                        scripts: jsFiles
+                    }
+                });
+            }
+        });
+    });
+
+    /**
+     * A utility function to get all app JavaScript sources.
+     */
+    function filterForJS(files) {
+        return files.filter(function (file) {
+            //console.log('File: ' + file);
+            return file.match(/\.js$/);
+        });
+    }
 
 //    TODO: 2. Bump up version property in bower.json.
 //    TODO: 3. Publish to git repo
