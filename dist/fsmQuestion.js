@@ -664,7 +664,7 @@ function Validators(QuestionTypes){
     function getDatePartials(value){
         if(value) {
             value = value.replace(new RegExp('[-.]', 'gi'), '');
-            if(value.toString().length === 8) {
+            if(value.toString().length >= 8) {
                 return {
                     year: value.substr(0, 4),
                     month: value.substr(4, 2),
