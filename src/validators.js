@@ -196,6 +196,7 @@ function Validators(QuestionTypes){
 
     function isValidDate(value){
         if(value) {
+            value = value.replace(new RegExp('[-.]', 'gi'), '');
             value = value.toString().length === 12 ? value.toString() : '19' + value;
             var datePartials = getDatePartials(value);
             return new Date(Date.UTC(datePartials.year, datePartials.month -1, datePartials.day)).toISOString().replace(new RegExp('-', 'gi'), '').indexOf(value.substr(0, 6)) >= 0;
