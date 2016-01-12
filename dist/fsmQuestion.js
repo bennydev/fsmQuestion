@@ -1100,7 +1100,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
-    "  <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
@@ -1108,15 +1108,17 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "\n" +
     "        <div class=\"form-row form-row--gap\">\n" +
     "            <textarea class=\"input-textarea\"\n" +
-    "              ng-trim=\"false\"\n" +
-    "              maxlength=\"{{question.maxLength}}\"\n" +
-    "              id=\"{{question.id}}\"\n" +
-    "              name=\"{{question.id}}\"\n" +
-    "              ng-model=\"question.model[question.id]\"\n" +
+    "                      ng-trim=\"false\"\n" +
+    "                      maxlength=\"{{question.maxLength}}\"\n" +
+    "                      id=\"{{question.id}}\"\n" +
+    "                      name=\"{{question.id}}\"\n" +
+    "                      ng-model=\"question.answer\"\n" +
     "                      ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
-    "              ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
+    "                      ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
     "        </div>\n" +
-    "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.length : 0}} {{'GENERAL.EXTRAS.OF' | translate}} {{question.restrictions.getMax()}}</div>\n" +
+    "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.length : 0}} {{'GENERAL.EXTRAS.OF' |\n" +
+    "            translate}} {{question.restrictions.getMax()}}\n" +
+    "        </div>\n" +
     "\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +

@@ -3,7 +3,7 @@
 </div>
 
 <div class="grid">
-  <div class="grid__item sm--six-twelfths" ng-include="'templates/tooltip.tpl.html'"></div>
+    <div class="grid__item sm--six-twelfths" ng-include="'templates/tooltip.tpl.html'"></div>
 </div>
 
 <div class="grid">
@@ -11,15 +11,17 @@
 
         <div class="form-row form-row--gap">
             <textarea class="input-textarea"
-              ng-trim="false"
-              maxlength="{{question.maxLength}}"
-              id="{{question.id}}"
-              name="{{question.id}}"
-              ng-model="question.model[question.id]"
+                      ng-trim="false"
+                      maxlength="{{question.maxLength}}"
+                      id="{{question.id}}"
+                      name="{{question.id}}"
+                      ng-model="question.answer"
                       ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
-              ng-class="{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}"></textarea>
+                      ng-class="{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}"></textarea>
         </div>
-        <div class="form-charcount" ng-cloak>{{question.answer ? question.length : 0}} {{'GENERAL.EXTRAS.OF' | translate}} {{question.restrictions.getMax()}}</div>
+        <div class="form-charcount" ng-cloak>{{question.answer ? question.length : 0}} {{'GENERAL.EXTRAS.OF' |
+            translate}} {{question.restrictions.getMax()}}
+        </div>
 
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
