@@ -1113,7 +1113,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "              id=\"{{question.id}}\"\n" +
     "              name=\"{{question.id}}\"\n" +
     "              ng-model=\"question.model[question.id]\"\n" +
-    "              ng-change=\"question.removeErrors(); question.saveAnswer();\"\n" +
+    "                      ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "              ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
     "        </div>\n" +
     "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.length : 0}} {{'GENERAL.EXTRAS.OF' | translate}} {{question.restrictions.getMax()}}</div>\n" +
