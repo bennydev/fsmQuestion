@@ -1079,13 +1079,13 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap\">\n" +
     "            <div class=\"custom-select custom-select--full-width\">\n" +
-    "                 <select id=\"{{question.id}}\"\n" +
+    "                <select id=\"{{question.id}}\"\n" +
     "                        name=\"{{question.id}}\"\n" +
     "                        class=\"form-control\"\n" +
     "                        ng-model=\"question.answer\"\n" +
-    "                        ng-change=\"question.removeError();question.onChange(question); question.saveAnswer();\"\n" +
-    "                         ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
-    "                        ng-options=\"option.value as option.label | translate for option in question.options.getValues()\">\n" +
+    "                        ng-change=\"question.removeErrors();question.onChange(question); question.saveAnswer(); question.setAnswer(question.answer);\"\n" +
+    "                        ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                        ng-options=\"option.value as option.label | translate for option in question.options\">\n" +
     "                </select>\n" +
     "            </div>\n" +
     "        </div>\n" +
