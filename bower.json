@@ -1,6 +1,6 @@
 {
   "name": "fsmQuestion",
-  "version": "0.1.67",
+  "version": "0.1.68",
   "description": "Generic Question library",
   "directory": "dist",
   "main": "fsmQuestion.js",
@@ -8,6 +8,10 @@
     "globals"
   ],
   "dependencies": {
+    "angular": "~1.4.8",
+    "angular-mocks": "~1.4.8",
+    "angular-sanitize": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
     "angular-translate": "~2.7.0",
     "angular-translate-loader-static-files": "~2.7.0"
   },
