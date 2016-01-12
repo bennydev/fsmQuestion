@@ -174,11 +174,11 @@ function Validators(QuestionTypes){
             var result = {};
             result.valid = true;
             result.valid = result.valid && isValidDateFormat(answer);
-            result.message = !result.valid ? question.text.root + '.ERRORS.FORMAT' : undefined;
+            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : undefined;
             result.valid = result.valid && isValidDate(answer);
-            result.message = !result.valid ? question.text.root + '.ERRORS.INVALID' : undefined;
+            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : undefined;
             result.valid = result.valid && isPastDate(answer);
-            result.message = !result.valid ? question.text.root + '.ERRORS.FUTURE' : undefined;
+            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FUTURE' : undefined;
             return result;
         }};
     }
