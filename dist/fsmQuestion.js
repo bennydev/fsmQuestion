@@ -649,7 +649,7 @@ function Validators(QuestionTypes){
     function validatePersonId(value){
         value = removeValidPersonIdSeparators(value);
         value = value.length === 12 ? value.substr(2) : value;
-        return isValidDate(value) && hasValidChecksum(value);
+        return isValidDate(value.substr(0,6)) && hasValidChecksum(value);
     }
 
     function isValidDate(value){
