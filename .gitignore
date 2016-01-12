@@ -44,3 +44,13 @@ Thumbs.db
 .classpath
 .metadata
 .idea
+# Excluded folders #
+####################
+/build/
+/node_modules/
+/vendor/
+/target/
+/webapp/
+/webapp_build/
+npm-debug.log
+/~/
