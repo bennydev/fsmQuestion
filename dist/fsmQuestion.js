@@ -1,6 +1,7 @@
 "use strict";
-angular.module('fsmQuestion', ['fsmFileUploader'])
-    .constant('buttonConfig', {activeClass: 'is-active'});
+angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule'])
+    .constant('buttonConfig', {activeClass: 'is-active'})
+    .value('storagePrefix', 'i84ds03');
 "use strict";
 angular.module('fsmQuestion')
     .factory('ErrorReporter', ErrorReporter);
@@ -393,6 +394,7 @@ angular.module('fsmQuestion')
 function QuestionTypes(){
     var types = this;
     types.input = 'INPUT';
+    types.inputcurrency = 'INPUTCURRENCY';
     types.buttongroup = 'BUTTONGROUP';
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
@@ -984,7 +986,8 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
 angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/inputcurrency.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.id}}\">{{question.text.root+'.QUESTION' | translate}}<span ng-show=\"question.isRequired()\"\n" +
+    "                                                                                     class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
@@ -996,16 +999,16 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "        <div class=\"form-row form-row--gap\">\n" +
     "            <div class=\"input-group\">\n" +
     "                <input type=\"text\"\n" +
-    "                   id=\"{{question.id}}\"\n" +
-    "                   name=\"{{question.id}}\"\n" +
-    "                   placeholder=\"{{question.placeholder}}\"\n" +
-    "                   input-touched\n" +
-    "                   class=\"input-text input-group__input\"\n" +
-    "                   ng-model=\"question.model[question.id]\"\n" +
-    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
-    "                   maxlength=\"{{question.maxLength}}\"\n" +
-    "                    />\n" +
+    "                       id=\"{{question.id}}\"\n" +
+    "                       name=\"{{question.id}}\"\n" +
+    "                       placeholder=\"{{question.placeholder}}\"\n" +
+    "                       input-touched\n" +
+    "                       class=\"input-text input-group__input\"\n" +
+    "                       ng-model=\"question.model[question.id]\"\n" +
+    "                       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                       maxlength=\"{{question.maxLength}}\"\n" +
+    "                />\n" +
     "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -1115,7 +1118,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "                      name=\"{{question.id}}\"\n" +
     "                      ng-model=\"question.answer\"\n" +
     "                      ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
-    "                      ng-class=\"{'fsm-invalid': errors[question.id], 'fsm-valid': !errors[question.id]}\"></textarea>\n" +
+    "                      ng-class=\"{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"></textarea>\n" +
     "        </div>\n" +
     "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'GENERAL.EXTRAS.OF' |\n" +
     "            translate}} {{question.restrictions.getMax()}}\n" +

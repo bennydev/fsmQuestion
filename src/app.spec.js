@@ -6,6 +6,6 @@ describe("Sanity check test", function() {
     ctrl = module('fsmQuestion');
 
     it('should have a fsmQuestion module', function () {
-        expect(ctrl).toBeDefined();
+        expect(ctrl).toBeTruthy();
     });
 });

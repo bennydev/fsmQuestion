@@ -4,6 +4,7 @@ angular.module('fsmQuestion')
 function QuestionTypes(){
     var types = this;
     types.input = 'INPUT';
+    types.inputcurrency = 'INPUTCURRENCY';
     types.buttongroup = 'BUTTONGROUP';
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
