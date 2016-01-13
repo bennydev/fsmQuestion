@@ -212,6 +212,18 @@ angular.module('fsmQuestion')
             }
         };
     }]);
+"use strict";
+angular.module('fsmQuestion').filter('numbersOnly', function () {
+    return function(input) {
+        if (input) {
+            var str = input.replace(/[^1-9]/, '');
+           return str.replace(/[^0-9]+/g, '');
+        }
+
+        return input;
+    }
+
+});
 'use strict';
 angular.module('fsmQuestion')
 .value('Options', Options);
@@ -1000,7 +1012,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap\">\n" +
     "            <div class=\"input-group\">\n" +
-    "                <input type=\"text\"\n" +
+    "                <input type=\"number\"\n" +
     "                       id=\"{{question.id}}\"\n" +
     "                       name=\"{{question.id}}\"\n" +
     "                       placeholder=\"{{question.placeholder}}\"\n" +
