@@ -213,6 +213,23 @@ angular.module('fsmQuestion')
         };
     }]);
 "use strict";
+angular.module('fsmQuestion')
+    .directive('numbers', ['numbersOnlyFilter', function(numbersOnlyFilter){
+        return {
+            restrict: 'A',
+            scope: {
+                question: '='
+            },
+            link: function(scope){
+                scope.$watch('scope.question.answer', function(newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        scope.question.answer = numbersOnlyFilter(newValue);
+                    }
+                });
+            }
+        };
+    }]);
+"use strict";
 angular.module('fsmQuestion').filter('numbersOnly', function () {
     return function(input) {
         if (input) {
@@ -1019,6 +1036,8 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       input-touched\n" +
     "                       class=\"input-text input-group__input\"\n" +
     "                       ng-model=\"question.answer\"\n" +
+    "                       numbers\n" +
+    "                       question=\"question\"\n" +
     "                       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer($filter('numbersOnlyFilter')(question.answer));\"\n" +
     "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
