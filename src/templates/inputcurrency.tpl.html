@@ -21,7 +21,7 @@
                        numbers
                        question="question"
                        ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
-                       ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer($filter('numbersOnlyFilter')(question.answer));"
+                       ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
                        maxlength="{{question.restrictions.getMax()}}"
                 />
                 <div class="input-group__addon">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>

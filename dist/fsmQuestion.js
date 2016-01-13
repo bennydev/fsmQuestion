@@ -1039,7 +1039,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       numbers\n" +
     "                       question=\"question\"\n" +
     "                       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer($filter('numbersOnlyFilter')(question.answer));\"\n" +
+    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                />\n" +
     "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
