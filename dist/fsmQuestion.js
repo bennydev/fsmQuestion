@@ -475,7 +475,9 @@ function Validators(QuestionTypes){
             addCenturyToPersonId: addCenturyToPersonId,
             isValidDateFormat: isValidDateFormat,
             isValidDate: isValidDate,
-            isPastDate: isPastDate
+            isPastDate: isPastDate,
+            dateInMillis: dateInMillis,
+            getDatePartials: getDatePartials
         }
     };
 
