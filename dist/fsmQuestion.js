@@ -1018,10 +1018,10 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       placeholder=\"{{question.placeholder}}\"\n" +
     "                       input-touched\n" +
     "                       class=\"input-text input-group__input\"\n" +
-    "                       ng-model=\"question.model[question.id]\"\n" +
+    "                       ng-model=\"question.answer\"\n" +
     "                       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
-    "                       maxlength=\"{{question.maxLength}}\"\n" +
+    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer($filter('numbersOnly') (question.answer));\"\n" +
+    "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                />\n" +
     "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
     "            </div>\n" +
