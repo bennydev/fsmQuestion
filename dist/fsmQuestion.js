@@ -596,7 +596,7 @@ function Validators(QuestionTypes){
             validate: function(question) {
                 var answer = question.answer;
                 var result = {};
-                result.valid = getNumericAnswer(answer) !== undefined;
+                result.valid = typeof answer === 'number' && answer !== NaN ? true : getNumericAnswer(answer) !== undefined;
                 result.message = question.text.root + '.ERRORS.INVALID';
                 return result;
             }
@@ -1012,7 +1012,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap\">\n" +
     "            <div class=\"input-group\">\n" +
-    "                <input type=\"number\"\n" +
+    "                <input type=\"text\"\n" +
     "                       id=\"{{question.id}}\"\n" +
     "                       name=\"{{question.id}}\"\n" +
     "                       placeholder=\"{{question.placeholder}}\"\n" +
@@ -1020,7 +1020,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       class=\"input-text input-group__input\"\n" +
     "                       ng-model=\"question.answer\"\n" +
     "                       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer($filter('numbersOnly')(question.answer));\"\n" +
     "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                />\n" +
     "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +

@@ -124,7 +124,7 @@ function Validators(QuestionTypes){
             validate: function(question) {
                 var answer = question.answer;
                 var result = {};
-                result.valid = getNumericAnswer(answer) !== undefined;
+                result.valid = typeof answer === 'number' && answer !== NaN ? true : getNumericAnswer(answer) !== undefined;
                 result.message = question.text.root + '.ERRORS.INVALID';
                 return result;
             }
