@@ -517,7 +517,7 @@ function Validators(QuestionTypes){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = dateInMillis(answer) >= question.restrictions.getMin().getTime();
+                result.valid = dateInMillis(answer) >= question.restrictions.getMin().date.getTime();
                 result.message = question.text.root + '.ERRORS.TOO_EARLY';
                 return result;
             }
@@ -529,7 +529,7 @@ function Validators(QuestionTypes){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = dateInMillis(answer) <= question.restrictions.getMax().getTime();
+                result.valid = dateInMillis(answer) <= question.restrictions.date.getMax().getTime();
                 result.message = question.text.root + '.ERRORS.TOO_LATE';
                 return result;
             }
@@ -1151,7 +1151,8 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "                      name=\"{{question.id}}\"\n" +
     "                      ng-model=\"question.answer\"\n" +
     "                      ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
-    "                      ng-class=\"{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"></textarea>\n" +
+    "                      ng-class=\"{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "            maxlength=\"{{question.restrictions.getMax()}}\"></textarea>\n" +
     "        </div>\n" +
     "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'GENERAL.EXTRAS.OF' |\n" +
     "            translate}} {{question.restrictions.getMax()}}\n" +
