@@ -221,7 +221,7 @@ angular.module('fsmQuestion')
                 question: '='
             },
             link: function(scope){
-                scope.$watch('scope.question.answer', function(newValue, oldValue) {
+                scope.$watch('question.answer', function(newValue, oldValue) {
                     if (newValue !== oldValue) {
                         scope.question.answer = numbersOnlyFilter(newValue);
                     }
