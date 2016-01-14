@@ -1042,7 +1042,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                />\n" +
-    "                <div class=\"input-group__addon\">{{'VIEW.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
+    "                <div class=\"input-group__addon\">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +

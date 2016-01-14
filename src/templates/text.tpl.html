@@ -19,7 +19,7 @@
                       ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
                       ng-class="{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}"></textarea>
         </div>
-        <div class="form-charcount" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'VIEW.EXTRAS.OF' |
+        <div class="form-charcount" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'GENERAL.EXTRAS.OF' |
             translate}} {{question.restrictions.getMax()}}
         </div>
 
