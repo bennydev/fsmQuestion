@@ -28,7 +28,7 @@ function Validators(QuestionTypes){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = dateInMillis(answer) >= question.restrictions.getMin().getTime();
+                result.valid = dateInMillis(answer) >= question.restrictions.getMin().date.getTime();
                 result.message = question.text.root + '.ERRORS.TOO_EARLY';
                 return result;
             }
@@ -40,7 +40,7 @@ function Validators(QuestionTypes){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = dateInMillis(answer) <= question.restrictions.getMax().getTime();
+                result.valid = dateInMillis(answer) <= question.restrictions.date.getMax().getTime();
                 result.message = question.text.root + '.ERRORS.TOO_LATE';
                 return result;
             }
