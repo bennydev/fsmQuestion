@@ -837,7 +837,7 @@ angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", f
     "        <button type=\"button\" class=\"toggle-list__item\" id=\"{{question.id + $index}}\"\n" +
     "            name=\"{{question.id}}\"\n" +
     "            ng-repeat=\"option in question.options.getValues() track by $index\"\n" +
-    "            ng-model=\"question.model[question.id]\"\n" +
+    "            ng-model=\"question.answer\"\n" +
     "            btn-radio=\"'{{option.value}}'\"\n" +
     "            ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "            ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | translate}}</button>\n" +
