@@ -12,13 +12,13 @@
         <div class="form-row form-row--gap">
             <textarea class="input-textarea"
                       ng-trim="false"
-                      maxlength="{{question.maxLength}}"
+                      maxlength="{{question.restrictions.getMax()}}"
                       id="{{question.id}}"
                       name="{{question.id}}"
                       ng-model="question.answer"
                       ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
                       ng-class="{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
-                      maxlength="{{question.restrictions.getMax()}}"></textarea>
+                      ></textarea>
         </div>
         <div class="form-charcount" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'GENERAL.EXTRAS.OF' |
             translate}} {{question.restrictions.getMax()}}

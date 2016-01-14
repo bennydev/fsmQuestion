@@ -1146,13 +1146,13 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "        <div class=\"form-row form-row--gap\">\n" +
     "            <textarea class=\"input-textarea\"\n" +
     "                      ng-trim=\"false\"\n" +
-    "                      maxlength=\"{{question.maxLength}}\"\n" +
+    "                      maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                      id=\"{{question.id}}\"\n" +
     "                      name=\"{{question.id}}\"\n" +
     "                      ng-model=\"question.answer\"\n" +
     "                      ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                      ng-class=\"{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                      maxlength=\"{{question.restrictions.getMax()}}\"></textarea>\n" +
+    "                      ></textarea>\n" +
     "        </div>\n" +
     "        <div class=\"form-charcount\" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'GENERAL.EXTRAS.OF' |\n" +
     "            translate}} {{question.restrictions.getMax()}}\n" +
