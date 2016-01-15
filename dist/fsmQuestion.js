@@ -168,7 +168,7 @@ angular.module('fsmFileUploader', [])
 "use strict";
 angular.module('fsmQuestion')
 .directive('fsmQuestion', ['QuestionTypes', 'Validators', '$translate', function(QuestionTypes, Validators, $translate){
-    var utils = new Validators(QuestionTypes).utils;
+    var utils = Validators.utils;
     function dateSetup(scope){
         if(scope.question.type === QuestionTypes.date){
             scope.formatDateString = function(question){
