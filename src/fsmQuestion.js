@@ -18,6 +18,7 @@ angular.module('fsmQuestion')
 
     function isValidDate(value){
         if(value.length === 6 || value.length === 8) {
+            value = addCentury(value);
             var date = createDate(value);
             return getDigits(date.toISOString()).indexOf(value) === 0;
         }
@@ -25,9 +26,13 @@ angular.module('fsmQuestion')
 
     function createDate(value){
         value = getDigits(value);
-        value = value.length === 6 ? '20'+value : value;
+        value = addCentury(value);
         var partials = utils.getDatePartials(value);
         return utils.createDate(partials.year+'-'+partials.month+'-'+partials.day);
+    }
+
+    function addCentury(value){
+        return value.length === 6 ? '20'+value : value;
     }
 
     function getDigits(value){
