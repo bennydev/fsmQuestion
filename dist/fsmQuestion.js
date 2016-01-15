@@ -167,7 +167,38 @@ angular.module('fsmFileUploader', [])
 
 "use strict";
 angular.module('fsmQuestion')
-.directive('fsmQuestion', ['QuestionTypes', '$translate', function(QuestionTypes, $translate){
+.directive('fsmQuestion', ['QuestionTypes', 'Validators', '$translate', function(QuestionTypes, Validators, $translate){
+    var utils = new Validators(QuestionTypes).utils;
+    function dateSetup(scope){
+        if(scope.question.type === QuestionTypes.date){
+            scope.formatDateString = function(question){
+                if(question.answer && isValidDate(question.answer)) {
+                    question.setAnswer(date);
+                }
+            };
+
+            scope.updateCalendarModel = function(value){
+                scope.calendarModel = isValidDate(value) ? createDate(value) : scope.calendarModel;
+            }
+        }
+    }
+
+    function isValidDate(value){
+        var date = createDate(value);
+        return getDigits(date.toISOString()).indexOf(value) === 0;
+    }
+
+    function createDate(value){
+        value = getDigits(value);
+        value = value.length === 6 ? '20'+value : value;
+        var partials = utils.getDatePartials(value);
+        return utils.createDate(partials.year+'-'+partials.month+'-'+partials.day);
+    }
+
+    function getDigits(value){
+        return value ? value.toString().replace(/\D/g,'') : '';
+    }
+
     return {
         restrict: 'E',
         scope: {
@@ -180,6 +211,8 @@ angular.module('fsmQuestion')
             scope.hasText = function(key){
                 return $translate.instant(key) !== key;
             };
+            dateSetup(scope);
+
         }
     };
 
@@ -509,7 +542,8 @@ function Validators(QuestionTypes){
             isValidDate: isValidDate,
             isPastDate: isPastDate,
             dateInMillis: dateInMillis,
-            getDatePartials: getDatePartials
+            getDatePartials: getDatePartials,
+            createDate: createDate
         }
     };
 
@@ -893,7 +927,7 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                   input-touched\n" +
     "                   ng-model=\"question.answer\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();\"\n" +
+    "                   ng-change=\"question.removeErrors(); formatDateString(question); updateCalendarModel(question.answer);\"\n" +
     "                   maxlength=\"{{question.restrictions.getMax().length}}\"\n" +
     "                    />\n" +
     "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +

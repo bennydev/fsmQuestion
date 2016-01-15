@@ -17,7 +17,8 @@ function Validators(QuestionTypes){
             isValidDate: isValidDate,
             isPastDate: isPastDate,
             dateInMillis: dateInMillis,
-            getDatePartials: getDatePartials
+            getDatePartials: getDatePartials,
+            createDate: createDate
         }
     };
 
