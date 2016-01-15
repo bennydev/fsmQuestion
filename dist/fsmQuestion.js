@@ -172,8 +172,9 @@ angular.module('fsmQuestion')
     function dateSetup(scope){
         if(scope.question.type === QuestionTypes.date){
             scope.formatDateString = function(question){
-                if(question.answer && isValidDate(question.answer)) {
-                    question.setAnswer(date);
+                var value = question.answer;
+                if(value && isValidDate(value)) {
+                    question.setAnswer(createDate(value));
                 }
             };
 
