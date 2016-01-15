@@ -17,8 +17,10 @@ angular.module('fsmQuestion')
     }
 
     function isValidDate(value){
-        var date = createDate(value);
-        return getDigits(date.toISOString()).indexOf(value) === 0;
+        if(value.length === 6 || value.length === 8) {
+            var date = createDate(value);
+            return getDigits(date.toISOString()).indexOf(value) === 0;
+        }
     }
 
     function createDate(value){
