@@ -18,6 +18,7 @@ angular.module('fsmQuestion')
     }
 
     function isValidDate(value){
+        value = getDigits(value);
         if(value.length === 6 || value.length === 8) {
             value = addCentury(value);
             var date = createDate(value);
