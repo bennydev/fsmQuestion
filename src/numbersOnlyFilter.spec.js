@@ -18,6 +18,13 @@ describe('Numbers only filter tests.', function () {
         var result = numbersOnlyFilter(test);
         expect(result).toBe('1');
     }));
+    it('should not replace trailing zeros, but remove a non-numeric.', inject(function (numbersOnlyFilter) {
+        var test = '1e0';
+        var result = numbersOnlyFilter(test);
+        expect(result).toBe('10');
+        result = numbersOnlyFilter(result);
+        expect(result).toBe('10');
+    }));
     it('should not replace numeric chars, but remove all non-numeric.', inject(function (numbersOnlyFilter) {
         var test = '1e2Ö-3>4" 5';
         var result = numbersOnlyFilter(test);

@@ -233,8 +233,12 @@ angular.module('fsmQuestion')
 angular.module('fsmQuestion').filter('numbersOnly', function () {
     return function(input) {
         if (input) {
-            var str = input.replace(/[^1-9]/, '');
-           return str.replace(/[^0-9]+/g, '');
+            console.log('Input: ' + input);
+            var str = input.replace(/^0/, '');
+            console.log('After first: ' + str);
+            str = str.replace(/[^0-9]+/g, '');
+            console.log('Completed: ' + str);
+            return str;
         }
 
         return input;
@@ -613,7 +617,7 @@ function Validators(QuestionTypes){
             validate: function(question) {
                 var answer = question.answer;
                 var result = {};
-                result.valid = typeof answer === 'number' && answer !== NaN ? true : getNumericAnswer(answer) !== undefined;
+                result.valid = typeof answer === 'number' && !isNaN(answer) ? true : getNumericAnswer(answer) !== undefined;
                 result.message = question.text.root + '.ERRORS.INVALID';
                 return result;
             }
