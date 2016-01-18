@@ -18,8 +18,13 @@ function Validators(QuestionTypes, QuestionUtils){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
+                result.valid = true;
+                result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
+                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
+                result.valid = result.valid && QuestionUtils.isValidDate(answer);
+                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
                 result.valid = QuestionUtils.dateInMillis(answer) >= question.restrictions.getMin().date.getTime();
-                result.message = question.text.root + '.ERRORS.TOO_EARLY';
+                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.TOO_EARLY': result.message;
                 return result;
             }
         };
@@ -30,8 +35,13 @@ function Validators(QuestionTypes, QuestionUtils){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
+                result.valid = true;
+                result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
+                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
+                result.valid = result.valid && QuestionUtils.isValidDate(answer);
+                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
                 result.valid = QuestionUtils.dateInMillis(answer) <= question.restrictions.getMax().date.getTime();
-                result.message = question.text.root + '.ERRORS.TOO_LATE';
+                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.TOO_LATE' : result.message;
                 return result;
             }
         };
