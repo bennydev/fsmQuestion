@@ -1,44 +1,19 @@
 "use strict";
 angular.module('fsmQuestion')
-.directive('fsmQuestion', ['QuestionTypes', 'Validators', '$translate', function(QuestionTypes, Validators, $translate){
-    var utils = Validators.utils;
+.directive('fsmQuestion', ['QuestionTypes', 'QuestionUtils', '$translate', function(QuestionTypes, QuestionUtils, $translate){
     function dateSetup(scope){
         if(scope.question.type === QuestionTypes.date){
             scope.formatDateString = function(question){
                 var value = question.answer;
-                if(value && isValidDate(value)) {
-                    question.setAnswer(createDate(value));
+                if(value && QuestionUtils.isValidDate(value)) {
+                    question.setAnswer(QuestionUtils.createDate(value));
                 }
             };
 
             scope.updateCalendarModel = function(value){
-                scope.calendarModel = isValidDate(value) ? createDate(value) : scope.calendarModel;
+                scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
             }
         }
-    }
-
-    function isValidDate(value){
-        value = getDigits(value);
-        if(value.length === 6 || value.length === 8) {
-            value = addCentury(value);
-            var date = createDate(value);
-            return getDigits(date.toISOString()).indexOf(value) === 0;
-        }
-    }
-
-    function createDate(value){
-        value = getDigits(value);
-        value = addCentury(value);
-        var partials = utils.getDatePartials(value);
-        return utils.createDate(partials.year+'-'+partials.month+'-'+partials.day);
-    }
-
-    function addCentury(value){
-        return value.length === 6 ? '20'+value : value;
-    }
-
-    function getDigits(value){
-        return value ? value.toString().replace(/\D/g,'') : '';
     }
 
     return {

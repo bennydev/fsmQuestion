@@ -167,45 +167,20 @@ angular.module('fsmFileUploader', [])
 
 "use strict";
 angular.module('fsmQuestion')
-.directive('fsmQuestion', ['QuestionTypes', 'Validators', '$translate', function(QuestionTypes, Validators, $translate){
-    var utils = Validators.utils;
+.directive('fsmQuestion', ['QuestionTypes', 'QuestionUtils', '$translate', function(QuestionTypes, QuestionUtils, $translate){
     function dateSetup(scope){
         if(scope.question.type === QuestionTypes.date){
             scope.formatDateString = function(question){
                 var value = question.answer;
-                if(value && isValidDate(value)) {
-                    question.setAnswer(createDate(value));
+                if(value && QuestionUtils.isValidDate(value)) {
+                    question.setAnswer(QuestionUtils.createDate(value));
                 }
             };
 
             scope.updateCalendarModel = function(value){
-                scope.calendarModel = isValidDate(value) ? createDate(value) : scope.calendarModel;
+                scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
             }
         }
-    }
-
-    function isValidDate(value){
-        value = getDigits(value);
-        if(value.length === 6 || value.length === 8) {
-            value = addCentury(value);
-            var date = createDate(value);
-            return getDigits(date.toISOString()).indexOf(value) === 0;
-        }
-    }
-
-    function createDate(value){
-        value = getDigits(value);
-        value = addCentury(value);
-        var partials = utils.getDatePartials(value);
-        return utils.createDate(partials.year+'-'+partials.month+'-'+partials.day);
-    }
-
-    function addCentury(value){
-        return value.length === 6 ? '20'+value : value;
-    }
-
-    function getDigits(value){
-        return value ? value.toString().replace(/\D/g,'') : '';
     }
 
     return {
@@ -478,6 +453,147 @@ function QuestionTypes(){
     types.text = 'TEXT';
 }
 
+'use strict';
+angular.module('fsmQuestion')
+    .factory('QuestionUtils', Utils);
+function Utils(){
+    return {
+        isPersonId: isPersonId,
+        removeValidPersonIdSeparators: removeValidPersonIdSeparators,
+        addCenturyToPersonId: addCenturyToPersonId,
+        isValidDateFormat: isValidDateFormat,
+        isPastDate: isPastDate,
+        dateInMillis: dateInMillis,
+        getDatePartials: getDatePartials,
+        isValidDate: isValidDate,
+        createDate: createDate,
+        addCentury: addCentury,
+        getDigits: getDigits,
+        isNumeric: isNumeric,
+        startsWithNumberOfChars: startsWithNumberOfChars
+    };
+
+    function isValidDate(value){
+        value = getDigits(value);
+        if(value.length === 6 || value.length === 8) {
+            value = addCentury(value);
+            var date = createDate(value);
+            return getDigits(date.toISOString()).indexOf(value) === 0;
+        }
+    }
+
+    function createDate(value){
+        if(value) {
+            value = getDigits(value);
+            value = addCentury(value);
+            var partials = getDatePartials(value);
+            return new Date(Date.UTC(
+                parseInt(partials.year),
+                parseInt(partials.month) - 1,
+                parseInt(partials.day)
+            ));
+        }
+    }
+
+    function getDatePartials(value){
+        if(value) {
+            value = getDigits(value);
+            if(value.toString().length >= 8) {
+                return {
+                    year: value.substr(0, 4),
+                    month: value.substr(4, 2),
+                    day: value.substr(6, 2)
+                };
+            }
+        }
+    }
+
+    function addCentury(value){
+        return value.length === 6 ? getCurrentCentury()+value : value;
+    }
+
+    function getCurrentCentury(){
+        return new Date().getUTCFullYear().toString().substr(0,2);
+    }
+
+    function getDigits(value){
+        return value ? value.toString().replace(/\D/g,'') : '';
+    }
+
+    function isPersonId(value){
+        value = removeValidPersonIdSeparators(value);
+        return isNumeric(value) && (value.length === 10 || value.length === 12);
+    }
+
+    function removeValidPersonIdSeparators(value){
+        return value.toString().replace(new RegExp('[\\+-]', 'gi'), '');
+    }
+
+    function addCenturyToPersonId(personId) {
+        personId = personId.toString();
+        if (removeValidPersonIdSeparators(personId).length === 10) {
+            var currentYear = new Date().getUTCFullYear();
+            var currentCentury = getCurrentCentury();
+            if (personId.indexOf('+') === 6) {
+                personId = currentCentury - 1 + personId;
+            } else {
+                personId = currentYear - parseInt(currentCentury - 1 + personId.substr(0, 2)) >= 100 ? currentCentury + personId : currentCentury - 1 + personId;
+            }
+        }
+        return personId;
+    }
+
+    function isValidDateFormat(value){
+        value = value.toString().replace(new RegExp('[-.]', 'gi'), '');
+        return value && isNumeric(value) && value.length === 8;
+    }
+
+    function isNumeric(value, allowExponent){
+        value = value.toString();
+        if(allowExponent){
+            return !isNaN(value) && isFinite(value);
+        } else {
+            var amountLeadingZeroes = amountLeadingChar(value, '0');
+            var parsed = parseFloat(value);
+            return value.length === parsed.toString().length + amountLeadingZeroes && !isNaN(parsed) && isFinite(parsed);
+        }
+    }
+
+    function amountLeadingChar(string, find){
+        var amount = 0;
+        var found = true;
+        (''+string).split('').forEach(function(char){
+            if(found){
+                found = find === char;
+                if(found){
+                    amount++;
+                }
+            }
+        });
+        return amount;
+    }
+
+    function isPastDate(value){
+        if(value) {
+            var datePartials = getDatePartials(value);
+            var date = createDate(datePartials.year+'-'+datePartials.month+'-'+datePartials.day);
+            var now = new Date();
+            return date.getTime() < now.getTime();
+        }
+    }
+
+    function dateInMillis(value){
+        if(value) {
+            var date = createDate(value);
+            return date.getTime();
+        }
+    }
+
+    function startsWithNumberOfChars(value, length){
+        value = value.toString();
+        return !! value.substr(0, length).match(new RegExp('[a-zA-ZåäöÅÄÖ]','gi'));
+    }
+}
 "use strict";
 angular.module('fsmQuestion')
 .value('Restrictions', Restrictions);
@@ -534,26 +650,15 @@ function ValidationService(Validators, QuestionTypes, ErrorReporter){
 }
 "use strict";
 angular.module('fsmQuestion')
-.factory('Validators', ['QuestionTypes', Validators]);
-function Validators(QuestionTypes){
+.factory('Validators', ['QuestionTypes', 'QuestionUtils', Validators]);
+function Validators(QuestionTypes, QuestionUtils){
     var service = {
         getRequiredValidator: getRequiredValidator,
         getMinValidator: getMinValidator,
         getMaxValidator: getMaxValidator,
         getNumericValidator: getNumericValidator,
         getIdentificationValidator: getIdentificationValidator,
-        getPastDateValidator: getPastDateValidator,
-        utils: {
-            isPersonId: isPersonId,
-            removeValidPersonIdSeparators: removeValidPersonIdSeparators,
-            addCenturyToPersonId: addCenturyToPersonId,
-            isValidDateFormat: isValidDateFormat,
-            isValidDate: isValidDate,
-            isPastDate: isPastDate,
-            dateInMillis: dateInMillis,
-            getDatePartials: getDatePartials,
-            createDate: createDate
-        }
+        getPastDateValidator: getPastDateValidator
     };
 
     return service;
@@ -563,7 +668,7 @@ function Validators(QuestionTypes){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = dateInMillis(answer) >= question.restrictions.getMin().date.getTime();
+                result.valid = QuestionUtils.dateInMillis(answer) >= question.restrictions.getMin().date.getTime();
                 result.message = question.text.root + '.ERRORS.TOO_EARLY';
                 return result;
             }
@@ -575,7 +680,7 @@ function Validators(QuestionTypes){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = dateInMillis(answer) <= question.restrictions.getMax().date.getTime();
+                result.valid = QuestionUtils.dateInMillis(answer) <= question.restrictions.getMax().date.getTime();
                 result.message = question.text.root + '.ERRORS.TOO_LATE';
                 return result;
             }
@@ -672,28 +777,16 @@ function Validators(QuestionTypes){
         return numericAnswer;
     }
 
-    function dateInMillis(isoDateString){
-        var date = createDate(isoDateString);
-        return date.getTime();
-    }
-
-    function createDate(isoDateString){
-        var year = parseInt(isoDateString.substr(0,4));
-        var month = parseInt(isoDateString.substr(5,2)) -1;
-        var day = parseInt(isoDateString.substr(8,2));
-        return new Date(Date.UTC(year, month, day));
-    }
-
     function getIdentificationValidator(){
         return {
             validate: function(question){
                 var answer = question.answer;
-                if(isPersonId(answer)){
+                if(QuestionUtils.isPersonId(answer)){
                     return {
                         valid: validatePersonId(answer),
                         message: question.text.root + '.ERRORS.PERSON_ID_INVALID'
                     };
-                } else if(startsWithNumberOfChars(answer, 1)){
+                } else if(QuestionUtils.startsWithNumberOfChars(answer, 1)){
                     return {
                         valid: validateCustomerNumber(answer),
                         message: question.text.root + '.ERRORS.CUSTOMER_NUMBER_INVALID'
@@ -710,47 +803,20 @@ function Validators(QuestionTypes){
             var answer = question.answer;
             var result = {};
             result.valid = true;
-            result.valid = result.valid && isValidDateFormat(answer);
+            result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
             result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
-            result.valid = result.valid && isValidDate(answer);
+            result.valid = result.valid && QuestionUtils.isValidDate(answer);
             result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
-            result.valid = result.valid && isPastDate(answer);
+            result.valid = result.valid && QuestionUtils.isPastDate(answer);
             result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FUTURE' : result.message;
             return result;
         }};
     }
 
-    function isPersonId(value){
-        value = removeValidPersonIdSeparators(value);
-        return isNumeric(value) && (value.length === 10 || value.length === 12);
-    }
-
     function validatePersonId(value){
-        value = removeValidPersonIdSeparators(value);
+        value = QuestionUtils.removeValidPersonIdSeparators(value);
         value = value.length === 12 ? value.substr(2) : value;
-        return isValidDate(value.substr(0,6)) && hasValidChecksum(value);
-    }
-
-    function isValidDate(value){
-        if(value) {
-            value = value.replace(new RegExp('[-.]', 'gi'), '');
-            value = value.toString().length >= 8 ? value.toString() : '19' + value;
-            var datePartials = getDatePartials(value);
-            return new Date(Date.UTC(datePartials.year, datePartials.month -1, datePartials.day)).toISOString().replace(new RegExp('-', 'gi'), '').indexOf(value.substr(0, 6)) >= 0;
-        }
-    }
-
-    function getDatePartials(value){
-        if(value) {
-            value = value.replace(new RegExp('[-.]', 'gi'), '');
-            if(value.toString().length >= 8) {
-                return {
-                    year: value.substr(0, 4),
-                    month: value.substr(4, 2),
-                    day: value.substr(6, 2)
-                };
-            }
-        }
+        return QuestionUtils.isValidDate(value.substr(0,6)) && hasValidChecksum(value);
     }
 
     function hasValidChecksum(value){
@@ -774,72 +840,12 @@ function Validators(QuestionTypes){
         }).toString().split('').reduce(function(prev, curr){return parseInt(curr);});
     }
 
-    function removeValidPersonIdSeparators(value){
-        return value.toString().replace(new RegExp('[\\+-]', 'gi'), '');
-    }
-
-    function addCenturyToPersonId(personId) {
-        personId = personId.toString();
-        if (removeValidPersonIdSeparators(personId).length === 10) {
-            var currentYear = new Date().getUTCFullYear();
-            var currentCentury = currentYear.toString().substr(0, 2);
-            if (personId.indexOf('+') === 6) {
-                personId = currentCentury - 1 + personId;
-            } else {
-                personId = currentYear - parseInt(currentCentury - 1 + personId.substr(0, 2)) >= 100 ? currentCentury + personId : currentCentury - 1 + personId;
-            }
-        }
-        return personId;
-    }
-
     function validateCustomerNumber(value){
-        value = removeValidPersonIdSeparators(value);
-        return startsWithNumberOfChars(value, 3) && isNumeric(value.substr(3)) && value.length === 9;
+        value = QuestionUtils.removeValidPersonIdSeparators(value);
+        return QuestionUtils.startsWithNumberOfChars(value, 3) && QuestionUtils.isNumeric(value.substr(3)) && value.length === 9;
     }
 
-    function isNumeric(value, allowExponent){
-        value = value.toString();
-        if(allowExponent){
-            return !isNaN(value) && isFinite(value);
-        } else {
-            var amountLeadingZeroes = amountLeadingChar(value, '0');
-            var parsed = parseFloat(value).toString();
-            return value.length === parsed.length + amountLeadingZeroes && !isNaN(parsed) && isFinite(parsed);
-        }
-    }
 
-    function amountLeadingChar(string, find){
-        var amount = 0;
-        var found = true;
-        string.split('').forEach(function(char){
-            if(found){
-                found = find === char;
-                if(found){
-                    amount++;
-                }
-            }
-        });
-        return amount;
-    }
-
-    function startsWithNumberOfChars(value, length){
-        value = value.toString();
-        return !! value.substr(0, length).match(new RegExp('[a-zA-ZåäöÅÄÖ]','gi'));
-    }
-
-    function isValidDateFormat(value){
-        value = value.toString().replace(new RegExp('[-.]', 'gi'), '');
-        return value && isNumeric(value) && value.length === 8;
-    }
-
-    function isPastDate(value){
-        if(value) {
-            var datePartials = getDatePartials(value);
-            var date = createDate(datePartials.year+'-'+datePartials.month+'-'+datePartials.day);
-            var now = new Date();
-            return date.getTime() < now.getTime();
-        }
-    }
 }
 angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
