@@ -16,7 +16,7 @@
                       id="{{question.id}}"
                       name="{{question.id}}"
                       ng-model="question.answer"
-                      ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
+                      ng-change="question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
                       ng-class="{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
                       ></textarea>
         </div>

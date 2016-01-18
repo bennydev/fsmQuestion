@@ -902,7 +902,7 @@ angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", f
     "            ng-model=\"question.answer\"\n" +
     "            btn-radio=\"'{{option.value}}'\"\n" +
     "            ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
-    "            ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();\">{{option.label | translate}}</button>\n" +
+    "            ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();\">{{option.label | translate}}</button>\n" +
     "    </div>\n" +
     "    <input type=\"hidden\" ng-required=\"true\" name=\"agree\" ng-model=\"agree\">\n" +
     "\n" +
@@ -952,7 +952,7 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                   input-touched\n" +
     "                   ng-model=\"question.answer\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors(); formatDateString(question); updateCalendarModel(question.answer);\"\n" +
+    "                   ng-change=\"question.removeError(); formatDateString(question); updateCalendarModel(question.answer);\"\n" +
     "                   maxlength=\"{{question.restrictions.getMax().length}}\"\n" +
     "                    />\n" +
     "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +
@@ -961,7 +961,7 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                 max-date=\"question.restrictions.getMax().date\"\n" +
     "                 ng-model=\"calendarModel\"\n" +
     "                 ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                 ng-change=\"question.removeErrors();question.setAnswer(calendarModel);\"\n" +
+    "                 ng-change=\"question.removeError();question.setAnswer(calendarModel);\"\n" +
     "                 is-open=\"question.isOpen\"\n" +
     "                    style=\"margin-top:1px;\">\n" +
     "                 </div>\n" +
@@ -990,7 +990,7 @@ angular.module("templates/datetime.tpl.html", []).run(["$templateCache", functio
     "                   class=\"form-control\"\n" +
     "                   ng-model=\"question.model[question.id].date\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();\"\n" +
+    "                   ng-change=\"question.removeError();\"\n" +
     "                    />\n" +
     "        </div>\n" +
     "        <div class=\"clearfix visible-xs\" style=\"padding-bottom: 15px;\"></div>\n" +
@@ -1001,7 +1001,7 @@ angular.module("templates/datetime.tpl.html", []).run(["$templateCache", functio
     "                   class=\"form-control\"\n" +
     "                   ng-model=\"question.model[question.id].time\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-change=\"question.removeErrors();\"\n" +
+    "                   ng-change=\"question.removeError();\"\n" +
     "                    />\n" +
     "        </div>\n" +
     "\n" +
@@ -1066,7 +1066,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "             input-touched\n" +
     "             class=\"input-text\"\n" +
     "             ng-model=\"question.answer\"\n" +
-    "             ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "             ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "             ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "             maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                  />\n" +
@@ -1101,7 +1101,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       numbers\n" +
     "                       question=\"question\"\n" +
     "                       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                       ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                       ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                />\n" +
     "                <div class=\"input-group__addon\">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
@@ -1116,7 +1116,7 @@ angular.module("templates/location.tpl.html", []).run(["$templateCache", functio
   $templateCache.put("templates/location.tpl.html",
     "<div>{{question.text.root+'.QUESTION' | translate}}</div>\n" +
     "<input ng-model=\"question.model[question.id]\"\n" +
-    "       ng-change=\"question.removeErrors();question.saveAnswer();\"\n" +
+    "       ng-change=\"question.removeError();question.saveAnswer();\"\n" +
     "       ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\">\n" +
     "[KARTA]");
 }]);
@@ -1138,7 +1138,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                      <select ng-model=\"question.model[question.id].countryCode\"\n" +
     "                              id=\"{{question.id}}CountryCode\"\n" +
     "                              name=\"{{question.id}}CountryCode\"\n" +
-    "                              ng-change=\"question.removeErrors(); addZeroToPhonenumber(); question.saveAnswer();\"\n" +
+    "                              ng-change=\"question.removeError(); addZeroToPhonenumber(); question.saveAnswer();\"\n" +
     "                              ng-init=\"question.model[question.id].countryCode = question.options[209]; question.model[question.id].phoneNumber = '0';\"\n" +
     "                              ng-options=\"option.name for option in question.options track by option.id\"\n" +
     "\n" +
@@ -1153,7 +1153,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                 name=\"{{question.id}}PhoneNumber\"\n" +
     "                 input-touched\n" +
     "                 ng-model=\"question.model[question.id].phoneNumber\"\n" +
-    "                 ng-change=\"question.removeErrors(); question.onChange(question); question.saveAnswer();\"\n" +
+    "                 ng-change=\"question.removeError(); question.onChange(question); question.saveAnswer();\"\n" +
     "                  />\n" +
     "          </div>\n" +
     "\n" +
@@ -1181,7 +1181,7 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "                        name=\"{{question.id}}\"\n" +
     "                        class=\"form-control\"\n" +
     "                        ng-model=\"question.answer\"\n" +
-    "                        ng-change=\"question.removeErrors();question.onChange(question); question.saveAnswer(); question.setAnswer(question.answer);\"\n" +
+    "                        ng-change=\"question.removeError();question.onChange(question); question.saveAnswer(); question.setAnswer(question.answer);\"\n" +
     "                        ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "                        ng-options=\"option.value as option.label | translate for option in question.options.getValues()\">\n" +
     "                </select>\n" +
@@ -1212,7 +1212,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "                      id=\"{{question.id}}\"\n" +
     "                      name=\"{{question.id}}\"\n" +
     "                      ng-model=\"question.answer\"\n" +
-    "                      ng-change=\"question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                      ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                      ng-class=\"{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "                      ></textarea>\n" +
     "        </div>\n" +

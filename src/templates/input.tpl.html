@@ -16,7 +16,7 @@
              input-touched
              class="input-text"
              ng-model="question.answer"
-             ng-change="question.removeErrors();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
+             ng-change="question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
              ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
              maxlength="{{question.restrictions.getMax()}}"
                   />
