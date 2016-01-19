@@ -1128,14 +1128,14 @@ angular.module("templates/formerror.tpl.html", []).run(["$templateCache", functi
 
 angular.module("templates/fsmQuestion.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/fsmQuestion.tpl.html",
-    "<div ng-if=\"question.isVisible()\" class=\"row input-block animate-show\">\n" +
+    "<div ng-show=\"question.isVisible()\" class=\"row input-block animate-show\">\n" +
     "    <div class=\"input-block__block\" ng-include=\"'templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
 angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/fsmQuestionGroup.tpl.html",
-    "<fieldset ng-if=\"isVisible()\">\n" +
+    "<fieldset ng-show=\"isVisible()\">\n" +
     "    <fsm-question question=\"question\" ng-repeat=\"question in questions\"></fsm-question>\n" +
     "</fieldset>");
 }]);
