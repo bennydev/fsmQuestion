@@ -13,6 +13,9 @@ function ValidationService(Validators, QuestionTypes, ErrorReporter){
             if(question.isRequired()){
                 validateWithValidator(Validators.getRequiredValidator(), question);
             }
+            if (question.type === QuestionTypes.date) {
+                validateWithValidator(Validators.getDateValidator(), question);
+            }
             if(question.restrictions.getMin() && !ErrorReporter.hasErrorFor(question.id)){
                 validateWithValidator(Validators.getMinValidator(question), question);
             }

@@ -1,9 +1,10 @@
 "use strict";
 angular.module('fsmQuestion')
-.factory('Validators', ['QuestionTypes', 'QuestionUtils', Validators]);
-function Validators(QuestionTypes, QuestionUtils){
+.factory('Validators', ['QuestionTypes', 'QuestionUtils', 'DateValidator', Validators]);
+function Validators(QuestionTypes, QuestionUtils, DateValidator){
     var service = {
         getRequiredValidator: getRequiredValidator,
+        getDateValidator: DateValidator,
         getMinValidator: getMinValidator,
         getMaxValidator: getMaxValidator,
         getNumericValidator: getNumericValidator,
@@ -19,10 +20,6 @@ function Validators(QuestionTypes, QuestionUtils){
                 var answer = question.answer;
                 var result = {};
                 result.valid = true;
-                result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
-                result.valid = result.valid && QuestionUtils.isValidDate(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
                 result.valid = result.valid && QuestionUtils.dateInMillis(answer) >= question.restrictions.getMin().date.getTime();
                 result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.TOO_EARLY': result.message;
                 return result;
@@ -36,10 +33,6 @@ function Validators(QuestionTypes, QuestionUtils){
                 var answer = question.answer;
                 var result = {};
                 result.valid = true;
-                result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
-                result.valid = result.valid && QuestionUtils.isValidDate(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
                 result.valid = result.valid && QuestionUtils.dateInMillis(answer) <= question.restrictions.getMax().date.getTime();
                 result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.TOO_LATE' : result.message;
                 return result;
@@ -162,11 +155,6 @@ function Validators(QuestionTypes, QuestionUtils){
         return {validate: function(question){
             var answer = question.answer;
             var result = {};
-            result.valid = true;
-            result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
-            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
-            result.valid = result.valid && QuestionUtils.isValidDate(answer);
-            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
             result.valid = result.valid && QuestionUtils.isPastDate(answer);
             result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FUTURE' : result.message;
             return result;

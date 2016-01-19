@@ -3,6 +3,85 @@ angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule'])
     .constant('buttonConfig', {activeClass: 'is-active'})
     .value('storagePrefix', 'i84ds03');
 "use strict";
+angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', function (QuestionUtils) {
+    var service = {
+        isValidDate:isValidDate,
+        isPastDate: isPastDate,
+        isFutureDate: isFutureDate
+    };
+
+    function isValidDate(possibleDate) {
+        var result = {};
+        result.valid = QuestionUtils.isValidDateFormat(possibleDate);
+        if (result.valid) {
+            var digits = QuestionUtils.getDigits(possibleDate);
+            result.valid = validateDate(digits);
+        }
+
+        return result.valid;
+    }
+
+    function isPastDate(date) {
+        var now = getToday();
+        return date < now;
+    }
+
+    function isFutureDate(date) {
+        var now = getToday();
+        return date > now;
+    }
+
+    function getToday() {
+        var now = new Date();
+        now.setHours(0);
+        now.setMinutes(0);
+        now.setSeconds(0);
+        now.setMilliseconds(0);
+        return now;
+    }
+
+    function validateDate(digits) {
+        var dateCandidate = digits;
+
+        if (dateCandidate.length === 6 && dateCandidate.indexOf('20') !== 0) {
+            dateCandidate = '20' + digits;
+        }
+        if (isNaN(dateCandidate)) {
+            return false;
+        }
+        var year = parseInt(d.substr(0, 4));
+        var month = parseInt(d.substr(4, 2)) - 1;
+        var day = parseInt(d.substr(6, 2));
+        return isValidYearMonthDayCombination(year, month, day);
+
+    }
+
+    function isValidYearMonthDayCombination(year, month, day) {
+        if (month > 11) {
+            return false;
+        }
+        if (day > 31) {
+            return false;
+        }
+
+        if (month === 1 && day === 29) {
+            return isLeapYear(year);
+        }
+        if (month === 1 && day > 28) {
+            return false;
+        }
+        return !((month === 3 || month === 5 || month === 8 || month === 10) && day > 30);
+
+
+    }
+
+    function isLeapYear(year) {
+        return new Date(Date.UTC(year, 1, 29, 0, 0, 0, 0)).getMonth() === 1;
+    }
+    return service;
+
+}]);
+"use strict";
 angular.module('fsmQuestion')
     .factory('ErrorReporter', ErrorReporter);
 function ErrorReporter(){
