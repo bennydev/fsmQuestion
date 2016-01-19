@@ -5,22 +5,21 @@ angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule'])
 "use strict";
 angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', function (QuestionUtils) {
     var service = {
-        isValidDate:isValidDate,
+        validate: validate,
         isPastDate: isPastDate,
         isFutureDate: isFutureDate
     };
 
-    function isValidDate(possibleDate) {
-        var result = {};
-        result.valid = QuestionUtils.isValidDateFormat(possibleDate);
+    function validate(question) {
+        var result = validateFormat(question);
         if (result.valid) {
-            var digits = QuestionUtils.getDigits(possibleDate);
-            result.valid = validateDate(digits);
+            result = validateDate(question);
         }
 
-        return result.valid;
+        return result;
     }
 
+    // Could put all date validations and operations in this...
     function isPastDate(date) {
         var now = getToday();
         return date < now;
@@ -40,7 +39,27 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
         return now;
     }
 
-    function validateDate(digits) {
+    function validateFormat(question) {
+        var result = {};
+
+        result.valid = QuestionUtils.isValidDateFormat(question.answer);
+        if (!result.valid) {
+            result.message = question.text.root + '.ERRORS.FORMAT';
+        }
+        return result;
+    }
+
+    function validateDate(question) {
+        var result = {};
+        var digits = QuestionUtils.getDigits(question.answer);
+        result.valid = isValidDate(digits);
+        if (!result.valid) {
+            result.message = question.text.root + '.ERRORS.INVALID';
+        }
+        return result;
+    }
+
+    function isValidDate(digits) {
         var dateCandidate = digits;
 
         if (dateCandidate.length === 6 && dateCandidate.indexOf('20') !== 0) {
@@ -57,6 +76,9 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
     }
 
     function isValidYearMonthDayCombination(year, month, day) {
+        if (day === 0) {
+            return false;
+        }
         if (month > 11) {
             return false;
         }
@@ -64,20 +86,22 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
             return false;
         }
 
-        if (month === 1 && day === 29) {
-            return isLeapYear(year);
-        }
         if (month === 1 && day > 28) {
             return false;
         }
-        return !((month === 3 || month === 5 || month === 8 || month === 10) && day > 30);
-
-
+        if ((month === 3 || month === 5 || month === 8 || month === 10) && day > 30) {
+            return false;
+        }
+        if (month === 1 && day === 29) {
+            return isLeapYear(year);
+        }
+        return true;
     }
 
     function isLeapYear(year) {
         return new Date(Date.UTC(year, 1, 29, 0, 0, 0, 0)).getMonth() === 1;
     }
+
     return service;
 
 }]);
@@ -708,6 +732,9 @@ function ValidationService(Validators, QuestionTypes, ErrorReporter){
             if(question.isRequired()){
                 validateWithValidator(Validators.getRequiredValidator(), question);
             }
+            if (question.type === QuestionTypes.date) {
+                validateWithValidator(Validators.getDateValidator(), question);
+            }
             if(question.restrictions.getMin() && !ErrorReporter.hasErrorFor(question.id)){
                 validateWithValidator(Validators.getMinValidator(question), question);
             }
@@ -729,10 +756,11 @@ function ValidationService(Validators, QuestionTypes, ErrorReporter){
 }
 "use strict";
 angular.module('fsmQuestion')
-.factory('Validators', ['QuestionTypes', 'QuestionUtils', Validators]);
-function Validators(QuestionTypes, QuestionUtils){
+.factory('Validators', ['QuestionTypes', 'QuestionUtils', 'DateValidator', Validators]);
+function Validators(QuestionTypes, QuestionUtils, DateValidator){
     var service = {
         getRequiredValidator: getRequiredValidator,
+        getDateValidator: DateValidator,
         getMinValidator: getMinValidator,
         getMaxValidator: getMaxValidator,
         getNumericValidator: getNumericValidator,
@@ -748,10 +776,6 @@ function Validators(QuestionTypes, QuestionUtils){
                 var answer = question.answer;
                 var result = {};
                 result.valid = true;
-                result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
-                result.valid = result.valid && QuestionUtils.isValidDate(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
                 result.valid = result.valid && QuestionUtils.dateInMillis(answer) >= question.restrictions.getMin().date.getTime();
                 result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.TOO_EARLY': result.message;
                 return result;
@@ -765,10 +789,6 @@ function Validators(QuestionTypes, QuestionUtils){
                 var answer = question.answer;
                 var result = {};
                 result.valid = true;
-                result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
-                result.valid = result.valid && QuestionUtils.isValidDate(answer);
-                result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
                 result.valid = result.valid && QuestionUtils.dateInMillis(answer) <= question.restrictions.getMax().date.getTime();
                 result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.TOO_LATE' : result.message;
                 return result;
@@ -891,11 +911,6 @@ function Validators(QuestionTypes, QuestionUtils){
         return {validate: function(question){
             var answer = question.answer;
             var result = {};
-            result.valid = true;
-            result.valid = result.valid && QuestionUtils.isValidDateFormat(answer);
-            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FORMAT' : result.message;
-            result.valid = result.valid && QuestionUtils.isValidDate(answer);
-            result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.INVALID' : result.message;
             result.valid = result.valid && QuestionUtils.isPastDate(answer);
             result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FUTURE' : result.message;
             return result;
@@ -1113,14 +1128,14 @@ angular.module("templates/formerror.tpl.html", []).run(["$templateCache", functi
 
 angular.module("templates/fsmQuestion.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/fsmQuestion.tpl.html",
-    "<div ng-show=\"question.isVisible()\" class=\"row input-block animate-show\">\n" +
+    "<div ng-if=\"question.isVisible()\" class=\"row input-block animate-show\">\n" +
     "    <div class=\"input-block__block\" ng-include=\"'templates/' + question.type.toLowerCase() + '.tpl.html'\"></div>\n" +
     "</div>");
 }]);
 
 angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/fsmQuestionGroup.tpl.html",
-    "<fieldset ng-show=\"isVisible()\">\n" +
+    "<fieldset ng-if=\"isVisible()\">\n" +
     "    <fsm-question question=\"question\" ng-repeat=\"question in questions\"></fsm-question>\n" +
     "</fieldset>");
 }]);
