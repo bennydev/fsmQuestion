@@ -465,10 +465,10 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
     }
 
     function value(value, defaultValue){
-        if(value && value.isBuilder){
+        if((value && value.isBuilder) || value === undefined || value === null){
             return defaultValue;
         } else {
-            return value === undefined || value === null ? defaultValue : value;
+            return value;
         }
     }
 
