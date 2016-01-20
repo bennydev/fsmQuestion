@@ -81,15 +81,14 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
         if (day > 31) {
             return false;
         }
-
+        if (month === 1 && day === 29) {
+            return isLeapYear(year);
+        }
         if (month === 1 && day > 28) {
             return false;
         }
         if ((month === 3 || month === 5 || month === 8 || month === 10) && day > 30) {
             return false;
-        }
-        if (month === 1 && day === 29) {
-            return isLeapYear(year);
         }
         return true;
     }

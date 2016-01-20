@@ -85,15 +85,14 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
         if (day > 31) {
             return false;
         }
-
+        if (month === 1 && day === 29) {
+            return isLeapYear(year);
+        }
         if (month === 1 && day > 28) {
             return false;
         }
         if ((month === 3 || month === 5 || month === 8 || month === 10) && day > 30) {
             return false;
-        }
-        if (month === 1 && day === 29) {
-            return isLeapYear(year);
         }
         return true;
     }
@@ -760,7 +759,7 @@ angular.module('fsmQuestion')
 function Validators(QuestionTypes, QuestionUtils, DateValidator){
     var service = {
         getRequiredValidator: getRequiredValidator,
-        getDateValidator: DateValidator,
+        getDateValidator: getDateValidator,
         getMinValidator: getMinValidator,
         getMaxValidator: getMaxValidator,
         getNumericValidator: getNumericValidator,
@@ -846,6 +845,10 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
                 return result;
             }
         };
+    }
+
+    function getDateValidator(){
+        return DateValidator;
     }
 
     function getMinValidator(question){

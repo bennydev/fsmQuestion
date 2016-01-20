@@ -4,7 +4,7 @@ angular.module('fsmQuestion')
 function Validators(QuestionTypes, QuestionUtils, DateValidator){
     var service = {
         getRequiredValidator: getRequiredValidator,
-        getDateValidator: DateValidator,
+        getDateValidator: getDateValidator,
         getMinValidator: getMinValidator,
         getMaxValidator: getMaxValidator,
         getNumericValidator: getNumericValidator,
@@ -90,6 +90,10 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
                 return result;
             }
         };
+    }
+
+    function getDateValidator(){
+        return DateValidator;
     }
 
     function getMinValidator(question){
