@@ -68,9 +68,9 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
         if (isNaN(dateCandidate)) {
             return false;
         }
-        var year = parseInt(d.substr(0, 4));
-        var month = parseInt(d.substr(4, 2)) - 1;
-        var day = parseInt(d.substr(6, 2));
+        var year = parseInt(dateCandidate.substr(0, 4));
+        var month = parseInt(dateCandidate.substr(4, 2)) - 1;
+        var day = parseInt(dateCandidate.substr(6, 2));
         return isValidYearMonthDayCombination(year, month, day);
 
     }
