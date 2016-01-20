@@ -23,8 +23,8 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                     value(builder.id),
                     value(builder.type),
                     value(builder.text),
-                    new Options(value(builder.defaultAnswer)||'', value(builder.visible)||true, value(builder.values)||[], value(builder.placeholder)||'', value(builder.onChange)),
-                    new Restrictions(value(builder.required)||false, value(builder.validator), value(builder.min), value(builder.max), value(builder.numeric)||false),
+                    new Options(value(builder.defaultAnswer, ''), value(builder.visible ,true), value(builder.values, []), value(builder.placeholder, ''), value(builder.onChange)),
+                    new Restrictions(value(builder.required, false), value(builder.validator), value(builder.min), value(builder.max), value(builder.numeric, false)),
                     ValidationService,
                     ErrorReporter
                 );
@@ -45,11 +45,11 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
         return setter;
     }
 
-    function value(value){
+    function value(value, defaultValue){
         if(value && value.isBuilder){
-            return undefined;
+            return defaultValue;
         } else {
-            return value;
+            return value === undefined || value === null ? defaultValue : value;
         }
     }
 
