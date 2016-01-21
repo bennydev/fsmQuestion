@@ -12,7 +12,16 @@ angular.module('fsmQuestion')
 
             scope.updateCalendarModel = function(value){
                 scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
-            }
+            };
+        }
+        if (scope.question.type === QuestionTypes.phone) {
+            scope.addZeroToPhoneNumber = function(){
+                if(scope.question.answer.phoneNumber === '0' && scope.question.answer.countryCode.code !== 'SWE'){
+                    scope.question.answer.phoneNumber = '';
+                } else if(scope.questionanswer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
+                    scope.question.answer.phoneNumber = '0';
+                }
+            };
         }
     }
 

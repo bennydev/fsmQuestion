@@ -283,6 +283,15 @@ angular.module('fsmQuestion')
                 scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
             }
         }
+        if (scope.question.type === QuestionTypes.phone) {
+            scope.addZeroToPhoneNumber = function(){
+                if(scope.question.answer.phoneNumber === '0' && scope.question.answer.countryCode.code !== 'SWE'){
+                    scope.question.answer.phoneNumber = '';
+                } else if(scope.questionanswer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
+                    scope.question.answer.phoneNumber = '0';
+                }
+            }
+        }
     }
 
     return {
@@ -1236,7 +1245,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                      <select ng-model=\"question.answer.countryCode\"\n" +
     "                              id=\"{{question.id}}CountryCode\"\n" +
     "                              name=\"{{question.id}}CountryCode\"\n" +
-    "                              ng-change=\"question.removeError(); addZeroToPhonenumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                              ng-change=\"question.removeError(); addZeroToPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                              ng-init=\"question.answer.countryCode = question.options[209]; question.answer.phoneNumber = '0';\"\n" +
     "                              ng-options=\"option.name for option in question.options track by option.id\"\n" +
     "\n" +
@@ -1251,7 +1260,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                 name=\"{{question.id}}PhoneNumber\"\n" +
     "                 input-touched\n" +
     "                 ng-model=\"question.answer.phoneNumber\"\n" +
-    "                 ng-change=\"question.removeError(); question.onChange(question); question.saveAnswer();\"\n" +
+    "                 ng-change=\"question.removeError(); question.onChange(question); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                  />\n" +
     "          </div>\n" +
     "\n" +
