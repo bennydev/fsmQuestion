@@ -1232,12 +1232,12 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "              <div class=\"input-group__addon\">\n" +
     "\n" +
     "                  <div class=\"addon-select\">\n" +
-    "                    {{ question.model[question.id].countryCode.phoneCode }} <i class=\"icon icon-arrow-down\" aria-hidden=\"true\"></i>\n" +
-    "                      <select ng-model=\"question.model[question.id].countryCode\"\n" +
+    "                    {{ question.answer.countryCode.phoneCode }} <i class=\"icon icon-arrow-down\" aria-hidden=\"true\"></i>\n" +
+    "                      <select ng-model=\"question.answer.countryCode\"\n" +
     "                              id=\"{{question.id}}CountryCode\"\n" +
     "                              name=\"{{question.id}}CountryCode\"\n" +
     "                              ng-change=\"question.removeError(); addZeroToPhonenumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
-    "                              ng-init=\"question.model[question.id].countryCode = question.options[209]; question.model[question.id].phoneNumber = '0';\"\n" +
+    "                              ng-init=\"question.answer.countryCode = question.options[209]; question.answer.phoneNumber = '0';\"\n" +
     "                              ng-options=\"option.name for option in question.options track by option.id\"\n" +
     "\n" +
     "                              >\n" +
@@ -1250,7 +1250,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                 id=\"{{question.id}}PhoneNumber\"\n" +
     "                 name=\"{{question.id}}PhoneNumber\"\n" +
     "                 input-touched\n" +
-    "                 ng-model=\"question.model[question.id].phoneNumber\"\n" +
+    "                 ng-model=\"question.answer.phoneNumber\"\n" +
     "                 ng-change=\"question.removeError(); question.onChange(question); question.saveAnswer();\"\n" +
     "                  />\n" +
     "          </div>\n" +
