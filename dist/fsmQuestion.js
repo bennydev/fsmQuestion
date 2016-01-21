@@ -553,6 +553,7 @@ function QuestionTypes(){
     types.checkbox = 'CHECKBOX';
     types.select = 'SELECT';
     types.text = 'TEXT';
+    types.phone = 'PHONE';
 }
 
 'use strict';
@@ -1235,7 +1236,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                      <select ng-model=\"question.model[question.id].countryCode\"\n" +
     "                              id=\"{{question.id}}CountryCode\"\n" +
     "                              name=\"{{question.id}}CountryCode\"\n" +
-    "                              ng-change=\"question.removeError(); addZeroToPhonenumber(); question.saveAnswer();\"\n" +
+    "                              ng-change=\"question.removeError(); addZeroToPhonenumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                              ng-init=\"question.model[question.id].countryCode = question.options[209]; question.model[question.id].phoneNumber = '0';\"\n" +
     "                              ng-options=\"option.name for option in question.options track by option.id\"\n" +
     "\n" +

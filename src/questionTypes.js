@@ -12,4 +12,5 @@ function QuestionTypes(){
     types.checkbox = 'CHECKBOX';
     types.select = 'SELECT';
     types.text = 'TEXT';
+    types.phone = 'PHONE';
 }

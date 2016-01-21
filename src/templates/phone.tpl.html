@@ -13,7 +13,7 @@
                       <select ng-model="question.model[question.id].countryCode"
                               id="{{question.id}}CountryCode"
                               name="{{question.id}}CountryCode"
-                              ng-change="question.removeError(); addZeroToPhonenumber(); question.saveAnswer();"
+                              ng-change="question.removeError(); addZeroToPhonenumber(); question.saveAnswer();question.setAnswer(question.answer);"
                               ng-init="question.model[question.id].countryCode = question.options[209]; question.model[question.id].phoneNumber = '0';"
                               ng-options="option.name for option in question.options track by option.id"
 
