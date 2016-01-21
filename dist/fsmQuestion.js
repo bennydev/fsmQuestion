@@ -281,7 +281,7 @@ angular.module('fsmQuestion')
 
             scope.updateCalendarModel = function(value){
                 scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
-            }
+            };
         }
         if (scope.question.type === QuestionTypes.phone) {
             scope.addZeroToPhoneNumber = function(){
@@ -290,7 +290,7 @@ angular.module('fsmQuestion')
                 } else if(scope.questionanswer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
                     scope.question.answer.phoneNumber = '0';
                 }
-            }
+            };
         }
     }
 
@@ -1247,7 +1247,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                              name=\"{{question.id}}CountryCode\"\n" +
     "                              ng-change=\"question.removeError(); addZeroToPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                              ng-init=\"question.answer.countryCode = question.options[209]; question.answer.phoneNumber = '0';\"\n" +
-    "                              ng-options=\"option.name for option in question.options track by option.id\"\n" +
+    "                              ng-options=\"option.value for option in question.options track by option.id\"\n" +
     "\n" +
     "                              >\n" +
     "                      </select>\n" +
