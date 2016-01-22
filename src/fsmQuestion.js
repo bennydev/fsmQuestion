@@ -26,14 +26,8 @@ angular.module('fsmQuestion')
                     scope.question.answer.phoneNumber = '0';
                 }
             };
-
-            initCountryCodes(scope);
         }
 
-    }
-    function initCountryCodes(scope) {
-        var question = scope.question;
-        question.setAnswer({countryCode: question.options.getValues()[209], phoneNumber: '0'});
     }
 
     return {
