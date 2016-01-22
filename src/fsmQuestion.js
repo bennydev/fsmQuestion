@@ -14,7 +14,11 @@ angular.module('fsmQuestion')
                 scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
             };
         }
+    }
+
+    function phoneSetup(scope) {
         if (scope.question.type === QuestionTypes.phone) {
+
             scope.addZeroToPhoneNumber = function(){
                 if(scope.question.answer.phoneNumber === '0' && scope.question.answer.countryCode.code !== 'SWE'){
                     scope.question.answer.phoneNumber = '';
@@ -22,7 +26,14 @@ angular.module('fsmQuestion')
                     scope.question.answer.phoneNumber = '0';
                 }
             };
+
+            initCountryCodes(scope);
         }
+
+    }
+    function initCountryCodes(scope) {
+        var question = scope.question;
+        question.setAnswer({countryCode: question.options.getValues()[209], phoneNumber: '0'});
     }
 
     return {
@@ -38,6 +49,7 @@ angular.module('fsmQuestion')
                 return $translate.instant(key) !== key;
             };
             dateSetup(scope);
+            phoneSetup(scope);
 
         }
     };

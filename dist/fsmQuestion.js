@@ -283,7 +283,11 @@ angular.module('fsmQuestion')
                 scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
             };
         }
+    }
+
+    function phoneSetup(scope) {
         if (scope.question.type === QuestionTypes.phone) {
+
             scope.addZeroToPhoneNumber = function(){
                 if(scope.question.answer.phoneNumber === '0' && scope.question.answer.countryCode.code !== 'SWE'){
                     scope.question.answer.phoneNumber = '';
@@ -291,7 +295,14 @@ angular.module('fsmQuestion')
                     scope.question.answer.phoneNumber = '0';
                 }
             };
+
+            initCountryCodes(scope);
         }
+
+    }
+    function initCountryCodes(scope) {
+        var question = scope.question;
+        question.setAnswer({countryCode: question.options.getValues()[209], phoneNumber: '0'});
     }
 
     return {
@@ -307,6 +318,7 @@ angular.module('fsmQuestion')
                 return $translate.instant(key) !== key;
             };
             dateSetup(scope);
+            phoneSetup(scope);
 
         }
     };
@@ -1246,9 +1258,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                              id=\"{{question.id}}CountryCode\"\n" +
     "                              name=\"{{question.id}}CountryCode\"\n" +
     "                              ng-change=\"question.removeError(); addZeroToPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
-    "                              ng-init=\"question.answer.countryCode = question.options[209]; question.answer.phoneNumber = '0';\"\n" +
-    "                              ng-options=\"option.value for option in question.options track by option.id\"\n" +
-    "\n" +
+    "                              ng-options=\"option.value for option in question.options.getValues() track by option.id\"\n" +
     "                              >\n" +
     "                      </select>\n" +
     "                  </div>\n" +

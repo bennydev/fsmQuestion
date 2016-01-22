@@ -14,9 +14,7 @@
                               id="{{question.id}}CountryCode"
                               name="{{question.id}}CountryCode"
                               ng-change="question.removeError(); addZeroToPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);"
-                              ng-init="question.answer.countryCode = question.options[209]; question.answer.phoneNumber = '0';"
-                              ng-options="option.value for option in question.options track by option.id"
-
+                              ng-options="option.value for option in question.options.getValues() track by option.id"
                               >
                       </select>
                   </div>
