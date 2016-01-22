@@ -291,7 +291,7 @@ angular.module('fsmQuestion')
             scope.addZeroToPhoneNumber = function(){
                 if(scope.question.answer.phoneNumber === '0' && scope.question.answer.countryCode.code !== 'SWE'){
                     scope.question.answer.phoneNumber = '';
-                } else if(scope.questionanswer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
+                } else if(scope.question.answer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
                     scope.question.answer.phoneNumber = '0';
                 }
             };
