@@ -1179,7 +1179,7 @@ angular.module("templates/input.tpl.html", []).run(["$templateCache", function($
     "             input-touched\n" +
     "             class=\"input-text\"\n" +
     "             ng-model=\"question.answer\"\n" +
-    "             ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "             ng-change=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer);\"\n" +
     "             ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "             maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                  />\n" +
