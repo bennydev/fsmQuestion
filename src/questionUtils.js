@@ -22,8 +22,8 @@ function Utils(){
     function isValidDate(value){
         value = getDigits(value);
         if(value.length === 6 || value.length === 8) {
-            value = addCentury(value);
             var date = createDate(value);
+            value = addCentury(value);
             return getDigits(date.toISOString()).indexOf(value) === 0;
         }
     }
@@ -33,11 +33,9 @@ function Utils(){
             value = getDigits(value);
             value = addCentury(value);
             var partials = getDatePartials(value);
-            return new Date(Date.UTC(
-                parseInt(partials.year),
-                parseInt(partials.month) - 1,
-                parseInt(partials.day)
-            ));
+            if (partials) {
+                return createDateFromPartials(partials);
+            }
         }
     }
 
@@ -73,7 +71,7 @@ function Utils(){
     }
 
     function createDateFromPartials(datePartials) {
-        return new Date(Date.UTC(datePartials.year, datePartials.month, datePartials.day));
+        return new Date(Date.UTC(datePartials.year, datePartials.month - 1, datePartials.day));
     }
 
     function getCurrentCentury(){
@@ -138,7 +136,7 @@ function Utils(){
     }
 
     function isPastDate(value){
-        if(value) {
+        if(value && isValidDate(value)) {
             var datePartials = getDatePartials(value);
             var date = createDate(datePartials.year+'-'+datePartials.month+'-'+datePartials.day);
             var now = new Date();
@@ -147,7 +145,7 @@ function Utils(){
     }
 
     function dateInMillis(value){
-        if(value) {
+        if(value && isValidDate(value)) {
             var date = createDate(value);
             return date.getTime();
         }

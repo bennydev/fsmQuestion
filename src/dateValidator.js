@@ -58,11 +58,12 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
     function isValidDate(digits) {
         var dateCandidate = digits;
 
- /*
-        if (dateCandidate.length === 6 && dateCandidate.indexOf('20') !== 0) {
-            dateCandidate = '20' + digits;
+
+        if (dateCandidate.length < 8) {
+            return false;
         }
-*/        if (isNaN(dateCandidate)) {
+
+        if (isNaN(dateCandidate)) {
             return false;
         }
         var year = parseInt(dateCandidate.substr(0, 4));
