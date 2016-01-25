@@ -923,9 +923,11 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
         return {
             validate: function(question) {
                 var answer = question.answer;
-                var result = {};
-                result.valid = typeof answer === 'number' && !isNaN(answer) ? true : getNumericAnswer(answer) !== undefined;
-                result.message = question.text.root + '.ERRORS.INVALID';
+                var result = {valid: true};
+                if(answer !== undefined || answer !== null || answer !== '') {
+                    result.valid = QuestionUtils.isNumeric(answer);
+                    result.message = question.text.root + '.ERRORS.INVALID';
+                }
                 return result;
             }
         };
