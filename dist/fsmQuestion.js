@@ -62,7 +62,7 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
     function isValidDate(digits) {
         var dateCandidate = digits;
 
- /*       
+ /*
         if (dateCandidate.length === 6 && dateCandidate.indexOf('20') !== 0) {
             dateCandidate = '20' + digits;
         }
@@ -123,7 +123,7 @@ function ErrorReporter(){
 
     function addError(id, message){
         errors[id] = message;
-        messages.push(message)
+        messages.push(message);
     }
 
     function removeErrorFor(id){
@@ -376,7 +376,7 @@ angular.module('fsmQuestion').filter('numbersOnly', function () {
         }
 
         return input;
-    }
+    };
 
 });
 'use strict';
@@ -411,7 +411,7 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
     question.restrictions = restrictions;
     question.isVisible = options.isVisible;
     question.isRequired = restrictions.isRequired;
-    question.validate = function(){ValidationService.validate(question)};
+    question.validate = function(){ValidationService.validate(question);};
     question.setAnswer = function(value){
         if(value instanceof Date){
             value.setUTCHours(value.getUTCHours() + Math.abs(value.getTimezoneOffset()) / 60);
@@ -479,11 +479,11 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
         return setter;
     }
 
-    function value(value, defaultValue){
-        if((value && value.isBuilder) || value === undefined || value === null){
+    function value(inputValue, defaultValue){
+        if((inputValue && inputValue.isBuilder) || inputValue === undefined || inputValue === null){
             return defaultValue;
         } else {
-            return value;
+            return inputValue;
         }
     }
 
@@ -888,7 +888,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = answer != undefined && answer !== '' && answer !== null && answer !== 'SELECT';
+                result.valid = answer !== undefined && answer !== '' && answer !== null && answer !== 'SELECT';
                 result.message = question.text.root + '.ERRORS.REQUIRED';
                 return result;
             }
@@ -928,7 +928,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
                 result.message = question.text.root + '.ERRORS.INVALID';
                 return result;
             }
-        }
+        };
     }
 
     function getNumericAnswer(answer){

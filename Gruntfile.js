@@ -132,7 +132,61 @@ module.exports = function (grunt) {
             }
 
 
+        },
+        /**
+         * `jshint` defines the rules of our linter as well as which files we
+         * should check. This file, all javascript sources, and all our unit tests
+         * are linted based on the policies listed in `options`. But we can also
+         * specify exclusionary patterns by prefixing them with an exclamation
+         * point (!); this is useful when code comes from a third party but is
+         * nonetheless inside `src/`.
+         */
+        jshint: {
+            src: [
+                'src'
+            ],
+            test: [
+                'src'
+            ],
+            gruntfile: [
+                'Gruntfile.js'
+            ],
+            options: {
+                curly: true,
+                immed: true,
+                newcap: true,
+                noarg: true,
+                sub: true,
+                boss: false,
+                eqnull: false,
+                globalstrict: true,
+                jquery: true,
+                browser: true,
+                devel: true,
+                debug: true,
+                laxcomma: true,
+                globals: {
+                    module: true,
+                    require: true,
+                    Modernizr: true,
+                    angular: true,
+                    _: true,
+                    jQuery: true,
+                    jasmine: true,
+                    describe: true,
+                    ddescribe: true,
+                    xdescribe: true,
+                    it: true,
+                    xit: true,
+                    expect: true,
+                    beforeEach: true,
+                    afterEach: true,
+                    inject: true,
+                    spyOn: true
+                }
+            }
         }
+
     };
 
     grunt.initConfig(taskConfig);
@@ -141,7 +195,7 @@ module.exports = function (grunt) {
      * The default task is to build and compile. When build and compile is finished
      * the project opened in your browser served by the connect-server.
      */
-    grunt.registerTask( 'default', [ 'clean', 'copy', 'html2js', 'concat', 'karmaconfig',  'karma:continuous', 'karma:unit' ] );
+    grunt.registerTask( 'default', [ 'clean', 'jshint', 'copy', 'html2js', 'concat', 'karmaconfig',  'karma:continuous', 'karma:unit' ] );
 
     /**
      * In order to avoid having to specify manually the files needed for karma to

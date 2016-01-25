@@ -10,7 +10,7 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
     question.restrictions = restrictions;
     question.isVisible = options.isVisible;
     question.isRequired = restrictions.isRequired;
-    question.validate = function(){ValidationService.validate(question)};
+    question.validate = function(){ValidationService.validate(question);};
     question.setAnswer = function(value){
         if(value instanceof Date){
             value.setUTCHours(value.getUTCHours() + Math.abs(value.getTimezoneOffset()) / 60);

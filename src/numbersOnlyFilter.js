@@ -10,6 +10,6 @@ angular.module('fsmQuestion').filter('numbersOnly', function () {
         }
 
         return input;
-    }
+    };
 
 });

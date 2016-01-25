@@ -16,7 +16,7 @@ function ErrorReporter(){
 
     function addError(id, message){
         errors[id] = message;
-        messages.push(message)
+        messages.push(message);
     }
 
     function removeErrorFor(id){

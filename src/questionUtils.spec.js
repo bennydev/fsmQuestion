@@ -1,3 +1,4 @@
+"use strict";
 describe('utils-test', function(){
     beforeEach(module('fsmQuestion'));
 

@@ -45,11 +45,11 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
         return setter;
     }
 
-    function value(value, defaultValue){
-        if((value && value.isBuilder) || value === undefined || value === null){
+    function value(inputValue, defaultValue){
+        if((inputValue && inputValue.isBuilder) || inputValue === undefined || inputValue === null){
             return defaultValue;
         } else {
-            return value;
+            return inputValue;
         }
     }
 

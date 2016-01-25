@@ -85,7 +85,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
             validate: function(question){
                 var answer = question.answer;
                 var result = {};
-                result.valid = answer != undefined && answer !== '' && answer !== null && answer !== 'SELECT';
+                result.valid = answer !== undefined && answer !== '' && answer !== null && answer !== 'SELECT';
                 result.message = question.text.root + '.ERRORS.REQUIRED';
                 return result;
             }
@@ -125,7 +125,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
                 result.message = question.text.root + '.ERRORS.INVALID';
                 return result;
             }
-        }
+        };
     }
 
     function getNumericAnswer(answer){
