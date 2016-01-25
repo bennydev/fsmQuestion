@@ -282,7 +282,7 @@ angular.module('fsmQuestion')
             };
 
             scope.updateCalendarModel = function(value){
-                scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
+                scope.question.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
             };
         }
     }
@@ -599,7 +599,7 @@ function Utils(){
         if(value.length === 6 || value.length === 8) {
             var date = createDate(value);
             value = addCentury(value);
-            
+
             return date ? getDigits(date.toISOString()).indexOf(value) === 0 : false;
         }
     }
@@ -1106,9 +1106,9 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "            <div datepicker-popup=\"yyyy-MM-dd\"\n" +
     "                 min-date=\"question.restrictions.getMin().date\"\n" +
     "                 max-date=\"question.restrictions.getMax().date\"\n" +
-    "                 ng-model=\"calendarModel\"\n" +
+    "                 ng-model=\"question.calendarModel\"\n" +
     "                 ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                 ng-change=\"question.removeError();question.setAnswer(calendarModel);\"\n" +
+    "                 ng-change=\"question.removeError();question.setAnswer(question.calendarModel);\"\n" +
     "                 is-open=\"question.isOpen\"\n" +
     "                    style=\"margin-top:1px;\">\n" +
     "                 </div>\n" +

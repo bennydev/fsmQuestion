@@ -21,9 +21,9 @@
             <div datepicker-popup="yyyy-MM-dd"
                  min-date="question.restrictions.getMin().date"
                  max-date="question.restrictions.getMax().date"
-                 ng-model="calendarModel"
+                 ng-model="question.calendarModel"
                  ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
-                 ng-change="question.removeError();question.setAnswer(calendarModel);"
+                 ng-change="question.removeError();question.setAnswer(question.calendarModel);"
                  is-open="question.isOpen"
                     style="margin-top:1px;">
                  </div>

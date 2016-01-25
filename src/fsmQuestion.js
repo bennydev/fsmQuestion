@@ -11,7 +11,7 @@ angular.module('fsmQuestion')
             };
 
             scope.updateCalendarModel = function(value){
-                scope.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
+                scope.question.calendarModel = QuestionUtils.isValidDate(value) ? QuestionUtils.createDate(value) : scope.calendarModel;
             };
         }
     }
