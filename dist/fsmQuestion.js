@@ -963,7 +963,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
         return {validate: function(question){
             var answer = question.answer;
             var result = {};
-            result.valid = result.valid && QuestionUtils.isPastDate(answer);
+            result.valid = QuestionUtils.isPastDate(answer);
             result.message = !result.valid && !result.message ? question.text.root + '.ERRORS.FUTURE' : result.message;
             return result;
         }};
