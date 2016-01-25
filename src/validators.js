@@ -121,7 +121,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
             validate: function(question) {
                 var answer = question.answer;
                 var result = {valid: true};
-                if(answer !== undefined || answer !== null || answer !== '') {
+                if(answer !== undefined && answer !== null && answer !== '') {
                     result.valid = QuestionUtils.isNumeric(answer);
                     result.message = question.text.root + '.ERRORS.INVALID';
                 }
