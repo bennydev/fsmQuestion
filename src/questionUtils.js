@@ -24,7 +24,7 @@ function Utils(){
         if(value.length === 6 || value.length === 8) {
             var date = createDate(value);
             value = addCentury(value);
-            return getDigits(date.toISOString()).indexOf(value) === 0;
+            return date ? getDigits(date.toISOString()).indexOf(value) === 0 : false;
         }
     }
 

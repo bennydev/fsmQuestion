@@ -41,6 +41,7 @@ describe('utils-test', function(){
         expect(QuestionUtils.isValidDate('15-05-05')).toBeTruthy();
         expect(QuestionUtils.isValidDate('2020-05-05')).toBeTruthy();
         expect(QuestionUtils.isValidDate('15-05-35')).toBeFalsy();
+        expect(QuestionUtils.isValidDate('201205')).toBeFalsy();
     }));
 
     it('QuestionUtils.createDate century tests', inject(function(QuestionUtils){
