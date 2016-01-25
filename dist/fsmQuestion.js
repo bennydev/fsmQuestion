@@ -62,10 +62,11 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
     function isValidDate(digits) {
         var dateCandidate = digits;
 
+ /*       
         if (dateCandidate.length === 6 && dateCandidate.indexOf('20') !== 0) {
             dateCandidate = '20' + digits;
         }
-        if (isNaN(dateCandidate)) {
+*/        if (isNaN(dateCandidate)) {
             return false;
         }
         var year = parseInt(dateCandidate.substr(0, 4));
@@ -627,7 +628,25 @@ function Utils(){
     }
 
     function addCentury(value){
-        return value.length === 6 ? getCurrentCentury()+value : value;
+
+        if (value.length === 6 && value.indexOf(getCurrentCentury()) !== 0) {
+            var currentCentury = getCurrentCentury();
+            var tempDate = currentCentury + value;
+            var datePartials = getDatePartials(tempDate);
+            var today = new Date();
+            var valueDate = createDateFromPartials(datePartials);
+            if (valueDate > today) {
+                // reduce century to 19...
+                return (parseInt(currentCentury)) - 1 + value;
+            }
+            return tempDate;
+        }
+
+        return value;
+    }
+
+    function createDateFromPartials(datePartials) {
+        return new Date(Date.UTC(datePartials.year, datePartials.month, datePartials.day));
     }
 
     function getCurrentCentury(){
