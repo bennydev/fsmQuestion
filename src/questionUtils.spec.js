@@ -39,7 +39,13 @@ describe('utils-test', function(){
         expect(QuestionUtils.isValidDate('2015.05-05')).toBeTruthy();
         expect(QuestionUtils.isValidDate('2015a05-05')).toBeTruthy(); //diff
         expect(QuestionUtils.isValidDate('15-05-05')).toBeTruthy();
+        expect(QuestionUtils.isValidDate('2020-05-05')).toBeTruthy();
         expect(QuestionUtils.isValidDate('15-05-35')).toBeFalsy();
+    }));
+
+    it('QuestionUtils.createDate century tests', inject(function(QuestionUtils){
+        expect(QuestionUtils.createDate('990505').toString()).toBe(new Date(Date.UTC(1999, 4, 5)).toString());
+        expect(QuestionUtils.createDate('201205')).toBeFalsy();
     }));
 
     it('QuestionUtils.isPastDate', inject(function(QuestionUtils){
