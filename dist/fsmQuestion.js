@@ -589,7 +589,8 @@ function Utils(){
         addCentury: addCentury,
         getDigits: getDigits,
         isNumeric: isNumeric,
-        startsWithNumberOfChars: startsWithNumberOfChars
+        startsWithNumberOfChars: startsWithNumberOfChars,
+        formatPersonId: formatPersonId
     };
 
     function isValidDate(value){
@@ -729,6 +730,18 @@ function Utils(){
     function startsWithNumberOfChars(value, length){
         value = value.toString();
         return !! value.substr(0, length).match(new RegExp('[a-zA-ZåäöÅÄÖ]','gi'));
+    }
+
+    function formatPersonId(question){
+        if(!question.centuryAdded) {
+            if (isPersonId(question.answer)) {
+                question.answer = removeValidPersonIdSeparators(addCenturyToPersonId(question.answer));
+                question.answer = question.answer.substr(0,8) +'-'+question.answer.substr(8);
+                question.centuryAdded = true;
+            }
+        } else if(question.answer.toString().length === 0){
+            question.centuryAdded = false;
+        }
     }
 }
 "use strict";
