@@ -5,6 +5,7 @@ function QuestionTypes(){
     var types = this;
     types.input = 'INPUT';
     types.inputcurrency = 'INPUTCURRENCY';
+    types.inputidentification = 'INPUTIDENTIFICATION';
     types.buttongroup = 'BUTTONGROUP';
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';

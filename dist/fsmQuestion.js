@@ -563,6 +563,7 @@ function QuestionTypes(){
     var types = this;
     types.input = 'INPUT';
     types.inputcurrency = 'INPUTCURRENCY';
+    types.inputidentification = 'INPUTIDENTIFICATION';
     types.buttongroup = 'BUTTONGROUP';
     types.buttongroupBig = 'BUTTONGROUPBIG';
     types.upload = 'UPLOAD';
@@ -1004,7 +1005,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
 
 
 }
-angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
+angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/inputidentification.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
@@ -1254,6 +1255,37 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                />\n" +
     "                <div class=\"input-group__addon\">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
     "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("templates/inputidentification.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/inputidentification.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "            <input type=\"text\"\n" +
+    "                   id=\"{{question.id}}\"\n" +
+    "                   name=\"{{question.id}}\"\n" +
+    "                   placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
+    "                   input-touched\n" +
+    "                   class=\"input-text\"\n" +
+    "                   ng-model=\"question.answer\"\n" +
+    "                   ng-blur=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer);\"\n" +
+    "                   ng-change=\"question.removeError()\"\n" +
+    "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
+    "                   maxlength=\"{{question.restrictions.getMax()}}\"\n" +
+    "            />\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
