@@ -141,10 +141,11 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
             validate: function(question){
                 var answer = question.answer;
                 if(QuestionUtils.isPersonId(answer)){
-                    return {
-                        valid: validatePersonId(answer),
-                        message: question.text.root + '.ERRORS.PERSON_ID_INVALID'
-                    };
+                    return validatePersonId(question);
+                    //return {
+                    //    valid: validatePersonId(answer),
+                    //    message: question.text.root + '.ERRORS.PERSON_ID_INVALID'
+                    //};
                 } else if(QuestionUtils.startsWithNumberOfChars(answer, 1)){
                     return {
                         valid: validateCustomerNumber(answer),
@@ -167,10 +168,22 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
         }};
     }
 
-    function validatePersonId(value){
-        value = QuestionUtils.removeValidPersonIdSeparators(value);
+    function validatePersonId(question){
+        var value = QuestionUtils.removeValidPersonIdSeparators(question.answer);
         value = value.length === 12 ? value.substr(2) : value;
-        return QuestionUtils.isValidDate(value.substr(0,6)) && hasValidChecksum(value);
+        var result = {};
+
+        result.valid = QuestionUtils.isValidDate(value.substr(0,6));
+        if (!result.valid) {
+            result.message = question.text.root + '.ERRORS.PERSON_ID_INVALID';
+            return result;
+        }
+        result.valid =  hasValidChecksum(value);
+        if (!result.valid) {
+            result.message = question.text.root + '.ERRORS.PERSON_ID_CHECKSUM';
+        }
+
+        return result;
     }
 
     function hasValidChecksum(value){
