@@ -158,14 +158,14 @@ function Utils(){
     }
 
     function formatPersonId(question){
-        if(!question.centuryAdded) {
+        //if(!question.centuryAdded) {
             if (isPersonId(question.answer)) {
                 question.answer = removeValidPersonIdSeparators(addCenturyToPersonId(question.answer));
                 question.answer = question.answer.substr(0,8) +'-'+question.answer.substr(8);
-                question.centuryAdded = true;
+                //question.centuryAdded = true;
             }
-        } else if(question.answer.toString().length === 0){
-            question.centuryAdded = false;
-        }
+        //} else if(question.answer.toString().length === 0){
+        //    question.centuryAdded = false;
+        //}
     }
 }
