@@ -1099,7 +1099,8 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                   input-touched\n" +
     "                   ng-model=\"question.answer\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
-    "                   ng-blur=\"question.removeError(); formatDateString(question); updateCalendarModel(question.answer);\"\n" +
+    "                   ng-change=\"question.removeError(); updateCalendarModel(question.answer);\"\n" +
+    "                   ng-blur=\"formatDateString(question); updateCalendarModel(question.answer);\"\n" +
     "                   maxlength=\"{{question.restrictions.getMax().length}}\"\n" +
     "                    />\n" +
     "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +
