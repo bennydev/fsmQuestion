@@ -979,12 +979,12 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
 
         result.valid = QuestionUtils.isValidDate(value.substr(0,6));
         if (!result.valid) {
-            result.message = question.text.root + '.ERRORS.PERSON_ID_INVALID';
+            result.message = question.text.root + '.ERRORS.FORMAT';
             return result;
         }
         result.valid =  hasValidChecksum(value);
         if (!result.valid) {
-            result.message = question.text.root + '.ERRORS.PERSON_ID_CHECKSUM';
+            result.message = question.text.root + '.ERRORS.PERSON_ID_INVALID';
         }
 
         return result;
