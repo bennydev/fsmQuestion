@@ -1203,7 +1203,7 @@ angular.module("templates/fsmQuestion.tpl.html", []).run(["$templateCache", func
 
 angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/fsmQuestionGroup.tpl.html",
-    "<fieldset ng-show=\"isVisible()\">\n" +
+    "<fieldset ng-if=\"isVisible()\">\n" +
     "    <fsm-question question=\"question\" ng-repeat=\"question in questions\"></fsm-question>\n" +
     "</fieldset>");
 }]);
