@@ -20,6 +20,7 @@
                     />
             <i aria-hidden="true" class="icon icon-date" ng-click="question.isOpen =! question.isOpen"></i>
             <div datepicker-popup="yyyy-MM-dd"
+                 datepicker-options="{startingDay: 1}"
                  min-date="question.restrictions.getMin().date"
                  max-date="question.restrictions.getMax().date"
                  ng-model="question.calendarModel"

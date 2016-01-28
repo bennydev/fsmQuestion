@@ -1,6 +1,23 @@
 "use strict";
 angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule'])
     .constant('buttonConfig', {activeClass: 'is-active'})
+    .constant('datepickerPopupConfig', {
+        datepickerPopup: 'yyyy-MM-dd',
+        datepickerPopupTemplateUrl: 'template/datepicker/popup.html',
+        datepickerTemplateUrl: 'template/datepicker/datepicker.html',
+        html5Types: {
+            date: 'yyyy-MM-dd',
+            'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
+            'month': 'yyyy-MM'
+        },
+        currentText: 'Idag',
+        clearText: 'Rensa',
+        closeText: 'Stäng',
+        closeOnDateSelection: true,
+        appendToBody: false,
+        showButtonBar: true,
+        onOpenFocus: true
+    })
     .value('storagePrefix', 'i84ds03');
 "use strict";
 angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', function (QuestionUtils) {
@@ -1119,6 +1136,7 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                    />\n" +
     "            <i aria-hidden=\"true\" class=\"icon icon-date\" ng-click=\"question.isOpen =! question.isOpen\"></i>\n" +
     "            <div datepicker-popup=\"yyyy-MM-dd\"\n" +
+    "                 datepicker-options=\"{startingDay: 1}\"\n" +
     "                 min-date=\"question.restrictions.getMin().date\"\n" +
     "                 max-date=\"question.restrictions.getMax().date\"\n" +
     "                 ng-model=\"question.calendarModel\"\n" +
