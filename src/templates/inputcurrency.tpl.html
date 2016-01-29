@@ -9,8 +9,7 @@
 </div>
 <div class="grid">
     <div class="grid__item sm--six-twelfths">
-        <div class="form-row form-row--gap">
-            <div class="input-group">
+        <div class="form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half">
                 <input type="text"
                        id="{{question.id}}"
                        name="{{question.id}}"
@@ -24,8 +23,7 @@
                        ng-change="question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
                        maxlength="{{question.restrictions.getMax()}}"
                 />
-                <div class="input-group__addon">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>
-            </div>
+            <span class="input-inlinetext">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</span>
         </div>
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>

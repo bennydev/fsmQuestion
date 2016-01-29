@@ -1120,7 +1120,7 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
+    "        <div class=\"form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half\">\n" +
     "\n" +
     "            <input type=\"text\"\n" +
     "                   id=\"{{question.id}}\"\n" +
@@ -1269,8 +1269,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
-    "        <div class=\"form-row form-row--gap\">\n" +
-    "            <div class=\"input-group\">\n" +
+    "        <div class=\"form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half\">\n" +
     "                <input type=\"text\"\n" +
     "                       id=\"{{question.id}}\"\n" +
     "                       name=\"{{question.id}}\"\n" +
@@ -1284,8 +1283,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                />\n" +
-    "                <div class=\"input-group__addon\">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</div>\n" +
-    "            </div>\n" +
+    "            <span class=\"input-inlinetext\">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</span>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
