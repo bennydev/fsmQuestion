@@ -1125,7 +1125,11 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
-    "\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
     "<div class=\"grid\" ng-controller=\"DateCtrl\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half\">\n" +
@@ -1154,7 +1158,6 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                    style=\"margin-top:1px;\">\n" +
     "                 </div>\n" +
     "        </div>\n" +
-    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
@@ -1231,8 +1234,7 @@ angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache",
   $templateCache.put("templates/fsmQuestionGroup.tpl.html",
     "<fieldset ng-show=\"isVisible()\">\n" +
     "    <fsm-question question=\"question\" ng-repeat=\"question in questions\"></fsm-question>\n" +
-    "</fieldset>\n" +
-    "<div class=\"no-question\" ng-if=\"!isVisible()\"></div>");
+    "</fieldset>");
 }]);
 
 angular.module("templates/input.tpl.html", []).run(["$templateCache", function($templateCache) {

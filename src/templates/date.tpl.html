@@ -1,7 +1,11 @@
 <div class="form-label">
     <label for="{{question.id}}"><span translate translate-default=" " translate-values="question.text.getTranslateValues()">{{question.text.root+'.QUESTION'}}</span><span ng-show="question.isRequired()" class="required"></span></label>
 </div>
-
+<div class="grid">
+    <div class="grid__item sm--six-twelfths">
+        <div ng-include="'templates/tooltip.tpl.html'"></div>
+    </div>
+</div>
 <div class="grid" ng-controller="DateCtrl">
     <div class="grid__item sm--six-twelfths">
         <div class="form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half">
@@ -30,7 +34,6 @@
                     style="margin-top:1px;">
                  </div>
         </div>
-        <div ng-include="'templates/tooltip.tpl.html'"></div>
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
 </div>
