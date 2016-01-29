@@ -1,5 +1,5 @@
 "use strict";
-angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule'])
+angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule', 'fsmQuestion.date'])
     .constant('buttonConfig', {activeClass: 'is-active'})
     .constant('datepickerPopupConfig', {
         datepickerPopup: 'yyyy-MM-dd',
@@ -783,6 +783,14 @@ function Restrictions(required, validator, min, max, numeric){
 }
 
 "use strict";
+angular.module('fsmQuestion.date', ['pascalprecht.translate'])
+    .controller('DateCtrl', ['$scope', 'datepickerPopupConfig', '$translate',
+        function ($scope, datepickerPopupConfig, $translate) {
+          datepickerPopupConfig.currentText = $translate.instant('DATE_PICKER.CURRENT_TEXT');
+          datepickerPopupConfig.clearText = $translate.instant('DATE_PICKER.CLEAR_TEXT');
+          datepickerPopupConfig.closeText = $translate.instant('DATE_PICKER.CLOSE_TEXT');
+        }]);
+"use strict";
 angular.module('fsmQuestion')
 .factory('ValidationService', ['Validators', 'QuestionTypes', 'ErrorReporter', ValidationService]);
 function ValidationService(Validators, QuestionTypes, ErrorReporter){
@@ -1118,7 +1126,7 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "\n" +
-    "<div class=\"grid\">\n" +
+    "<div class=\"grid\" ng-controller=\"DateCtrl\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half\">\n" +
     "\n" +
