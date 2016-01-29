@@ -1231,7 +1231,8 @@ angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache",
   $templateCache.put("templates/fsmQuestionGroup.tpl.html",
     "<fieldset ng-show=\"isVisible()\">\n" +
     "    <fsm-question question=\"question\" ng-repeat=\"question in questions\"></fsm-question>\n" +
-    "</fieldset>");
+    "</fieldset>\n" +
+    "<div class=\"no-question\" ng-if=\"!isVisible()\"></div>");
 }]);
 
 angular.module("templates/input.tpl.html", []).run(["$templateCache", function($templateCache) {

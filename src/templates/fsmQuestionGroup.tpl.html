@@ -1,3 +1,4 @@
 <fieldset ng-show="isVisible()">
     <fsm-question question="question" ng-repeat="question in questions"></fsm-question>
 </fieldset>
+<div class="no-question" ng-if="!isVisible()"></div>
