@@ -1284,7 +1284,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                <input type=\"text\"\n" +
     "                       id=\"{{question.id}}\"\n" +
     "                       name=\"{{question.id}}\"\n" +
-    "                       placeholder=\"{{question.placeholder}}\"\n" +
+    "                       placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "                       input-touched\n" +
     "                       class=\"input-text input-group__input\"\n" +
     "                       ng-model=\"question.answer\"\n" +
@@ -1430,6 +1430,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "                      id=\"{{question.id}}\"\n" +
     "                      name=\"{{question.id}}\"\n" +
     "                      ng-model=\"question.answer\"\n" +
+    "                      placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "                      ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                      ng-class=\"{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "                      ></textarea>\n" +
