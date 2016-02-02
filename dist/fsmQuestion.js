@@ -1,5 +1,5 @@
 "use strict";
-angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule'])
+angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule', 'fsmQuestion.date'])
     .constant('buttonConfig', {activeClass: 'is-active'})
     .constant('datepickerPopupConfig', {
         datepickerPopup: 'yyyy-MM-dd',
@@ -783,6 +783,14 @@ function Restrictions(required, validator, min, max, numeric){
 }
 
 "use strict";
+angular.module('fsmQuestion.date', ['pascalprecht.translate'])
+    .controller('DateCtrl', ['$scope', 'datepickerPopupConfig', '$translate',
+        function ($scope, datepickerPopupConfig, $translate) {
+          datepickerPopupConfig.currentText = $translate.instant('DATE_PICKER.CURRENT_TEXT');
+          datepickerPopupConfig.clearText = $translate.instant('DATE_PICKER.CLEAR_TEXT');
+          datepickerPopupConfig.closeText = $translate.instant('DATE_PICKER.CLOSE_TEXT');
+        }]);
+"use strict";
 angular.module('fsmQuestion')
 .factory('ValidationService', ['Validators', 'QuestionTypes', 'ErrorReporter', ValidationService]);
 function ValidationService(Validators, QuestionTypes, ErrorReporter){
@@ -1117,8 +1125,12 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "<div class=\"form-label\">\n" +
     "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
-    "\n" +
     "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\" ng-controller=\"DateCtrl\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half\">\n" +
     "\n" +
@@ -1146,7 +1158,6 @@ angular.module("templates/date.tpl.html", []).run(["$templateCache", function($t
     "                    style=\"margin-top:1px;\">\n" +
     "                 </div>\n" +
     "        </div>\n" +
-    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
@@ -1273,7 +1284,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                <input type=\"text\"\n" +
     "                       id=\"{{question.id}}\"\n" +
     "                       name=\"{{question.id}}\"\n" +
-    "                       placeholder=\"{{question.placeholder}}\"\n" +
+    "                       placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "                       input-touched\n" +
     "                       class=\"input-text input-group__input\"\n" +
     "                       ng-model=\"question.answer\"\n" +
@@ -1419,6 +1430,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "                      id=\"{{question.id}}\"\n" +
     "                      name=\"{{question.id}}\"\n" +
     "                      ng-model=\"question.answer\"\n" +
+    "                      placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
     "                      ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                      ng-class=\"{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}\"\n" +
     "                      ></textarea>\n" +

@@ -1,5 +1,5 @@
 "use strict";
-angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule'])
+angular.module('fsmQuestion', ['fsmFileUploader', 'LocalStorageModule', 'fsmQuestion.date'])
     .constant('buttonConfig', {activeClass: 'is-active'})
     .constant('datepickerPopupConfig', {
         datepickerPopup: 'yyyy-MM-dd',
