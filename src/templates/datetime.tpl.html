@@ -13,7 +13,7 @@
                    name="{{question.id}}Date"
                    class="form-control"
                    ng-model="question.model[question.id].date"
-                   ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                   ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
                    ng-change="question.removeError();"
                     />
         </div>
@@ -24,7 +24,7 @@
                    name="{{question.id}}Time"
                    class="form-control"
                    ng-model="question.model[question.id].time"
-                   ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                   ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
                    ng-change="question.removeError();"
                     />
         </div>

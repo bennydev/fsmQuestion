@@ -17,7 +17,7 @@
                    placeholder="{{question.options.getPlaceholder()}}"
                    input-touched
                    ng-model="question.answer"
-                   ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                   ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
                    ng-change="question.removeError(); updateCalendarModel(question.answer);"
                    ng-blur="formatDateString(question); updateCalendarModel(question.answer);"
                    maxlength="{{question.restrictions.getMax().length}}"
@@ -28,7 +28,7 @@
                  min-date="question.restrictions.getMin().date"
                  max-date="question.restrictions.getMax().date"
                  ng-model="question.calendarModel"
-                 ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                 ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
                  ng-change="question.removeError();question.setAnswer(question.calendarModel);"
                  is-open="question.isOpen"
                     style="margin-top:1px;">

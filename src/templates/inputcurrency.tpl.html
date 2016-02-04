@@ -19,7 +19,7 @@
                        ng-model="question.answer"
                        numbers
                        question="question"
-                       ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                       ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
                        ng-change="question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
                        maxlength="{{question.restrictions.getMax()}}"
                 />

@@ -18,7 +18,7 @@
                    ng-model="question.answer"
                    ng-blur="question.removeError();question.options.onChange(question);question.setAnswer(question.answer);"
                    ng-change="question.removeError()"
-                   ng-class="{'fsm-invalid': question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                   ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
                    maxlength="{{question.restrictions.getMax()}}"
             />
         </div>

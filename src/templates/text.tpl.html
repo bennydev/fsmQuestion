@@ -18,7 +18,7 @@
                       ng-model="question.answer"
                       placeholder="{{question.options.getPlaceholder()}}"
                       ng-change="question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
-                      ng-class="{'fsm-invalid':question.hasErrors(), 'fsm-valid': !question.hasErrors()}"
+                      ng-class="{'fsm-invalid':question.hasError(), 'fsm-valid': !question.hasError()}"
                       ></textarea>
         </div>
         <div class="form-charcount" ng-cloak>{{question.answer ? question.answer.length : 0}} {{'GENERAL.EXTRAS.OF' |
