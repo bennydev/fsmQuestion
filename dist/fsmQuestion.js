@@ -1108,7 +1108,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "               type=\"checkbox\"\n" +
     "               class=\"custom-checkbox__input\"\n" +
     "               ng-model=\"question.answer\"\n" +
-    "               ng-change=\"question.removeError();question.saveAnswer();\"\n" +
+    "               ng-change=\"question.removeError();question.options.onChange(question);question.saveAnswer();\"\n" +
     "               ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "               ng-true-value=\"'{{question.options.getValues()[0].value}}'\"\n" +
     "               ng-false-value=\"undefined\">\n" +
@@ -1116,8 +1116,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "    </label>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
-    "");
+    "<div ng-include=\"'templates/tooltip.tpl.html'\"></div>");
 }]);
 
 angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
