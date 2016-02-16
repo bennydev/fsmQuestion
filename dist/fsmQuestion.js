@@ -318,6 +318,14 @@ angular.module('fsmQuestion')
 
     }
 
+    function labelSetup(scope){
+        if (scope.question.type === QuestionTypes.label) {
+            scope.question.validate = function(){
+                return true;
+            };
+        }
+    }
+
     return {
         restrict: 'E',
         scope: {
@@ -332,6 +340,7 @@ angular.module('fsmQuestion')
             };
             dateSetup(scope);
             phoneSetup(scope);
+            labelSetup(scope);
 
         }
     };
@@ -1391,7 +1400,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
 angular.module("templates/select.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/select.tpl.html",
     "<div class=\"form-label\" ng-if=\"question.text\">\n" +
-    "    <label for=\"{{question.id}}\" ng-hide=\"!question.text\">\n" +
+    "    <label for=\"{{question.id}}\">\n" +
     "        <span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span>\n" +
     "        <span ng-show=\"question.isRequired()\" class=\"required\"></span>\n" +
     "    </label>\n" +

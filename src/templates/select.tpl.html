@@ -1,5 +1,5 @@
 <div class="form-label" ng-if="question.text">
-    <label for="{{question.id}}" ng-hide="!question.text">
+    <label for="{{question.id}}">
         <span translate translate-default=" " translate-values="question.text.getTranslateValues()">{{question.text.root+'.QUESTION'}}</span>
         <span ng-show="question.isRequired()" class="required"></span>
     </label>
