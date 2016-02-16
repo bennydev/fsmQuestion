@@ -589,6 +589,7 @@ function QuestionTypes(){
     types.select = 'SELECT';
     types.text = 'TEXT';
     types.phone = 'PHONE';
+    types.label = 'LABEL';
 }
 
 'use strict';
@@ -1043,7 +1044,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
 
 
 }
-angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/inputidentification.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
+angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/inputidentification.tpl.html', 'templates/label.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
@@ -1070,7 +1071,6 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
     "                </button>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <input type=\"hidden\" ng-required=\"true\" name=\"newPhone\" ng-model=\"step1.newPhone\">\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
@@ -1122,7 +1122,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
 
 angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/date.tpl.html",
-    "<div class=\"form-label\">\n" +
+    "<div class=\"form-label\" ng-if=\"question.text.root+'.QUESTION' | translate\">\n" +
     "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
@@ -1330,6 +1330,14 @@ angular.module("templates/inputidentification.tpl.html", []).run(["$templateCach
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");
+}]);
+
+angular.module("templates/label.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/label.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.options.labelFor}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("templates/location.tpl.html", []).run(["$templateCache", function($templateCache) {

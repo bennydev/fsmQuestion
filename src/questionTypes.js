@@ -14,4 +14,5 @@ function QuestionTypes(){
     types.select = 'SELECT';
     types.text = 'TEXT';
     types.phone = 'PHONE';
+    types.label = 'LABEL';
 }
