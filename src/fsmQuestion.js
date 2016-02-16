@@ -27,7 +27,12 @@ angular.module('fsmQuestion')
                 }
             };
         }
+    }
 
+    function labelSetup(scope) {
+        if (scope.question.type === QuestionTypes.label) {
+            scope.question.validate = function(){return true;};
+        }
     }
 
     return {
@@ -44,6 +49,7 @@ angular.module('fsmQuestion')
             };
             dateSetup(scope);
             phoneSetup(scope);
+            labelSetup(scope);
         }
     };
 
