@@ -318,14 +318,6 @@ angular.module('fsmQuestion')
 
     }
 
-    function labelSetup(scope){
-        if (scope.question.type === QuestionTypes.label) {
-            scope.question.validate = function(){
-                return true;
-            };
-        }
-    }
-
     return {
         restrict: 'E',
         scope: {
@@ -340,8 +332,6 @@ angular.module('fsmQuestion')
             };
             dateSetup(scope);
             phoneSetup(scope);
-            labelSetup(scope);
-
         }
     };
 
@@ -1343,7 +1333,7 @@ angular.module("templates/inputidentification.tpl.html", []).run(["$templateCach
 angular.module("templates/label.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/label.tpl.html",
     "<div class=\"form-label\">\n" +
-    "    <label for=\"{{question.options.labelFor}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "    <label for=\"{{question.options.labelFor}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.options.isRequired\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "");
 }]);
