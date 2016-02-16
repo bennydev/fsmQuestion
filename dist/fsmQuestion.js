@@ -1120,7 +1120,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
 
 angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/date.tpl.html",
-    "<div class=\"form-label\" ng-if=\"question.text\">\n" +
+    "<div class=\"form-label\" ng-if=\"!question.text.hide\">\n" +
     "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
@@ -1389,7 +1389,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
 
 angular.module("templates/select.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/select.tpl.html",
-    "<div class=\"form-label\" ng-if=\"question.text\">\n" +
+    "<div class=\"form-label\" ng-if=\"!question.text.hide\">\n" +
     "    <label for=\"{{question.id}}\">\n" +
     "        <span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span>\n" +
     "        <span ng-show=\"question.isRequired()\" class=\"required\"></span>\n" +
