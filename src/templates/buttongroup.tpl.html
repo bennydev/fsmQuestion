@@ -17,11 +17,10 @@
                     ng-model="question.answer"
                     btn-radio="'{{option.value}}'"
                     ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
-                    ng-change="question.removeError();question.options.onChange(question);question.setAnswer(question.answer)">{{option.label | translate}}</button>
+                    ng-change="question.removeError();question.options.onChange(question);question.setAnswer(question.answer)">{{option.label | translate}}
                 </button>
             </div>
         </div>
-        <input type="hidden" ng-required="true" name="newPhone" ng-model="step1.newPhone">
     </div>
     <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
 </div>

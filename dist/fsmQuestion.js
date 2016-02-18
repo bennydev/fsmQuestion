@@ -88,29 +88,29 @@ angular.module('fsmQuestion').factory('DateValidator', ['QuestionUtils', functio
             return false;
         }
         var year = parseInt(dateCandidate.substr(0, 4));
-        var month = parseInt(dateCandidate.substr(4, 2)) - 1;
+        var month = parseInt(dateCandidate.substr(4, 2));
         var day = parseInt(dateCandidate.substr(6, 2));
         return isValidYearMonthDayCombination(year, month, day);
 
     }
 
     function isValidYearMonthDayCombination(year, month, day) {
-        if (day === 0) {
+        if (day === 0 || month === 0) {
             return false;
         }
-        if (month > 11) {
+        if (month > 12) {
             return false;
         }
         if (day > 31) {
             return false;
         }
-        if (month === 1 && day === 29) {
+        if (month === 2 && day === 29) {
             return isLeapYear(year);
         }
-        if (month === 1 && day > 28) {
+        if (month === 2 && day > 28) {
             return false;
         }
-        if ((month === 3 || month === 5 || month === 8 || month === 10) && day > 30) {
+        if ((month === 4 || month === 6 || month === 9 || month === 11) && day > 30) {
             return false;
         }
         return true;
@@ -545,7 +545,8 @@ function QuestionStorage(storagePrefix, localStorageService){
         contains: contains,
         addQuestion: addQuestion,
         getQuestion: getQuestion,
-        loadAnswer: loadAnswer
+        loadAnswer: loadAnswer,
+        saveAnswer: saveAnswer
     };
     return service;
 
@@ -1066,11 +1067,10 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
     "                    ng-model=\"question.answer\"\n" +
     "                    btn-radio=\"'{{option.value}}'\"\n" +
     "                    ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
-    "                    ng-change=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer)\">{{option.label | translate}}</button>\n" +
+    "                    ng-change=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer)\">{{option.label | translate}}\n" +
     "                </button>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <input type=\"hidden\" ng-required=\"true\" name=\"newPhone\" ng-model=\"step1.newPhone\">\n" +
     "    </div>\n" +
     "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
     "</div>");

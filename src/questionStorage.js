@@ -7,7 +7,8 @@ function QuestionStorage(storagePrefix, localStorageService){
         contains: contains,
         addQuestion: addQuestion,
         getQuestion: getQuestion,
-        loadAnswer: loadAnswer
+        loadAnswer: loadAnswer,
+        saveAnswer: saveAnswer
     };
     return service;
 
