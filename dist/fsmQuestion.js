@@ -315,7 +315,12 @@ angular.module('fsmQuestion')
                 }
             };
         }
+    }
 
+    function labelSetup(scope) {
+        if (scope.question.type === QuestionTypes.label) {
+            scope.question.validate = function(){return true;};
+        }
     }
 
     return {
@@ -332,7 +337,7 @@ angular.module('fsmQuestion')
             };
             dateSetup(scope);
             phoneSetup(scope);
-
+            labelSetup(scope);
         }
     };
 
@@ -590,6 +595,7 @@ function QuestionTypes(){
     types.select = 'SELECT';
     types.text = 'TEXT';
     types.phone = 'PHONE';
+    types.label = 'LABEL';
 }
 
 'use strict';
@@ -1044,7 +1050,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
 
 
 }
-angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/inputidentification.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
+angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/inputidentification.tpl.html', 'templates/label.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
@@ -1108,7 +1114,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "               type=\"checkbox\"\n" +
     "               class=\"custom-checkbox__input\"\n" +
     "               ng-model=\"question.answer\"\n" +
-    "               ng-change=\"question.removeError();question.saveAnswer();\"\n" +
+    "               ng-change=\"question.removeError();question.options.onChange(question);question.saveAnswer();\"\n" +
     "               ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "               ng-true-value=\"'{{question.options.getValues()[0].value}}'\"\n" +
     "               ng-false-value=\"undefined\">\n" +
@@ -1116,13 +1122,12 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "    </label>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
-    "");
+    "<div ng-include=\"'templates/tooltip.tpl.html'\"></div>");
 }]);
 
 angular.module("templates/date.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/date.tpl.html",
-    "<div class=\"form-label\">\n" +
+    "<div class=\"form-label\" ng-if=\"!question.text.hide\">\n" +
     "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
@@ -1332,6 +1337,14 @@ angular.module("templates/inputidentification.tpl.html", []).run(["$templateCach
     "</div>");
 }]);
 
+angular.module("templates/label.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/label.tpl.html",
+    "<div class=\"form-label\">\n" +
+    "    <label for=\"{{question.options.labelFor}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "");
+}]);
+
 angular.module("templates/location.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/location.tpl.html",
     "<div>{{question.text.root+'.QUESTION' | translate}}</div>\n" +
@@ -1383,8 +1396,11 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
 
 angular.module("templates/select.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/select.tpl.html",
-    "<div class=\"form-label\" ng-if=\"question.text.root+'.QUESTION' | translate\">\n" +
-    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "<div class=\"form-label\" ng-if=\"!question.text.hide\">\n" +
+    "    <label for=\"{{question.id}}\">\n" +
+    "        <span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span>\n" +
+    "        <span ng-show=\"question.isRequired()\" class=\"required\"></span>\n" +
+    "    </label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +

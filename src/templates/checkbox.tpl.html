@@ -6,7 +6,7 @@
                type="checkbox"
                class="custom-checkbox__input"
                ng-model="question.answer"
-               ng-change="question.removeError();question.saveAnswer();"
+               ng-change="question.removeError();question.options.onChange(question);question.saveAnswer();"
                ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
                ng-true-value="'{{question.options.getValues()[0].value}}'"
                ng-false-value="undefined">
