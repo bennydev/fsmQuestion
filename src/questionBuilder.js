@@ -26,6 +26,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                     new Options(value(builder.defaultAnswer, ''), value(builder.visible ,true), value(builder.values, []), value(builder.placeholder, ''), value(builder.onChange)),
                     new Restrictions(value(builder.required, false), value(builder.validator), value(builder.min), value(builder.max), value(builder.numeric, false)),
                     ValidationService,
+                    questionStorage,
                     ErrorReporter
                 );
                 loadAnswer(question);

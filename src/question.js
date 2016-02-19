@@ -1,7 +1,7 @@
 "use strict";
 angular.module('fsmQuestion')
     .value('Question', Question);
-function Question(id, type, text, options, restrictions, ValidationService, ErrorReporter){
+function Question(id, type, text, options, restrictions, ValidationService, questionStorage, ErrorReporter){
     var question = this;
     question.id = id;
     question.type = type;
@@ -18,6 +18,7 @@ function Question(id, type, text, options, restrictions, ValidationService, Erro
         } else {
             question.answer = value;
         }
+        questionStorage.saveAnswer(question.id, question.answer);
     };
     question.hasError = function(){
         return ErrorReporter.hasErrorFor(question.id);
