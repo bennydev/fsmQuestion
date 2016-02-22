@@ -516,7 +516,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
         var answer = questionStorage.loadAnswer(question.id);
         if(answer) {
             question.setAnswer(answer);
-            //question.options.onChange(question);
+            question.options.onChange(question);
         }
     }
 
