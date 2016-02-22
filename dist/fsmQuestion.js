@@ -516,7 +516,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
         var answer = questionStorage.loadAnswer(question.id);
         if(answer) {
             question.setAnswer(answer);
-            question.options.onChange(question);
+            //question.options.onChange(question);
         }
     }
 
@@ -537,6 +537,8 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
     function getQuestionBuilder(){
         return new QuestionBuilder(QuestionStorage, Question, Options, Restrictions, ValidationService, ErrorReporter);
     }
+
+    //function
 
     function getQuestion(id){
         return QuestionStorage.getQuestion(id);

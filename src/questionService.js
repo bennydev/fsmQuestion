@@ -13,6 +13,8 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
         return new QuestionBuilder(QuestionStorage, Question, Options, Restrictions, ValidationService, ErrorReporter);
     }
 
+    //function
+
     function getQuestion(id){
         return QuestionStorage.getQuestion(id);
     }
