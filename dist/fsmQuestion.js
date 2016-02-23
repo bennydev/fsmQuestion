@@ -585,7 +585,7 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function questionHasLocalStorage(id, answer) {
-        var keys = localStorageService.keys;
+        var keys = localStorageService.keys();
         return answer === loadAnswer(id) && keys.length > 4;
     }
 
