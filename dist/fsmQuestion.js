@@ -587,7 +587,9 @@ function QuestionStorage(storagePrefix, localStorageService){
 
     function reload() {
         Object.keys(questions).forEach(function(id) {
-            getQuestion(id).answer = loadAnswer(id);
+            var question = getQuestion(id);
+            question.answer = loadAnswer(id);
+            question.options.onChange();
         });
     }
 
