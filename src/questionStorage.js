@@ -12,6 +12,7 @@ function QuestionStorage(storagePrefix, localStorageService){
         saveAnswer: saveAnswer,
         reload: reload,
         isReloaded: isReloaded,
+        questionHasLocalStorage: questionHasLocalStorage,
         clear: clear
     };
     return service;
@@ -36,8 +37,13 @@ function QuestionStorage(storagePrefix, localStorageService){
         return localStorageService.get(getStorageKey(id));
     }
 
+    function questionHasLocalStorage(id, answer) {
+        var keys = localStorageService.keys;
+        return answer === loadAnswer(id) && keys.length > 4;
+    }
+
     function saveAnswer(id, answer){
-        if (isReloaded()) {
+        if (isReloaded() || !loadAnswer(id)) {
             localStorageService.set(getStorageKey(id), answer);
         }
     }
