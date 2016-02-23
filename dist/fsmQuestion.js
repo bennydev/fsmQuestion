@@ -603,9 +603,11 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function clear() {
-        Object.keys(questions).forEach(function(id) {
-            localStorageService.remove(getStorageKey(id));
-        });
+        //Object.keys(questions).forEach(function(id) {
+        //    localStorageService.remove(getStorageKey(id));
+        //});
+
+        localStorageService.clearAll();
     }
 }
 "use strict";
