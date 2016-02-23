@@ -29,7 +29,7 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                     questionStorage,
                     ErrorReporter
                 );
-                loadAnswer(question);
+                //loadAnswer(question);
                 questionStorage.addQuestion(question);
                 init();
                 return question;

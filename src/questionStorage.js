@@ -8,7 +8,9 @@ function QuestionStorage(storagePrefix, localStorageService){
         addQuestion: addQuestion,
         getQuestion: getQuestion,
         loadAnswer: loadAnswer,
-        saveAnswer: saveAnswer
+        saveAnswer: saveAnswer,
+        reload: reload,
+        clear: clear
     };
     return service;
 
@@ -34,5 +36,15 @@ function QuestionStorage(storagePrefix, localStorageService){
 
     function saveAnswer(id, answer){
         localStorageService.set(getStorageKey(id), answer);
+    }
+
+    function reload() {
+        Object.keys(questions).forEach(function(id) {
+            getQuestion(id).answer = loadAnswer(id);
+        });
+    }
+
+    function clear() {
+        localStorageService.remove(storagePrefix);
     }
 }
