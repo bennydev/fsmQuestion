@@ -42,7 +42,7 @@ function QuestionStorage(storagePrefix, localStorageService){
         Object.keys(questions).forEach(function(id) {
             var question = getQuestion(id);
             question.answer = loadAnswer(id);
-            if (question.answer !== question.options.getDefaultAnswer()) {
+            if (question.answer && question.answer !== question.options.getDefaultAnswer()) {
                 question.options.onChange(question);
             }
         });
