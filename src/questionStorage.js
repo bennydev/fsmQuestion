@@ -56,6 +56,8 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function clear() {
-        localStorageService.remove(storagePrefix);
+        Object.keys(questions).forEach(function(id) {
+            localStorageService.remove(getStorageKey(id));
+        });
     }
 }
