@@ -550,7 +550,8 @@ angular.module('fsmQuestion')
 .factory('QuestionStorage', ['storagePrefix', 'localStorageService', QuestionStorage]);
 function QuestionStorage(storagePrefix, localStorageService){
     var questions = {};
-    var reloaded = false;
+    var customerEntered = false;
+    var cachedId = {};
     var service = {
         contains: contains,
         addQuestion: addQuestion,
@@ -560,9 +561,14 @@ function QuestionStorage(storagePrefix, localStorageService){
         reload: reload,
         isReloaded: isReloaded,
         questionHasLocalStorage: questionHasLocalStorage,
+        customerEnteredFirstPage: customerEnteredFirstPage,
         clear: clear
     };
     return service;
+
+    function customerEnteredFirstPage() {
+        customerEntered = true;
+    }
 
     function contains(id){
         return !!questions[id];
@@ -585,18 +591,29 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function questionHasLocalStorage(id, answer) {
-        var keys = localStorageService.keys();
-        return answer === loadAnswer(id) && keys.length > 4;
+        customerEntered = false;
+        if (answer === loadAnswer(id)) {
+            cachedId.id = id;
+            cachedId.answer = answer;
+           return true;
+        }
+        // Clear storage to avoid someone else's info to be displayed....
+        clear();
+        saveAnswer(id, answer);
+        return false;
     }
 
     function saveAnswer(id, answer){
-        if (isReloaded() || !loadAnswer(id)) {
+        if (!customerEntered) {
+            if (id === cachedId.id) {
+                cachedId = {};
+            }
             localStorageService.set(getStorageKey(id), answer);
         }
     }
 
     function isReloaded() {
-        return reloaded;
+        return !customerEntered;
     }
 
     function reload() {
@@ -607,7 +624,6 @@ function QuestionStorage(storagePrefix, localStorageService){
                 question.options.onChange(question);
             }
         });
-        reloaded = true;
     }
 
     function clear() {
@@ -616,6 +632,9 @@ function QuestionStorage(storagePrefix, localStorageService){
         //});
 
         localStorageService.clearAll();
+        if (cachedId.id) {
+            saveAnswer(cachedId.id, cachedId.answer);
+        }
     }
 }
 "use strict";
