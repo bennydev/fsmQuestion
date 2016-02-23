@@ -37,7 +37,9 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function saveAnswer(id, answer){
-        localStorageService.set(getStorageKey(id), answer);
+        if (isReloaded()) {
+            localStorageService.set(getStorageKey(id), answer);
+        }
     }
 
     function isReloaded() {
