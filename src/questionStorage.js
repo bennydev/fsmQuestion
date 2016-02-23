@@ -3,6 +3,7 @@ angular.module('fsmQuestion')
 .factory('QuestionStorage', ['storagePrefix', 'localStorageService', QuestionStorage]);
 function QuestionStorage(storagePrefix, localStorageService){
     var questions = {};
+    var reloaded = false;
     var service = {
         contains: contains,
         addQuestion: addQuestion,
@@ -10,6 +11,7 @@ function QuestionStorage(storagePrefix, localStorageService){
         loadAnswer: loadAnswer,
         saveAnswer: saveAnswer,
         reload: reload,
+        isReloaded: isReloaded,
         clear: clear
     };
     return service;
@@ -38,6 +40,10 @@ function QuestionStorage(storagePrefix, localStorageService){
         localStorageService.set(getStorageKey(id), answer);
     }
 
+    function isReloaded() {
+        return reloaded;
+    }
+
     function reload() {
         Object.keys(questions).forEach(function(id) {
             var question = getQuestion(id);
@@ -46,6 +52,7 @@ function QuestionStorage(storagePrefix, localStorageService){
                 question.options.onChange(question);
             }
         });
+        reloaded = true;
     }
 
     function clear() {
