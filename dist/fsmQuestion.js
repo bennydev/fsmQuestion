@@ -550,9 +550,8 @@ angular.module('fsmQuestion')
 .factory('QuestionStorage', ['storagePrefix', 'localStorageService', QuestionStorage]);
 function QuestionStorage(storagePrefix, localStorageService){
     var questions = {};
-    var customerEntered = false;
     var questionLocalStorageDone = false;
-    var cachedId = {};
+    var cachedLocalStorageIdentifierId = {};
     var service = {
         contains: contains,
         addQuestion: addQuestion,
@@ -562,14 +561,9 @@ function QuestionStorage(storagePrefix, localStorageService){
         reload: reload,
         isLocalStorageQuestionDone: isLocalStorageQuestionDone,
         questionHasLocalStorage: questionHasLocalStorage,
-        customerEnteredFirstPage: customerEnteredFirstPage,
         clear: clear
     };
     return service;
-
-    function customerEnteredFirstPage() {
-        customerEntered = true;
-    }
 
     function contains(id){
         return !!questions[id];
@@ -592,12 +586,11 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function questionHasLocalStorage(id, answer) {
-        customerEntered = false;
         questionLocalStorageDone = true;
         if (answer === loadAnswer(id)) {
-            // cache id and answer, will be saved after alla data is cleared
-            cachedId.id = id;
-            cachedId.answer = answer;
+            // cache id and answer for the key local storage identifier, will be saved after all data is cleared
+            cachedLocalStorageIdentifierId.id = id;
+            cachedLocalStorageIdentifierId.answer = answer;
            return true;
         }
         // Clear storage to avoid someone else's info to be displayed....
@@ -607,9 +600,9 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function saveAnswer(id, answer){
-        if (!customerEntered) {
-            if (id === cachedId.id) {
-                cachedId = {};
+        if (questionLocalStorageDone) {
+            if (id === cachedLocalStorageIdentifierId.id) {
+                cachedLocalStorageIdentifierId = {};
             }
             localStorageService.set(getStorageKey(id), answer);
         }
@@ -636,8 +629,8 @@ function QuestionStorage(storagePrefix, localStorageService){
         //});
 
         localStorageService.clearAll();
-        if (cachedId.id) {
-            saveAnswer(cachedId.id, cachedId.answer);
+        if (cachedLocalStorageIdentifierId.id) {
+            saveAnswer(cachedLocalStorageIdentifierId.id, cachedLocalStorageIdentifierId.answer);
         }
     }
 }
