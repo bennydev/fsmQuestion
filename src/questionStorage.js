@@ -41,7 +41,8 @@ function QuestionStorage(storagePrefix, localStorageService){
     function questionHasLocalStorage(id, answer) {
         questionLocalStorageDone = true;
         if (answer === loadAnswer(id)) {
-            // cache id and answer for the key local storage identifier, will be saved after all data is cleared
+            // cache id and answer for the key local storage identifier,
+            // since we don't know if the user will use or clear the local storage.
             cachedLocalStorageIdentifierId.id = id;
             cachedLocalStorageIdentifierId.answer = answer;
            return true;
@@ -57,7 +58,7 @@ function QuestionStorage(storagePrefix, localStorageService){
             if (id === cachedLocalStorageIdentifierId.id) {
                 cachedLocalStorageIdentifierId = {};
             }
-            if (answer !== undefined || answer !== null) {
+            if (isNotNull(answer)) {
                 localStorageService.set(getStorageKey(id), answer);
             }
         }
@@ -70,11 +71,16 @@ function QuestionStorage(storagePrefix, localStorageService){
     function reload() {
         Object.keys(questions).forEach(function(id) {
             var question = getQuestion(id);
-            question.answer = loadAnswer(id);
-            if (question.answer && question.answer !== question.options.getDefaultAnswer()) {
+            var answer = loadAnswer(id);
+            if (isNotNull(answer)) {
+                question.answer = answer;
                 question.options.onChange(question);
             }
         });
+    }
+
+    function isNotNull(value) {
+        return value !== undefined || value !== null;
     }
 
     function clear() {
