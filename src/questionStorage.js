@@ -57,7 +57,9 @@ function QuestionStorage(storagePrefix, localStorageService){
             if (id === cachedLocalStorageIdentifierId.id) {
                 cachedLocalStorageIdentifierId = {};
             }
-            localStorageService.set(getStorageKey(id), answer);
+            if (answer !== undefined || answer !== null) {
+                localStorageService.set(getStorageKey(id), answer);
+            }
         }
     }
 
