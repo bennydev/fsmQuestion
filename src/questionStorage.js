@@ -4,6 +4,7 @@ angular.module('fsmQuestion')
 function QuestionStorage(storagePrefix, localStorageService){
     var questions = {};
     var customerEntered = false;
+    var questionLocalStorageDone = false;
     var cachedId = {};
     var service = {
         contains: contains,
@@ -12,7 +13,7 @@ function QuestionStorage(storagePrefix, localStorageService){
         loadAnswer: loadAnswer,
         saveAnswer: saveAnswer,
         reload: reload,
-        isReloaded: isReloaded,
+        isLocalStorageQuestionDone: isLocalStorageQuestionDone,
         questionHasLocalStorage: questionHasLocalStorage,
         customerEnteredFirstPage: customerEnteredFirstPage,
         clear: clear
@@ -45,7 +46,9 @@ function QuestionStorage(storagePrefix, localStorageService){
 
     function questionHasLocalStorage(id, answer) {
         customerEntered = false;
+        questionLocalStorageDone = true;
         if (answer === loadAnswer(id)) {
+            // cache id and answer, will be saved after alla data is cleared
             cachedId.id = id;
             cachedId.answer = answer;
            return true;
@@ -65,8 +68,8 @@ function QuestionStorage(storagePrefix, localStorageService){
         }
     }
 
-    function isReloaded() {
-        return !customerEntered;
+    function isLocalStorageQuestionDone() {
+        return questionLocalStorageDone;
     }
 
     function reload() {
@@ -80,6 +83,7 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function clear() {
+        // This does not work for some reason, should investigate.
         //Object.keys(questions).forEach(function(id) {
         //    localStorageService.remove(getStorageKey(id));
         //});
