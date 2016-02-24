@@ -80,7 +80,7 @@ function QuestionStorage(storagePrefix, localStorageService){
     }
 
     function isNotNull(value) {
-        return value !== undefined || value !== null;
+        return value !== undefined && value !== null;
     }
 
     function clear() {
