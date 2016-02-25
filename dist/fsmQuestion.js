@@ -547,11 +547,11 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
 
 "use strict";
 angular.module('fsmQuestion')
-.factory('QuestionStorage', ['storagePrefix', 'localStorageService', QuestionStorage]);
-function QuestionStorage(storagePrefix, localStorageService){
+    .factory('QuestionStorage', ['storagePrefix', 'localStorageService', QuestionStorage]);
+function QuestionStorage(storagePrefix, localStorageService) {
     var questions = {};
     var questionLocalStorageDone = false;
-    var cachedLocalStorageIdentifierId = {};
+    var localStore;
     var service = {
         contains: contains,
         addQuestion: addQuestion,
@@ -559,69 +559,63 @@ function QuestionStorage(storagePrefix, localStorageService){
         loadAnswer: loadAnswer,
         saveAnswer: saveAnswer,
         reload: reload,
-        isLocalStorageQuestionDone: isLocalStorageQuestionDone,
         questionHasLocalStorage: questionHasLocalStorage,
         clear: clear
     };
+    loadLocalStore();
     return service;
-
-    function contains(id){
+    function contains(id) {
         return !!questions[id];
     }
 
-    function addQuestion(question){
+    function loadLocalStore() {
+        localStore = localStorageService.get(storagePrefix) || {};
+    }
+
+    function addQuestion(question) {
         questions[question.id] = question;
     }
 
-    function getQuestion(id){
+    function getQuestion(id) {
         return questions[id];
     }
 
-    function getStorageKey(id){
-        return storagePrefix+'.questions.'+id;
+    function getStorageKey(id) {
+        return storagePrefix + '.questions.' + id;
     }
 
-    function loadAnswer(id){
-        return localStorageService.get(getStorageKey(id));
+    function loadAnswer(id) {
+        return localStore['questions.' + id];
     }
 
     function questionHasLocalStorage(id, answer) {
-        questionLocalStorageDone = true;
-        if (answer === loadAnswer(id)) {
-            // cache id and answer for the key local storage identifier,
-            // since we don't know if the user will use or clear the local storage.
-            cachedLocalStorageIdentifierId.id = id;
-            cachedLocalStorageIdentifierId.answer = answer;
-           return true;
+        if (!questionLocalStorageDone) {
+            questionLocalStorageDone = true;
+            if (answer === loadAnswer(id)) {
+                return true;
+            }
+            // Clear storage to avoid someone else's info to be displayed....
+            clear();
+            saveAnswer(id, answer);
         }
-        // Clear storage to avoid someone else's info to be displayed....
-        clear();
-        saveAnswer(id, answer);
         return false;
     }
 
-    function saveAnswer(id, answer){
-        if (questionLocalStorageDone) {
-            if (id === cachedLocalStorageIdentifierId.id) {
-                cachedLocalStorageIdentifierId = {};
-            }
-            if (isNotNull(answer)) {
-                localStorageService.set(getStorageKey(id), answer);
-            }
+    function saveAnswer(id, answer) {
+        if (isNotNull(answer)) {
+            localStorageService.set(getStorageKey(id), answer);
         }
     }
 
-    function isLocalStorageQuestionDone() {
-        return questionLocalStorageDone;
-    }
-
     function reload() {
-        Object.keys(questions).forEach(function(id) {
+        Object.keys(questions).forEach(function (id) {
             var question = getQuestion(id);
             var answer = loadAnswer(id);
             if (isNotNull(answer)) {
                 question.answer = answer;
-                question.options.onChange(question);
+                if (question.options.onChange) {
+                    question.options.onChange(question);
+                }
             }
         });
     }
@@ -635,11 +629,8 @@ function QuestionStorage(storagePrefix, localStorageService){
         //Object.keys(questions).forEach(function(id) {
         //    localStorageService.remove(getStorageKey(id));
         //});
-
+        localStore = {};
         localStorageService.clearAll();
-        if (cachedLocalStorageIdentifierId.id) {
-            saveAnswer(cachedLocalStorageIdentifierId.id, cachedLocalStorageIdentifierId.answer);
-        }
     }
 }
 "use strict";
