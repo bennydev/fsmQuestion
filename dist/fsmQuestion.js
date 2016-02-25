@@ -611,6 +611,17 @@ function QuestionStorage(storagePrefix, localStorageService) {
 
     function reload() {
         loadStoredAnswers = true;
+        Object.keys(questions).forEach(function (id) {
+            var question = getQuestion(id);
+            var answer = loadAnswer(id);
+            if (isNotNull(answer)) {
+                question.answer = answer;
+                if (question.options.onChange) {
+                    question.options.onChange(question);
+                }
+            }
+
+        });
     }
 
     function isNotNull(value) {
