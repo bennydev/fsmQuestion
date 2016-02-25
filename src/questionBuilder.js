@@ -29,8 +29,8 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                     questionStorage,
                     ErrorReporter
                 );
-                //loadAnswer(question);
                 questionStorage.addQuestion(question);
+                loadAnswer(question);
                 init();
                 return question;
             } else {

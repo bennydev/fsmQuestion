@@ -487,8 +487,8 @@ function QuestionBuilder(questionStorage, Question, Options, Restrictions, Valid
                     questionStorage,
                     ErrorReporter
                 );
-                //loadAnswer(question);
                 questionStorage.addQuestion(question);
+                loadAnswer(question);
                 init();
                 return question;
             } else {
@@ -551,6 +551,7 @@ angular.module('fsmQuestion')
 function QuestionStorage(storagePrefix, localStorageService) {
     var questions = {};
     var questionLocalStorageDone = false;
+    var loadStoredAnswers = false;
     var localStore = {};
     var service = {
         contains: contains,
@@ -588,7 +589,10 @@ function QuestionStorage(storagePrefix, localStorageService) {
     }
 
     function loadAnswer(id) {
-        return localStore[getStorageKey(id)];
+        if (loadStoredAnswers) {
+            return localStore[getStorageKey(id)];
+        }
+        return getQuestion(id).options.getDefaultAnswer();
     }
 
     function questionHasLocalStorage(id, answer) {
@@ -608,16 +612,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
     }
 
     function reload() {
-        Object.keys(questions).forEach(function (id) {
-            var question = getQuestion(id);
-            var answer = loadAnswer(id);
-            if (isNotNull(answer)) {
-                question.answer = answer;
-                if (question.options.onChange) {
-                    question.options.onChange(question);
-                }
-            }
-        });
+        loadStoredAnswers = true;
     }
 
     function isNotNull(value) {
