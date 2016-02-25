@@ -45,7 +45,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
         if (loadStoredAnswers) {
             return localStore[getStorageKey(id)];
         }
-        return getQuestion(id).options.getDefaultAnswer();
+        return undefined;
     }
 
     function questionHasLocalStorage(id, answer) {
