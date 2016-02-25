@@ -551,7 +551,7 @@ angular.module('fsmQuestion')
 function QuestionStorage(storagePrefix, localStorageService) {
     var questions = {};
     var questionLocalStorageDone = false;
-    var localStore;
+    var localStore = {};
     var service = {
         contains: contains,
         addQuestion: addQuestion,
@@ -569,7 +569,10 @@ function QuestionStorage(storagePrefix, localStorageService) {
     }
 
     function loadLocalStore() {
-        localStore = localStorageService.get(storagePrefix) || {};
+        var keys = localStorageService.keys();
+        if (keys) {
+            keys.forEach(function(key) {localStore[key] = localStorageService.get(key);});
+        }
     }
 
     function addQuestion(question) {
@@ -585,7 +588,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
     }
 
     function loadAnswer(id) {
-        return localStore['questions.' + id];
+        return localStore[getStorageKey(id)];
     }
 
     function questionHasLocalStorage(id, answer) {
@@ -594,9 +597,6 @@ function QuestionStorage(storagePrefix, localStorageService) {
             if (answer === loadAnswer(id)) {
                 return true;
             }
-            // Clear storage to avoid someone else's info to be displayed....
-            clear();
-            saveAnswer(id, answer);
         }
         return false;
     }
