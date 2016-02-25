@@ -1302,7 +1302,7 @@ angular.module("templates/fsmQuestionGroup.tpl.html", []).run(["$templateCache",
 
 angular.module("templates/input.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/input.tpl.html",
-    "<div class=\"form-label\" ng-if=\"!question.text.hide\">\n" +
+    "<div class=\"form-label\" ng-if=\"!question.text.hide\" >\n" +
     "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "<div class=\"grid\">\n" +
