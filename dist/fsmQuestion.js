@@ -598,9 +598,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
     function questionHasLocalStorage(id, answer) {
         if (!questionLocalStorageDone) {
             questionLocalStorageDone = true;
-            if (answer === loadAnswer(id)) {
-                return true;
-            }
+            return answer === localStore[getStorageKey(id)];
         }
         return false;
     }
