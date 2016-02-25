@@ -1172,7 +1172,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "               type=\"checkbox\"\n" +
     "               class=\"custom-checkbox__input\"\n" +
     "               ng-model=\"question.answer\"\n" +
-    "               ng-change=\"question.removeError();question.options.onChange(question);question.saveAnswer();\"\n" +
+    "               ng-change=\"question.removeError();question.options.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "               ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "               ng-true-value=\"'{{question.options.getValues()[0].value}}'\"\n" +
     "               ng-false-value=\"undefined\">\n" +
