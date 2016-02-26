@@ -614,7 +614,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
         Object.keys(questions).forEach(function (id) {
             var question = getQuestion(id);
             var answer = loadAnswer(id);
-            console.log(id + '===' + answer);
+            //console.log(id + '===' + answer);
             if (isNotNull(answer)) {
                 question.answer = answer;
                 if (question.options.onChange) {
