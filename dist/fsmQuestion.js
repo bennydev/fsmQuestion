@@ -574,7 +574,6 @@ function QuestionStorage(storagePrefix, localStorageService) {
         if (keys) {
             keys.forEach(function(key) {localStore[key] = localStorageService.get(key);});
         }
-        localStorageService.clearAll();
     }
 
     function addQuestion(question) {
@@ -594,6 +593,15 @@ function QuestionStorage(storagePrefix, localStorageService) {
             return localStore[getStorageKey(id)];
         }
         return undefined;
+    }
+
+    /**
+     * Load objects that does not belong to a Question's answer.
+     * @param id
+     * @returns {*}
+     */
+    function loadObject(id) {
+        return localStore[getStorageKey(id)];
     }
 
     function questionHasLocalStorage(id, answer) {
@@ -627,7 +635,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
     }
 
     function isNotNull(value) {
-        return value !== undefined && value !== null;
+        return value !== undefined && value !== null && value !== '';
     }
 
     function clear() {
