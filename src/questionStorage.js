@@ -11,6 +11,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
         addQuestion: addQuestion,
         getQuestion: getQuestion,
         loadAnswer: loadAnswer,
+        loadObject: loadObject,
         saveAnswer: saveAnswer,
         reload: reload,
         questionHasLocalStorage: questionHasLocalStorage,
