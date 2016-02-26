@@ -27,6 +27,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
         if (keys) {
             keys.forEach(function(key) {localStore[key] = localStorageService.get(key);});
         }
+        localStorageService.clearAll();
     }
 
     function addQuestion(question) {
