@@ -1186,7 +1186,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "               ng-change=\"question.removeError();question.options.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "               ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "               ng-true-value=\"'{{question.options.getValues()[0].value}}'\"\n" +
-    "               ng-false-value=\"undefined\">\n" +
+    "               ng-false-value=\"false\">\n" +
     "        <span class=\"custom-checkbox__icon\" translate>{{question.options.getValues()[0].label}}</span>\n" +
     "    </label>\n" +
     "  </div>\n" +
