@@ -61,7 +61,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
     function questionHasLocalStorage(id, answer) {
         if (!questionLocalStorageDone) {
             questionLocalStorageDone = true;
-            if (localStorage.keys().length > 4) {
+            if (localStorageService.keys().length > 4) {
                 return answer === localStore[getStorageKey(id)];
             }
         }
