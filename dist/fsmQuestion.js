@@ -314,6 +314,11 @@ angular.module('fsmQuestion')
                     scope.question.answer.phoneNumber = '0';
                 }
             };
+            scope.formatPhoneNumber = function(){
+                if(scope.question.answer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
+                    scope.question.answer.phoneNumber = '0';
+                }
+            };
         }
     }
 
@@ -1453,7 +1458,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                 name=\"{{question.id}}PhoneNumber\"\n" +
     "                 input-touched\n" +
     "                 ng-model=\"question.answer.phoneNumber\"\n" +
-    "                 ng-change=\"question.removeError(); question.onChange(question); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                 ng-change=\"question.removeError(); formatPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
     "                  />\n" +
     "          </div>\n" +
     "\n" +

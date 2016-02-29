@@ -26,6 +26,11 @@ angular.module('fsmQuestion')
                     scope.question.answer.phoneNumber = '0';
                 }
             };
+            scope.formatPhoneNumber = function(){
+                if(scope.question.answer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
+                    scope.question.answer.phoneNumber = '0';
+                }
+            };
         }
     }
 

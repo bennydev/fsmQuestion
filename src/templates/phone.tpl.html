@@ -26,7 +26,7 @@
                  name="{{question.id}}PhoneNumber"
                  input-touched
                  ng-model="question.answer.phoneNumber"
-                 ng-change="question.removeError(); question.onChange(question); question.saveAnswer();question.setAnswer(question.answer);"
+                 ng-change="question.removeError(); formatPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);"
                   />
           </div>
 
