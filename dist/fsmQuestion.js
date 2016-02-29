@@ -315,8 +315,13 @@ angular.module('fsmQuestion')
                 }
             };
             scope.formatPhoneNumber = function(){
-                if(scope.question.answer.phoneNumber === '' && scope.question.answer.countryCode.code === 'SWE'){
-                    scope.question.answer.phoneNumber = '0';
+                if(scope.question.answer.countryCode.code === 'SWE'){
+                    if(scope.question.answer.phoneNumber === ''){
+                        scope.question.answer.phoneNumber = '0';
+                    }
+                    if(scope.question.answer.phoneNumber.charAt(0) !== '0' ){
+                        scope.question.answer.phoneNumber = '0' + scope.question.answer.phoneNumber;
+                    }
                 }
             };
         }
