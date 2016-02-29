@@ -316,7 +316,7 @@ angular.module('fsmQuestion')
             };
             scope.formatPhoneNumber = function(){
                 if(scope.question.answer.countryCode.code === 'SWE'){
-                    if(scope.question.answer.phoneNumber === ''){
+                    if(scope.question.answer.phoneNumber === '' || scope.question.answer.phoneNumber === '00'){
                         scope.question.answer.phoneNumber = '0';
                     }
                     if(scope.question.answer.phoneNumber.charAt(0) !== '0' ){
