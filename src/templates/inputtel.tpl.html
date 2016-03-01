@@ -1,0 +1,26 @@
+<div class="form-label" ng-if="!question.text.hide" >
+    <label for="{{question.id}}"><span translate translate-default=" " translate-values="question.text.getTranslateValues()">{{question.text.root+'.QUESTION'}}</span><span ng-show="question.isRequired()" class="required"></span></label>
+</div>
+<div class="grid">
+    <div class="grid__item sm--six-twelfths">
+        <div ng-include="'templates/tooltip.tpl.html'"></div>
+    </div>
+</div>
+<div class="grid">
+    <div class="grid__item sm--six-twelfths">
+        <div class="form-row form-row--gap">
+            <input type="tel"
+                   id="{{question.id}}"
+                   name="{{question.id}}"
+                   placeholder="{{question.options.getPlaceholder()}}"
+                   input-touched
+                   class="input-text"
+                   ng-model="question.answer"
+                   ng-change="question.removeError();question.options.onChange(question);question.setAnswer(question.answer);"
+                   ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
+                   maxlength="{{question.restrictions.getMax()}}"
+            />
+        </div>
+    </div>
+    <div class="grid__item sm--six-twelfths" ng-include="'templates/formerror.tpl.html'"></div>
+</div>
