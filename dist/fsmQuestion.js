@@ -316,7 +316,7 @@ angular.module('fsmQuestion')
             };
             scope.formatPhoneNumber = function(){
                 if(scope.question.answer.countryCode.code === 'SWE'){
-                    if(scope.question.answer.phoneNumber === ''){
+                    if(scope.question.answer.phoneNumber === '' || scope.question.answer.phoneNumber === '00'){
                         scope.question.answer.phoneNumber = '0';
                     }
                     if(scope.question.answer.phoneNumber.charAt(0) !== '0' ){
@@ -666,6 +666,7 @@ angular.module('fsmQuestion')
 function QuestionTypes(){
     var types = this;
     types.input = 'INPUT';
+    types.inputtel = 'INPUTTEL';
     types.inputcurrency = 'INPUTCURRENCY';
     types.inputidentification = 'INPUTIDENTIFICATION';
     types.buttongroup = 'BUTTONGROUP';
@@ -1131,7 +1132,7 @@ function Validators(QuestionTypes, QuestionUtils, DateValidator){
 
 
 }
-angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/inputidentification.tpl.html', 'templates/label.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
+angular.module('fsmQuestionTemplates', ['templates/buttongroup.tpl.html', 'templates/buttongroupbig.tpl.html', 'templates/checkbox.tpl.html', 'templates/date.tpl.html', 'templates/datetime.tpl.html', 'templates/fileuploader.tpl.html', 'templates/formerror.tpl.html', 'templates/fsmQuestion.tpl.html', 'templates/fsmQuestionGroup.tpl.html', 'templates/input.tpl.html', 'templates/inputcurrency.tpl.html', 'templates/inputidentification.tpl.html', 'templates/inputtel.tpl.html', 'templates/label.tpl.html', 'templates/location.tpl.html', 'templates/phone.tpl.html', 'templates/select.tpl.html', 'templates/text.tpl.html', 'templates/tooltip.tpl.html', 'templates/upload.tpl.html']);
 
 angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/buttongroup.tpl.html",
@@ -1367,7 +1368,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap xs--two-thirds sm--two-thirds lg--one-half\">\n" +
-    "                <input type=\"text\"\n" +
+    "                <input type=\"tel\"\n" +
     "                       id=\"{{question.id}}\"\n" +
     "                       name=\"{{question.id}}\"\n" +
     "                       placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
@@ -1409,6 +1410,36 @@ angular.module("templates/inputidentification.tpl.html", []).run(["$templateCach
     "                   ng-model=\"question.answer\"\n" +
     "                   ng-blur=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer);\"\n" +
     "                   ng-change=\"question.removeError()\"\n" +
+    "                   ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
+    "                   maxlength=\"{{question.restrictions.getMax()}}\"\n" +
+    "            />\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"grid__item sm--six-twelfths\" ng-include=\"'templates/formerror.tpl.html'\"></div>\n" +
+    "</div>");
+}]);
+
+angular.module("templates/inputtel.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/inputtel.tpl.html",
+    "<div class=\"form-label\" ng-if=\"!question.text.hide\" >\n" +
+    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"grid\">\n" +
+    "    <div class=\"grid__item sm--six-twelfths\">\n" +
+    "        <div class=\"form-row form-row--gap\">\n" +
+    "            <input type=\"tel\"\n" +
+    "                   id=\"{{question.id}}\"\n" +
+    "                   name=\"{{question.id}}\"\n" +
+    "                   placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
+    "                   input-touched\n" +
+    "                   class=\"input-text\"\n" +
+    "                   ng-model=\"question.answer\"\n" +
+    "                   ng-change=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer);\"\n" +
     "                   ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "                   maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "            />\n" +

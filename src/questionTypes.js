@@ -4,6 +4,7 @@ angular.module('fsmQuestion')
 function QuestionTypes(){
     var types = this;
     types.input = 'INPUT';
+    types.inputtel = 'INPUTTEL';
     types.inputcurrency = 'INPUTCURRENCY';
     types.inputidentification = 'INPUTIDENTIFICATION';
     types.buttongroup = 'BUTTONGROUP';
