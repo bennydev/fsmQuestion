@@ -18,17 +18,43 @@ describe('QuestiionStorage tests.', function() {
     it('Should have a QuestionStorage.', function() {
         expect(QuestionStorage).toBeTruthy();
     });
-    it('Should be able to load a question from local storage.', function() {
-        var id = 'inputtest';
-        var inputText = 'A test that saves this text on local storage';
+    var id = 'inputtest';
+    var inputText = 'A test that saves this text on local storage';
+    it('Should be able to store a question to local storage.', function() {
+        var inputQuestion = storeQuestion(id, inputText);
+    });
+
+    it ('Should be able to read data from laocal storage', function() {
         var inputQuestion = createInputQuestion(id);
-        inputQuestion.answer = inputText;
-        inputQuestion.options.onChange(inputQuestion);
-        inputQuestion.setAnswer(inputQuestion.answer);
-        //inputQuestion.answer = '';
+        inputQuestion.answer = '';
         QuestionStorage.reload();
         expect(inputQuestion.answer).toBe(inputText);
+
     });
+    var ids = ['inputtest', 'inputtest2', 'inputtest3', 'inputtest4', 'inputtest5' ];
+
+    it ('Should be able to store several questions in local storage.', function() {
+        ids.forEach(function(id) {
+            var inputQuestion = storeQuestion(id, inputText + '.' + id);
+        });
+    });
+
+    it('Should be able to load several questions from local storage.', function() {
+        var inputQuestions = [];
+        ids.forEach(function(id) {
+            inputQuestions.push(createInputQuestion(id));
+        });
+        QuestionStorage.reload();
+        inputQuestions.forEach(function(question) {
+            expect(question.answer).toBe( inputText + '.' + question.id);
+        });
+    });
+
+    function storeQuestion(id, input) {
+        var inputQuestion = createInputQuestion(id);
+        inputQuestion.setAnswer(input);
+        return inputQuestion;
+    }
 
     function createInputQuestion(id) {
         return QuestionBuilder
