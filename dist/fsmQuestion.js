@@ -589,6 +589,7 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
                     localStore[key] = localStorageService.get(key);
                 });
             }
+            localStorageService.clearAll();
         }
 
         function addQuestion(question) {
