@@ -571,7 +571,7 @@ function QuestionStorage(storagePrefix, localStorageService) {
         loadObject: loadObject,
         saveAnswer: saveAnswer,
         reload: reload,
-        questionHasLocalStorage: questionHasLocalStorage,
+        questionsHasLocalStorage: questionsHasLocalStorage,
         clear: clear
     };
     loadLocalStore();
@@ -583,7 +583,9 @@ function QuestionStorage(storagePrefix, localStorageService) {
     function loadLocalStore() {
         var keys = localStorageService.keys();
         if (keys) {
-            keys.forEach(function(key) {localStore[key] = localStorageService.get(key);});
+            keys.forEach(function (key) {
+                localStore[key] = localStorageService.get(key);
+            });
         }
     }
 
@@ -615,14 +617,24 @@ function QuestionStorage(storagePrefix, localStorageService) {
         return localStore[getStorageKey(id)];
     }
 
-    function questionHasLocalStorage(id, answer) {
+    function questionsHasLocalStorage(questions) {
         if (!questionLocalStorageDone) {
             questionLocalStorageDone = true;
-            if (localStorageService.keys().length > 4) {
-                return answer === localStore[getStorageKey(id)];
+            for (var i = 0; i < questions.length; i++) {
+                if (!compareValues(questions[i].answer), localStore[getStorageKey(questions[i].id)]) {
+                    return false;
+                }
             }
+            return true;
         }
         return false;
+    }
+
+    function compareValues(answer, storedValue) {
+        if (!answer && !storedValue) {
+            return true;
+        }
+        return answer === storedValue;
     }
 
     function saveAnswer(id, answer) {
