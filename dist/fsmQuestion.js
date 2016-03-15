@@ -1554,8 +1554,8 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
 
 angular.module("templates/text.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/text.tpl.html",
-    "<div class=\"form-label\">\n" +
-    "    <label>{{question.text.root+'.QUESTION' | translate}}</label>\n" +
+    "<div class=\"form-label\" ng-if=\"!question.text.hide\" >\n" +
+    "    <label for=\"{{question.id}}\"><span translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.QUESTION'}}</span><span ng-show=\"question.isRequired()\" class=\"required\"></span></label>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"grid\">\n" +
