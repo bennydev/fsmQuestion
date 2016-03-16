@@ -20,7 +20,7 @@
                        numbers
                        question="question"
                        ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
-                       ng-change="question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);"
+                       ng-change="question.removeError();question.onChange(question);question.setAnswer(question.answer);"
                        maxlength="{{question.restrictions.getMax()}}"
                 />
             <span class="input-inlinetext">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</span>

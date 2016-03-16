@@ -8,7 +8,7 @@
             ng-model="question.answer"
             btn-radio="'{{option.value}}'"
             ng-class="{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}"
-            ng-change="question.removeError();question.onChange(question);question.saveAnswer();">{{option.label | translate}}</button>
+            ng-change="question.removeError();question.onChange(question);question.setAnswer(question.answer);">{{option.label | translate}}</button>
     </div>
     <input type="hidden" ng-required="true" name="agree" ng-model="agree">
 

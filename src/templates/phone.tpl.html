@@ -13,7 +13,7 @@
                       <select ng-model="question.answer.countryCode"
                               id="{{question.id}}CountryCode"
                               name="{{question.id}}CountryCode"
-                              ng-change="question.removeError(); addZeroToPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);"
+                              ng-change="question.removeError(); addZeroToPhoneNumber();question.setAnswer(question.answer);"
                               ng-options="option.value for option in question.options.getValues() track by option.id"
                               >
                       </select>
@@ -26,7 +26,7 @@
                  name="{{question.id}}PhoneNumber"
                  input-touched
                  ng-model="question.answer.phoneNumber"
-                 ng-change="question.removeError(); formatPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);"
+                 ng-change="question.removeError(); formatPhoneNumber();question.setAnswer(question.answer);"
                   />
           </div>
 

@@ -1190,7 +1190,7 @@ angular.module("templates/buttongroupbig.tpl.html", []).run(["$templateCache", f
     "            ng-model=\"question.answer\"\n" +
     "            btn-radio=\"'{{option.value}}'\"\n" +
     "            ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
-    "            ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();\">{{option.label | translate}}</button>\n" +
+    "            ng-change=\"question.removeError();question.onChange(question);question.setAnswer(question.answer);\">{{option.label | translate}}</button>\n" +
     "    </div>\n" +
     "    <input type=\"hidden\" ng-required=\"true\" name=\"agree\" ng-model=\"agree\">\n" +
     "\n" +
@@ -1210,7 +1210,7 @@ angular.module("templates/checkbox.tpl.html", []).run(["$templateCache", functio
     "               type=\"checkbox\"\n" +
     "               class=\"custom-checkbox__input\"\n" +
     "               ng-model=\"question.answer\"\n" +
-    "               ng-change=\"question.removeError();question.options.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "               ng-change=\"question.removeError();question.options.onChange(question);question.setAnswer(question.answer);\"\n" +
     "               ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "               ng-true-value=\"'{{question.options.getValues()[0].value}}'\"\n" +
     "               ng-false-value=\"false\">\n" +
@@ -1392,7 +1392,7 @@ angular.module("templates/inputcurrency.tpl.html", []).run(["$templateCache", fu
     "                       numbers\n" +
     "                       question=\"question\"\n" +
     "                       ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
-    "                       ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                       ng-change=\"question.removeError();question.onChange(question);question.setAnswer(question.answer);\"\n" +
     "                       maxlength=\"{{question.restrictions.getMax()}}\"\n" +
     "                />\n" +
     "            <span class=\"input-inlinetext\">{{'GENERAL.EXTRAS.CURRENCY_SWEDISH' | translate}}</span>\n" +
@@ -1497,7 +1497,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                      <select ng-model=\"question.answer.countryCode\"\n" +
     "                              id=\"{{question.id}}CountryCode\"\n" +
     "                              name=\"{{question.id}}CountryCode\"\n" +
-    "                              ng-change=\"question.removeError(); addZeroToPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                              ng-change=\"question.removeError(); addZeroToPhoneNumber();question.setAnswer(question.answer);\"\n" +
     "                              ng-options=\"option.value for option in question.options.getValues() track by option.id\"\n" +
     "                              >\n" +
     "                      </select>\n" +
@@ -1510,7 +1510,7 @@ angular.module("templates/phone.tpl.html", []).run(["$templateCache", function($
     "                 name=\"{{question.id}}PhoneNumber\"\n" +
     "                 input-touched\n" +
     "                 ng-model=\"question.answer.phoneNumber\"\n" +
-    "                 ng-change=\"question.removeError(); formatPhoneNumber(); question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                 ng-change=\"question.removeError(); formatPhoneNumber();question.setAnswer(question.answer);\"\n" +
     "                  />\n" +
     "          </div>\n" +
     "\n" +
@@ -1541,7 +1541,7 @@ angular.module("templates/select.tpl.html", []).run(["$templateCache", function(
     "                        name=\"{{question.id}}\"\n" +
     "                        class=\"form-control\"\n" +
     "                        ng-model=\"question.answer\"\n" +
-    "                        ng-change=\"question.removeError();question.options.onChange(question); question.saveAnswer(); question.setAnswer(question.answer);\"\n" +
+    "                        ng-change=\"question.removeError();question.options.onChange(question); question.setAnswer(question.answer);\"\n" +
     "                        ng-class=\"{'fsm-invalid': question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "                        ng-options=\"option.value as option.label | translate for option in question.options.getValues()\">\n" +
     "                </select>\n" +
@@ -1573,7 +1573,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
     "                      name=\"{{question.id}}\"\n" +
     "                      ng-model=\"question.answer\"\n" +
     "                      placeholder=\"{{question.options.getPlaceholder()}}\"\n" +
-    "                      ng-change=\"question.removeError();question.onChange(question);question.saveAnswer();question.setAnswer(question.answer);\"\n" +
+    "                      ng-change=\"question.removeError();question.onChange(question);question.setAnswer(question.answer);\"\n" +
     "                      ng-class=\"{'fsm-invalid':question.hasError(), 'fsm-valid': !question.hasError()}\"\n" +
     "                      ></textarea>\n" +
     "        </div>\n" +
