@@ -654,6 +654,9 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
                 //console.log(id + '===' + answer);
                 if (isNotNull(answer)) {
                     question.answer = answer;
+                    if (question.options.onChange) {
+                        question.options.onChange(question);
+                    }
                     saveAnswer(question.id, answer);
                 }
 
