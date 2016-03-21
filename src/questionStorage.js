@@ -97,8 +97,8 @@
                 //console.log(id + '===' + answer);
                 if (isNotNull(answer)) {
                     question.answer = answer;
-                    if (question.options.onChange) {
-                        question.options.onChange(question);
+                    if (question.options.onLoadStorage) {
+                        question.options.onLoadStorage(question);
                     }
                     saveAnswer(question.id, answer);
                 }
