@@ -1604,7 +1604,7 @@ angular.module("templates/text.tpl.html", []).run(["$templateCache", function($t
 
 angular.module("templates/tooltip.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/tooltip.tpl.html",
-    "<p ng-if=\"hasText(question.text.root+'.INFO')\" class=\"form-note\" translate translate-values=\"question.text.translateValues\">{{question.text.root+'.INFO'}}</p>");
+    "<p ng-if=\"hasText(question.text.root+'.INFO')\" class=\"form-note\" translate translate-default=\" \" translate-values=\"question.text.getTranslateValues()\">{{question.text.root+'.INFO'}}</p>");
 }]);
 
 angular.module("templates/upload.tpl.html", []).run(["$templateCache", function($templateCache) {
