@@ -1174,6 +1174,7 @@ angular.module("templates/buttongroup.tpl.html", []).run(["$templateCache", func
     "        <div ng-include=\"'templates/tooltip.tpl.html'\"></div>\n" +
     "    </div>\n" +
     "</div>\n" +
+    "\n" +
     "<div class=\"grid\">\n" +
     "    <div class=\"grid__item sm--six-twelfths\">\n" +
     "        <div class=\"form-row form-row--gap\">\n" +
