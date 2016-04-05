@@ -1329,7 +1329,7 @@ angular.module("templates/datetime.tpl.html", []).run(["$templateCache", functio
 angular.module("templates/fileuploader.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/fileuploader.tpl.html",
     "<div class=\"form-row form-row--gap\">\n" +
-    "    <button id=\"selectFileBtn\" type=\"button\" class=\"button button--small\" {{files.length >= max ? 'disabled=true' : ''}}><i class=\"icon icon-doc\"></i> {{buttonText}} - {{max}}</button>\n" +
+    "    <button id=\"selectFileBtn\" type=\"button\" class=\"button button--small\" ng-attr-disabled=\"files.length >= max || undefined\"><i class=\"icon icon-doc\"></i> {{buttonText}}</button>\n" +
     "    <input id=\"{{id}}\" type=\"file\" ng-model=\"file\" style=\"visibility: hidden; position: absolute;\"/>\n" +
     "</div>\n" +
     "\n" +
