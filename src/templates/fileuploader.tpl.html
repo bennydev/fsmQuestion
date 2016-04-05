@@ -1,5 +1,5 @@
 <div class="form-row form-row--gap">
-    <button id="selectFileBtn" type="button" class="button button--small" {{files.length >= question.restrictions.getMax() ? 'disabled=true' : ''}}"><i class="icon icon-doc"></i> {{buttonText}}</button>
+    <button id="selectFileBtn" type="button" class="button button--small" {{files.length >= max ? 'disabled=true' : ''}}><i class="icon icon-doc"></i> {{buttonText}}</button>
     <input id="{{id}}" type="file" ng-model="file" style="visibility: hidden; position: absolute;"/>
 </div>
 
