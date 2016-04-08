@@ -169,65 +169,92 @@ function ErrorReporter(){
 }
 
 
-'use strict';
-angular.module('fsmFileUploader', [])
-    .directive('fsmFileUploader', ['FileUploaderService', function(FileUploaderService){
-    return {
-        restrict: 'E',
-        scope: {
-            group: '&',
-            buttonText: '@',
-            max: '='
-        },
-        templateUrl: 'templates/fileuploader.tpl.html',
-        link: function(scope, element, attrs){
-            scope.id = 'fileUpload-'+scope.group();
-            scope.group = scope.group();
-            scope.files = FileUploaderService.createGroup(scope.group).files;
-            scope.removeFile = function(index){
-              FileUploaderService.removeFileInGroup(scope.group, index);
-            };
+(function(angular) {
+    'use strict';
 
-            var btn = element.find('#selectFileBtn');
-            var input;
+    angular.module('fsmFileUploader', [])
+        .directive('fsmFileUploader', fsmFileUploader);
 
-            btn.bind('click', function(event){
-                event.preventDefault();
-                event.stopPropagation();
-                bindInput();
-                input.click();
-            });
+    fsmFileUploader.$inject = ['FileUploaderService'];
 
-            function bindInput(){
-                if(!input){
-                    input = element.find('#'+scope.id);
-                    input.bind('change', function(){
-                        var file = input.files[0];
-                        file.path = input.value;
-                        if(!file.name) {
-                            file.name = input.value.substr(input.value.lastIndexOf('/'));
-                        }
-                        input.value = '';
-                        addFile(file, scope.group);
-                        scope.$apply();
-                    });
-                    input = input[0];
+    function fsmFileUploader(FileUploaderService) {
+        return {
+            restrict: 'E',
+            scope: {
+                group: '&',
+                buttonText: '@',
+                max: '='
+            },
+            templateUrl: 'templates/fileuploader.tpl.html',
+            link: function (scope, element, attrs) {
+                scope.id = 'fileUpload-' + scope.group();
+                scope.group = scope.group();
+                scope.files = FileUploaderService.createGroup(scope.group).files;
+                scope.removeFile = function (index) {
+                    FileUploaderService.removeFileInGroup(scope.group, index);
+                };
+
+                var btn = element.find('#selectFileBtn');
+                var input;
+
+                btn.bind('click', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    bindInput();
+                    input.click();
+                });
+
+                function bindInput() {
+                    if (!input) {
+                        input = element.find('#' + scope.id);
+                        input.bind('change', function () {
+                            var file = input.files[0];
+                            file.path = input.value;
+                            if (!file.name) {
+                                file.name = input.value.substr(input.value.lastIndexOf('/'));
+                            }
+                            input.value = '';
+                            addFile(file, scope.group);
+                            scope.$apply();
+                        });
+                        input = input[0];
+                    }
                 }
-            }
 
-            function addFile(file, group){
-                if(scope.max == 1){
-                    scope.removeFile(0);
+                function addFile(file, group) {
+                    if (scope.max == 1) {
+                        scope.removeFile(0);
+                    }
+                    FileUploaderService.addFileToGroup(file, group);
                 }
-                FileUploaderService.addFileToGroup(file, group);
-            }
 
-        }
-    };
-}])
-    .factory('FileUploaderService', ['$http', '$window', '$q', function($http, $window, $q){
+            }
+        };
+    }
+})(angular);
+
+(function(angular){
+    "use strict";
+    angular.module('fsmFileUploader')
+        .factory('FileUploaderService', FileUploaderService);
+
+    FileUploaderService.$inject =  ['$http', '$window', '$q'];
+
+    function FileUploaderService($http, $window, $q){
         var groups = {};
         var config = {headers: {'Content-Type': undefined, transformRequest: angular.identity}};
+        var filesUploaded = false;
+
+        var uploadService = {
+            getFileNames: getFileNames,
+            addFileToGroup: addFileToGroup,
+            uploadFiles: uploadFiles,
+            isFilesUploaded: isFilesUploaded,
+            removeFileInGroup: removeFileInGroup,
+            createGroup: createGroup,
+            fileUploadSupported: fileUploadSupported
+        };
+
 
         function addFileToGroup(file, groupName){
             var group = groups[groupName];
@@ -250,8 +277,14 @@ angular.module('fsmFileUploader', [])
                         promises.push(promise);
                     });
                 });
-                return $q.all(promises).then(function(){return resolve(groups);});
+                return $q.all(promises).then(function(){
+                    filesUploaded = true;
+                    return resolve(groups);});
             });
+        }
+
+        function isFilesUploaded() {
+            return filesUploaded;
         }
 
         function getFileNames(groupName){
@@ -276,15 +309,12 @@ angular.module('fsmFileUploader', [])
             return !!$window.FileReader && !!$window.File && !!$window.FileList && !!$window.Blob;
         }
 
-        return {
-            getFileNames: getFileNames,
-            addFileToGroup: addFileToGroup,
-            uploadFiles: uploadFiles,
-            removeFileInGroup: removeFileInGroup,
-            createGroup: createGroup,
-            fileUploadSupported: fileUploadSupported
-        };
-    }]);
+
+        return uploadService;
+
+    }
+
+})(angular);
 
 "use strict";
 angular.module('fsmQuestion')
