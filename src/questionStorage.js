@@ -112,11 +112,11 @@
 
         function clear() {
             // This does not work for some reason, should investigate.
-            //Object.keys(questions).forEach(function(id) {
-            //    localStorageService.remove(getStorageKey(id));
-            //});
+            Object.keys(questions).forEach(function(id) {
+               localStorageService.remove(getStorageKey(id));
+            });
             localStore = {};
-            localStorageService.clearAll();
+            // localStorageService.clearAll();
         }
     }
 })();
