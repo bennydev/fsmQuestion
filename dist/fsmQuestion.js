@@ -639,7 +639,7 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
             saveAnswer: saveAnswer,
             reload: reload,
             questionsHasLocalStorage: questionsHasLocalStorage,
-            clear: clear
+            clear: clearAll
         };
         loadLocalStore();
         return service;
@@ -654,7 +654,7 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
                     localStore[key] = localStorageService.get(key);
                 });
             }
-            localStorageService.clearAll();
+            clearOwnedKeys();
         }
 
         function addQuestion(question) {
@@ -732,13 +732,16 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
             return value !== undefined && value !== null && value !== '';
         }
 
-        function clear() {
-            // This does not work for some reason, should investigate.
+        function clearOwnedKeys() {
+            Object.keys(questions).forEach(function(id) {
+               localStorageService.remove(getStorageKey(id));
+            });
+        }
+        function clearAll() {
             Object.keys(questions).forEach(function(id) {
                localStorageService.remove(getStorageKey(id));
             });
             localStore = {};
-            // localStorageService.clearAll();
         }
     }
 })();
