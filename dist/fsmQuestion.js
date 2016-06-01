@@ -264,8 +264,8 @@ function ErrorReporter(){
         function uploadFiles(url, reject){
             var promises = [];
             return $q(function(resolve){
-                Object.keys(groups).forEach(function(groupname){
-                    var group = groups[groupname];
+                Object.keys(groups).forEach(function(groupName){
+                    var group = groups[groupName];
                     group.files.forEach(function(file){
                         var formData = new $window.FormData();
                         formData.append('file', file, file.name);
@@ -316,6 +316,28 @@ function ErrorReporter(){
 
 })(angular);
 
+(function(angular){
+    "use strict";
+    angular.module('fsmQuestion')
+        .service('localStorageLogger', LocalStorageLogger);
+
+    LocalStorageLogger.$inject = ['localStorageService'];
+
+    function LocalStorageLogger(localStorageService){
+
+        var service = {
+            logDebug: logDebug
+        };
+
+        function logDebug(key, message) {
+            localStorageService.set(key, message);
+        }
+
+        return service;
+
+    }
+
+})(angular);
 "use strict";
 angular.module('fsmQuestion')
 .directive('fsmQuestion', ['QuestionTypes', 'QuestionUtils', '$translate', function(QuestionTypes, QuestionUtils, $translate){
