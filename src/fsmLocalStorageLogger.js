@@ -1,7 +1,7 @@
 (function(angular){
     "use strict";
     angular.module('fsmQuestion')
-        .service('localStorageLogger', LocalStorageLogger);
+        .factory('localStorageLogger', LocalStorageLogger);
 
     LocalStorageLogger.$inject = ['localStorageService'];
 
