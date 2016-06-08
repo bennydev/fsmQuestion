@@ -44,6 +44,9 @@
         }
 
         function getStorageKey(id) {
+            if (typeof storagePrefix === 'object') {
+                return storagePrefix.value + '.questions.' + id;
+            }
             return storagePrefix + '.questions.' + id;
         }
 
