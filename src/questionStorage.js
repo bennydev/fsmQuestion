@@ -59,7 +59,7 @@
         }
 
         /**
-         * Save objects that do not belong to a Question's answer.
+         * Save objects that are not related to a Question or cannot use the prefixed key.
          * @param key
          * @param value
          */
@@ -70,7 +70,7 @@
         }
 
         /**
-         * Load objects that does not belong to a Question's answer.
+         * Load objects that are not related to a Question or cannot use the prefixed key.
          * @param id
          * @returns {*}
          */
