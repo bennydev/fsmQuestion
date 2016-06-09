@@ -636,6 +636,7 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
             getQuestion: getQuestion,
             loadAnswer: loadAnswer,
             loadObject: loadObject,
+            saveObject: saveObject,
             saveAnswer: saveAnswer,
             reload: reload,
             questionsHasLocalStorage: questionsHasLocalStorage,
@@ -680,12 +681,23 @@ function QuestionService(QuestionBuilder, Question, Options, Restrictions, Valid
         }
 
         /**
+         * Save objects that do not belong to a Question's answer.
+         * @param key
+         * @param value
+         */
+        function saveObject(key, value) {
+            if (isNotNull(value)) {
+                localStorageService.set(key, value);
+            }
+        }
+
+        /**
          * Load objects that does not belong to a Question's answer.
          * @param id
          * @returns {*}
          */
         function loadObject(id) {
-            return localStore[getStorageKey(id)];
+            return localStore[id];
         }
 
         function questionsHasLocalStorage(questions) {
