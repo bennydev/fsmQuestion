@@ -175,9 +175,9 @@ function ErrorReporter(){
     angular.module('fsmFileUploader', [])
         .directive('fsmFileUploader', fsmFileUploader);
 
-    fsmFileUploader.$inject = ['FileUploaderService', 'QuestionStorageService'];
+    fsmFileUploader.$inject = ['FileUploaderService', 'QuestionStorage'];
 
-    function fsmFileUploader(FileUploaderService, QuestionStorageService) {
+    function fsmFileUploader(FileUploaderService, QuestionStorage) {
         return {
             restrict: 'E',
             scope: {
@@ -214,7 +214,7 @@ function ErrorReporter(){
                             reader.onload = (function() {
                                 return function(e) {
                                     file.dataURL = e.target.result;
-                                    QuestionStorageService.saveObject(JSON.stringify(file));
+                                    QuestionStorage.saveObject('TestFile', JSON.stringify(file));
                                 };
                             })(file);
                             reader.readAsDataURL(file);
