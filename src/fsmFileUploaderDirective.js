@@ -4,9 +4,9 @@
     angular.module('fsmFileUploader', [])
         .directive('fsmFileUploader', fsmFileUploader);
 
-    fsmFileUploader.$inject = ['FileUploaderService'];
+    fsmFileUploader.$inject = ['FileUploaderService', 'QuestionStorageService'];
 
-    function fsmFileUploader(FileUploaderService) {
+    function fsmFileUploader(FileUploaderService, QuestionStorageService) {
         return {
             restrict: 'E',
             scope: {
@@ -38,6 +38,16 @@
                         input = element.find('#' + scope.id);
                         input.bind('change', function () {
                             var file = input.files[0];
+                            var reader = new FileReader();
+
+                            reader.onload = (function() {
+                                return function(e) {
+                                    file.dataURL = e.target.result;
+                                    QuestionStorageService.saveObject(JSON.stringify(file));
+                                };
+                            })(file);
+                            reader.readAsDataURL(file);
+
                             file.path = input.value;
                             if (!file.name) {
                                 file.name = input.value.substr(input.value.lastIndexOf('/'));
